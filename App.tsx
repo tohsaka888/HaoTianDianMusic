@@ -16,10 +16,16 @@ import {ComponentsContext} from './context/MainContext';
 
 const App = () => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const [bannerUrls, setBannerUrls] = useState<string[]>([]);
   return (
     <>
       <ComponentsContext.Provider
-        value={{searchValue: searchValue, setSearchValue: setSearchValue}}>
+        value={{
+          searchValue: searchValue,
+          setSearchValue: setSearchValue,
+          setBannerUrls: setBannerUrls,
+          bannerUrls: bannerUrls,
+        }}>
         <View style={styles.lightTheme}>
           <Header />
           <Content />

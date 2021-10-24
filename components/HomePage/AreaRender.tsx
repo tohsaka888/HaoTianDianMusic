@@ -1,6 +1,7 @@
 import React from 'react';
-import {ScrollView, View} from 'react-native';
-import {Text} from 'react-native-elements';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Icon, Text} from 'react-native-elements';
+import Banner from './Banner';
 
 type Item = {
   id: string;
@@ -14,11 +15,20 @@ type Props = {
 export default function AreaRender({item}: Props) {
   return (
     <View>
-      {item.id === '0' && <Text>11111111</Text>}
-      <Text>title</Text>
+      {item.id === '0' && <Banner />}
+      <View>
+        <Text style={styles.title}>{item.title}</Text>
+      </View>
       <ScrollView horizontal={true}>
         <Text>{item.title}</Text>
       </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+});

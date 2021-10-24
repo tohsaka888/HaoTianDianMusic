@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import SearchInput from '../common/SearchInput';
 import {Icon} from 'react-native-elements';
+import {getBannnerImg} from '../../request/HomePage';
+import {ComponentsContext} from '../../context/MainContext';
 
 export default function Header(): JSX.Element {
+  const {setBannerUrls} = useContext(ComponentsContext);
+  useEffect(() => {
+    getBannnerImg().then(value => {
+      setBannerUrls(value);
+    });
+  }, [setBannerUrls]);
   return (
     <View style={styles.header}>
       <View style={styles.leftButton}>

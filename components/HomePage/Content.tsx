@@ -6,16 +6,15 @@ export default function Content() {
   const DATA = [
     {
       id: '0',
-      title:
-        'First ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst ItemFirst Item',
+      title: '歌单推荐',
     },
     {
       id: '1',
-      title: 'Second Item',
+      title: '人气歌曲',
     },
     {
       id: '2',
-      title: 'Third Item',
+      title: '热门分类',
     },
   ];
   return (
