@@ -1,4 +1,4 @@
-import {baseUrl} from './baseUrl';
+import {baseUrl, pythonUrl} from './baseUrl';
 
 export const getBannnerImg = async (): Promise<string[]> => {
   const res = await fetch(`${baseUrl}/banner?type=1`);
@@ -10,4 +10,12 @@ export const getBannnerImg = async (): Promise<string[]> => {
     });
   }
   return bannerUrls;
+};
+
+export const getRandomMusic = async () => {
+  const res = await fetch(`${pythonUrl}/getMusicByName/random`, {
+    method: 'POST',
+  });
+  const data = await res.json();
+  return data?.musics;
 };

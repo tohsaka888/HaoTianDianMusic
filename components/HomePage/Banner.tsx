@@ -1,15 +1,24 @@
 import React, {useContext} from 'react';
 import Swiper from 'react-native-swiper';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {ComponentsContext} from '../../context/MainContext';
 import {Image} from 'react-native-elements';
 
 export default function Banner(): JSX.Element {
   const {bannerUrls} = useContext(ComponentsContext);
   return (
-    <Swiper height={200} showsButtons={false} autoplayTimeout={1}>
+    <Swiper
+      height={185}
+      autoplay={true}
+      showsButtons={false}
+      autoplayTimeout={2}
+      loop={true}>
       {bannerUrls.map((item: string, index: number) => {
-        return <Image source={{uri: item}} key={index} style={styles.images} />;
+        return (
+          <View key={index} style={styles.imgOuter}>
+            <Image source={{uri: item}} style={styles.images} />
+          </View>
+        );
       })}
     </Swiper>
   );
@@ -17,12 +26,21 @@ export default function Banner(): JSX.Element {
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '100%',
-    height: 180,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 5,
+    marginBottom: 5,
   },
   images: {
-    width: '100%',
-    height: 180,
+    height: 150,
     borderRadius: 10,
+    margin: 5,
+  },
+  imgOuter: {
+    padding: 5,
+    backgroundColor: '#94949440',
+    margin: 5,
+    borderRadius: 10,
+    marginTop: 10,
+    opacity: 1,
   },
 });
