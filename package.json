@@ -16,6 +16,7 @@
     "@react-native-community/slider": "^4.1.10",
     "@react-navigation/native": "^6.0.6",
     "@react-spring/native": "^9.3.0",
+    "@types/react-native-video": "^5.0.10",
     "react": "17.0.2",
     "react-native": "0.66.1",
     "react-native-elements": "^3.4.2",
@@ -24,7 +25,8 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
     "react-native-swiper": "^1.6.0-rc.3",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "react-native-video": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

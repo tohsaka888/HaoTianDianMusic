@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext} from 'react';
 
 type ComponentProps = {
   searchValue: string;
@@ -7,6 +7,16 @@ type ComponentProps = {
   setBannerUrls: Function;
 };
 
-export const ComponentsContext = React.createContext<ComponentProps | null>(
-  null,
-);
+type MusicInfoProps = {
+  musicInfo: any;
+  setMusicInfo: Function;
+  musicRef: any;
+  playStatus: boolean;
+  setPlayStatus: Function;
+};
+
+const MusicInfoContext = createContext<MusicInfoProps | null>(null);
+
+const ComponentsContext = createContext<ComponentProps | null>(null);
+
+export {MusicInfoContext, ComponentsContext};

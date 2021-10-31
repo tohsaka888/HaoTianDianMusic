@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Icon, Image, Text} from 'react-native-elements';
 import Banner from './Banner';
 import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
+import {MusicInfoContext} from '../../context/MainContext';
 
 type Item = {
   id: string;
@@ -17,6 +18,13 @@ type Props = {
 
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
+  const musicPlayProps = useContext(MusicInfoContext);
+  const playMusic = useCallback(
+    (music: any) => {
+      musicPlayProps?.setMusicInfo(music);
+    },
+    [musicPlayProps],
+  );
   return (
     <>
       <View>
@@ -65,6 +73,9 @@ const RenderContent = ({item}: Props) => {
                           type="antdesign"
                           name="play"
                           tvParallaxProperties={undefined}
+                          onPress={() => {
+                            playMusic(music);
+                          }}
                         />
                       </View>
                     </View>
@@ -121,10 +132,10 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     marginBottom: 5,
-    marginRight: 5,
   },
   randomPlaylist: {
-    marginLeft: 15,
+    marginLeft: 8,
+    padding: 5,
   },
   randomMusicName: {
     width: 200,
@@ -145,9 +156,16 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginRight: 15,
     marginLeft: 15,
+    // backgroundColor: '#c4c4c44b',
+    padding: 10,
+    borderRadius: 5,
+    boxShadow: '3px 3px 3px gray',
+    borderWidth: 1,
+    borderColor: '#ebebeb68',
   },
   randomArtists: {
     fontSize: 10,
     fontWeight: 'bold',
+    width: 200,
   },
 });

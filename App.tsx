@@ -8,11 +8,12 @@
  * @format
  */
 
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 import Content from './components/HomePage/Content';
 import Header from './components/HomePage/Header';
-import {ComponentsContext} from './context/MainContext';
+import MusicController from './components/common/MusicController';
+import {ComponentsContext, MusicInfoContext} from './context/MainContext';
 import {NavigationContainer} from '@react-navigation/native';
 import bak1 from './assets/images/bak1.jpg';
 import bak2 from './assets/images/bak2.jpg';
@@ -22,6 +23,9 @@ const App = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [bannerUrls, setBannerUrls] = useState<string[]>([]);
   const [globalTheme, setGlobalTheme] = useState<ThemeName>('light');
+  const [musicInfo, setMusicInfo] = useState<any>({});
+  const [playStatus, setPlayStatus] = useState<boolean>(false);
+  const musicRef = useRef();
   return (
     <NavigationContainer>
       <ThemeContext.Provider value={{globalTheme, setGlobalTheme}}>
@@ -32,13 +36,23 @@ const App = () => {
             setBannerUrls: setBannerUrls,
             bannerUrls: bannerUrls,
           }}>
-          <ImageBackground
-            source={globalTheme === 'light' ? bak1 : bak2}
-            imageStyle={styles.background}
-            style={styles.background}>
-            <Header />
-            <Content />
-          </ImageBackground>
+          <MusicInfoContext.Provider
+            value={{
+              musicInfo: musicInfo,
+              setMusicInfo: setMusicInfo,
+              musicRef: musicRef,
+              playStatus: playStatus,
+              setPlayStatus: setPlayStatus,
+            }}>
+            <ImageBackground
+              source={globalTheme === 'light' ? bak1 : bak2}
+              imageStyle={styles.background}
+              style={styles.background}>
+              <Header />
+              <Content />
+              <MusicController />
+            </ImageBackground>
+          </MusicInfoContext.Provider>
         </ComponentsContext.Provider>
       </ThemeContext.Provider>
     </NavigationContainer>
