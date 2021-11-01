@@ -1,0 +1,62 @@
+import React, {useContext} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {Icon} from 'react-native-elements/dist/icons/Icon';
+import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
+
+export default function ModalTitle() {
+  const musicProps = useContext(MusicInfoContext);
+  const props = useContext(ComponentsContext);
+  return (
+    <View style={styles.titleContainer}>
+      <Icon
+        name="down"
+        type="antdesign"
+        color={'black'}
+        onPress={() => {
+          props?.setVisible(false);
+        }}
+        // style={styles.titleIcon}
+      />
+      <View>
+        <Text numberOfLines={1} style={styles.title}>
+          {musicProps?.musicInfo.name}
+        </Text>
+        <Text numberOfLines={1} style={styles.artists}>
+          {musicProps?.musicInfo.ar.map((item: any) => {
+            return item.name;
+          })}
+        </Text>
+      </View>
+      <Icon
+        name="link"
+        type="antdesign"
+        color={'black'}
+        // style={styles.titleIcon}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  title: {
+    color: 'black',
+    fontSize: 18,
+    width: 250,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    padding: 10,
+    marginTop: 15,
+  },
+  titleIcon: {
+    position: 'absolute',
+  },
+  artists: {
+    color: 'black',
+    textAlign: 'center',
+  },
+});

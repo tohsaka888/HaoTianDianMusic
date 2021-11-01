@@ -119,6 +119,9 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
   },
+  allAreaToBottom: {
+    marginBottom: 60,
+  },
   content: {
     padding: 10,
     color: 'white',

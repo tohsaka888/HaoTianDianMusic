@@ -1,13 +1,14 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
-import {MusicInfoContext} from '../../context/MainContext';
-import Video from 'react-native-video';
+import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
+import Video, {OnProgressData} from 'react-native-video';
 import {getMusicUrl} from '../../request/getMusicUrl';
 
 export default function MusicController() {
   const musicProps = useContext(MusicInfoContext);
+  const props = useContext(ComponentsContext);
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const pushMusicRequest = useCallback(async () => {
     let data;
@@ -15,29 +16,37 @@ export default function MusicController() {
     if ((id = musicProps?.musicInfo.id)) {
       data = await getMusicUrl(id);
     }
-    if (data) {
-      musicProps?.setPlayStatus(true);
+    if (data === '') {
+      Alert.alert('没有音源');
+      musicProps?.setPaused(true);
     }
     setMusicUrl(data);
   }, [musicProps]);
   const isPlay = useCallback(() => {
-    const musicRef = musicProps?.musicRef.current;
-    console.log(musicRef.seek)
-    // musicProps?.setPlayStatus(!musicProps.playStatus);
-    // if (musicProps?.playStatus === false) {
-    //   console.log(musicProps.musicRef)
-    //   musicProps.musicRef.current.paused = false;
-    // }
-    // if (musicProps?.playStatus === true) {
-    //   console.log(musicProps.musicRef)
-    //   musicProps.musicRef.current.paused = true;
-    // }
+    musicProps?.setPaused(!musicProps.paused);
   }, [musicProps]);
   useEffect(() => {
     pushMusicRequest();
   }, [pushMusicRequest]);
+  const onProgress = useCallback(
+    ({currentTime, seekableDuration}: OnProgressData): void => {
+      if (musicProps?.currentTimeRef && musicProps.durationRef) {
+        musicProps.currentTimeRef.current = currentTime;
+        musicProps.durationRef.current = seekableDuration;
+      }
+    },
+    [musicProps?.currentTimeRef, musicProps?.durationRef],
+  );
   return (
-    <View style={styles.controllerMain}>
+    <TouchableOpacity
+      style={styles.controllerMain}
+      onPress={() => {
+        if (musicUrl) {
+          props?.setVisible(true);
+        } else {
+          Alert.alert('没有播放中的歌曲');
+        }
+      }}>
       <View style={styles.controller}>
         <View style={styles.musicPictureMain}>
           <Image
@@ -64,7 +73,9 @@ export default function MusicController() {
             source={{
               uri: musicUrl,
             }}
+            paused={musicProps?.paused}
             ref={musicProps?.musicRef}
+            onProgress={onProgress}
           />
         )}
         <View style={styles.buttons}>
@@ -75,7 +86,7 @@ export default function MusicController() {
           />
           <Icon
             type="antdesign"
-            name={musicUrl ? 'pausecircle' : 'play'}
+            name={!musicProps?.paused ? 'pausecircle' : 'play'}
             tvParallaxProperties={undefined}
             onPress={isPlay}
           />
@@ -86,7 +97,7 @@ export default function MusicController() {
           />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

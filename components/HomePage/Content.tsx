@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {ThemeContext} from '../../context/ThemeContext';
 import {getRandomMusic} from '../../request/HomePage';
 import AreaRender from './AreaRender';
@@ -64,7 +64,14 @@ export default function Content() {
         data={DATA}
         renderItem={AreaRender}
         keyExtractor={item => item.id}
+        style={styles.toBottom}
       />
     </AreaContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  toBottom: {
+    marginBottom: 70,
+  },
+});

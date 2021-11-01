@@ -1,10 +1,12 @@
-import React, {createContext} from 'react';
+import {createContext, MutableRefObject} from 'react';
 
 type ComponentProps = {
   searchValue: string;
   setSearchValue: Function;
   bannerUrls: string[];
   setBannerUrls: Function;
+  visible: boolean;
+  setVisible: Function;
 };
 
 type MusicInfoProps = {
@@ -13,6 +15,10 @@ type MusicInfoProps = {
   musicRef: any;
   playStatus: boolean;
   setPlayStatus: Function;
+  paused: boolean;
+  setPaused: Function;
+  currentTimeRef: MutableRefObject<number | null>;
+  durationRef: MutableRefObject<number | null>;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);
