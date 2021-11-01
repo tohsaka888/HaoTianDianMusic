@@ -2,9 +2,12 @@ import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Image} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
+import {Lrc} from 'lrc-kit';
+import useLrcParser from '../../hooks/useLrcParser';
 
 const ImageContent = () => {
   const musicProps = useContext(MusicInfoContext);
+  useLrcParser(musicProps?.musicInfo.id);
   return (
     <View>
       <Image

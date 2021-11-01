@@ -1,33 +1,20 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 import Video, {OnProgressData} from 'react-native-video';
-import {getMusicUrl} from '../../request/getMusicUrl';
+// import {getMusicUrl} from '../../request/getMusicUrl';
 
 export default function MusicController() {
   const musicProps = useContext(MusicInfoContext);
   const props = useContext(ComponentsContext);
-  const [musicUrl, setMusicUrl] = useState<string | null>(null);
-  const pushMusicRequest = useCallback(async () => {
-    let data;
-    let id = '';
-    if ((id = musicProps?.musicInfo.id)) {
-      data = await getMusicUrl(id);
-    }
-    if (data === '') {
-      Alert.alert('没有音源');
-      musicProps?.setPaused(true);
-    }
-    setMusicUrl(data);
-  }, [musicProps]);
   const isPlay = useCallback(() => {
     musicProps?.setPaused(!musicProps.paused);
   }, [musicProps]);
-  useEffect(() => {
-    pushMusicRequest();
-  }, [pushMusicRequest]);
+  // useEffect(() => {
+  //   pushMusicRequest();
+  // }, [pushMusicRequest]);
   const onProgress = useCallback(
     ({currentTime, seekableDuration}: OnProgressData): void => {
       if (musicProps?.currentTimeRef && musicProps.durationRef) {
@@ -41,7 +28,7 @@ export default function MusicController() {
     <TouchableOpacity
       style={styles.controllerMain}
       onPress={() => {
-        if (musicUrl) {
+        if (musicProps?.musicUrl) {
           props?.setVisible(true);
         } else {
           Alert.alert('没有播放中的歌曲');
@@ -68,10 +55,10 @@ export default function MusicController() {
               : '暂无歌手信息'}
           </Text>
         </View>
-        {musicUrl && (
+        {musicProps?.musicUrl && (
           <Video
             source={{
-              uri: musicUrl,
+              uri: musicProps.musicUrl,
             }}
             paused={musicProps?.paused}
             ref={musicProps?.musicRef}
@@ -86,7 +73,11 @@ export default function MusicController() {
           />
           <Icon
             type="antdesign"
-            name={!musicProps?.paused ? 'pausecircle' : 'play'}
+            name={
+              musicProps?.musicUrl && !musicProps?.paused
+                ? 'pausecircle'
+                : 'play'
+            }
             tvParallaxProperties={undefined}
             onPress={isPlay}
           />

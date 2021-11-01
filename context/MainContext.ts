@@ -19,6 +19,8 @@ type MusicInfoProps = {
   setPaused: Function;
   currentTimeRef: MutableRefObject<number | null>;
   durationRef: MutableRefObject<number | null>;
+  musicUrl: string | null;
+  setMusicUrl: Function;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);

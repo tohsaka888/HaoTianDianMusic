@@ -1,10 +1,17 @@
 import React, {useCallback, useContext} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Icon, Image, Text} from 'react-native-elements';
 import Banner from './Banner';
 import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
 import {MusicInfoContext} from '../../context/MainContext';
+import {getMusicUrl} from '../../request/getMusicUrl';
 
 type Item = {
   id: string;
@@ -18,12 +25,28 @@ type Props = {
 
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
-  const musicPlayProps = useContext(MusicInfoContext);
+  const musicProps = useContext(MusicInfoContext);
+  // const musicPlayProps = useContext(MusicInfoContext);
+  const pushMusicRequest = useCallback(async () => {
+    let data;
+    let id = '';
+    if ((id = musicProps?.musicInfo.id)) {
+      data = await getMusicUrl(id);
+    }
+    musicProps?.setMusicUrl(data);
+    if (data === '') {
+      Alert.alert('没有音源');
+      musicProps?.setPaused(true);
+    } else {
+      musicProps?.setPaused(false);
+    }
+  }, [musicProps]);
   const playMusic = useCallback(
     (music: any) => {
-      musicPlayProps?.setMusicInfo(music);
+      musicProps?.setMusicInfo(music);
+      pushMusicRequest();
     },
-    [musicPlayProps],
+    [musicProps, pushMusicRequest],
   );
   return (
     <>

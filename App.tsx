@@ -52,6 +52,7 @@ const App = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const currentTimeRef = useRef<number>(null);
   const durationRef = useRef<number>(null);
+  const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const musicRef = useRef();
   return (
     <NavigationContainer theme={TransparentTheme}>
@@ -76,6 +77,8 @@ const App = () => {
               setPaused: setPaused,
               currentTimeRef: currentTimeRef,
               durationRef: durationRef,
+              musicUrl: musicUrl,
+              setMusicUrl: setMusicUrl,
             }}>
             <ImageBackground
               source={globalTheme === 'light' ? bak1 : bak2}

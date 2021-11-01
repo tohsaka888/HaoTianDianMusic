@@ -4604,6 +4604,11 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+lrc-kit@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/lrc-kit/-/lrc-kit-1.1.1.tgz#90f6e61fffad0a1fb3adba19ac438ef0b687be12"
+  integrity sha512-n7wRGLWWyjIXpgo4iZQkce/wzZlNUO7dzZKHvwZjFK3e4QaKYyVYasMfN6adpoOibkVVV2TniuGfAlqYf3vngg==
+
 lru-cache@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-6.0.0.tgz"
