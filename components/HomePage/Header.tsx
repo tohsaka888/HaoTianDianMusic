@@ -20,7 +20,7 @@ export default function Header(): JSX.Element {
   const navigation = useNavigation();
   useEffect(() => {
     pushBannerRequest();
-  }, [contexts, contexts?.setBannerUrls, pushBannerRequest]);
+  }, [pushBannerRequest]);
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
