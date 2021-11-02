@@ -6,10 +6,14 @@ import {getBannnerImg} from '../../request/HomePage';
 import {ComponentsContext} from '../../context/MainContext';
 import {getMusicByName} from '../../request/SearchResult';
 import {ThemeContext} from '../../context/ThemeContext';
+import {useNavigation} from '@react-navigation/native';
+import {SearchContext} from '../../context/SearchContext';
 
 export default function Header(): JSX.Element {
   const contexts = useContext(ComponentsContext);
   const props = useContext(ThemeContext);
+  const searchProps = useContext(SearchContext);
+  const navigation = useNavigation();
   useEffect(() => {
     getBannnerImg().then(value => {
       contexts?.setBannerUrls(value);
@@ -18,9 +22,10 @@ export default function Header(): JSX.Element {
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
-      console.log(data);
+      searchProps?.setResult(data.result);
     }
-  }, [contexts]);
+    navigation.navigate('search');
+  }, [contexts?.searchValue, navigation, searchProps]);
   const changeTheme = useCallback(() => {
     if (props?.globalTheme === 'dark') {
       props?.setGlobalTheme('light');
