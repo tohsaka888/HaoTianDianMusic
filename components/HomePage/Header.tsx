@@ -6,6 +6,8 @@ import {getBannnerImg} from '../../request/HomePage';
 import {ComponentsContext} from '../../context/MainContext';
 import {getMusicByName} from '../../request/SearchResult';
 import {ThemeContext} from '../../context/ThemeContext';
+import {useNavigation} from '@react-navigation/native';
+import {SearchContext} from '../../context/SearchContext';
 
 export default function Header(): JSX.Element {
   const contexts = useContext(ComponentsContext);
@@ -14,15 +16,18 @@ export default function Header(): JSX.Element {
     const data = await getBannnerImg();
     contexts?.setBannerUrls(data);
   }, [contexts]);
+  const searchProps = useContext(SearchContext);
+  const navigation = useNavigation();
   useEffect(() => {
     pushBannerRequest();
   }, [contexts, contexts?.setBannerUrls, pushBannerRequest]);
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
-      console.log(data);
+      searchProps?.setResult(data.result);
     }
-  }, [contexts]);
+    navigation.navigate('search');
+  }, [contexts?.searchValue, navigation, searchProps]);
   const changeTheme = useCallback(() => {
     if (props?.globalTheme === 'dark') {
       props?.setGlobalTheme('light');

@@ -20,6 +20,8 @@ import bak2 from './assets/images/bak2.jpg';
 import {ThemeContext, ThemeName} from './context/ThemeContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MusicDetailModal from './components/common/MusicDetailModal';
+import SearchDetail from './components/SearchDetail/SearchDetail';
+import {SearchContext} from './context/SearchContext';
 // import {Image} from 'react-native-elements/dist/image/Image';
 
 const TransparentTheme = {
@@ -53,6 +55,7 @@ const App = () => {
   const currentTimeRef = useRef<number>(null);
   const durationRef = useRef<number>(null);
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
+  const [result, setResult] = useState<any[]>([]);
   const musicRef = useRef();
   return (
     <NavigationContainer theme={TransparentTheme}>
@@ -80,22 +83,32 @@ const App = () => {
               musicUrl: musicUrl,
               setMusicUrl: setMusicUrl,
             }}>
-            <ImageBackground
-              source={globalTheme === 'light' ? bak1 : bak2}
-              imageStyle={styles.background}
-              style={styles.background}>
-              <MusicDetailModal />
-              <Stack.Navigator>
-                <Stack.Screen
-                  name="home"
-                  component={HomePage}
-                  options={{
-                    headerShown: false,
-                  }}
-                />
-              </Stack.Navigator>
-              <MusicController />
-            </ImageBackground>
+            <SearchContext.Provider
+              value={{result: result, setResult: setResult}}>
+              <ImageBackground
+                source={globalTheme === 'light' ? bak1 : bak2}
+                imageStyle={styles.background}
+                style={styles.background}>
+                <MusicDetailModal />
+                <Stack.Navigator>
+                  <Stack.Screen
+                    name="home"
+                    component={HomePage}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="search"
+                    component={SearchDetail}
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                </Stack.Navigator>
+                <MusicController />
+              </ImageBackground>
+            </SearchContext.Provider>
           </MusicInfoContext.Provider>
         </ComponentsContext.Provider>
       </ThemeContext.Provider>
