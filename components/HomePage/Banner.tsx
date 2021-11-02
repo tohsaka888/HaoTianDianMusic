@@ -5,7 +5,7 @@ import {ComponentsContext} from '../../context/MainContext';
 import {Image} from 'react-native-elements';
 
 export default function Banner(): JSX.Element {
-  const {bannerUrls} = useContext(ComponentsContext);
+  const props = useContext(ComponentsContext);
   return (
     <Swiper
       height={185}
@@ -13,7 +13,7 @@ export default function Banner(): JSX.Element {
       showsButtons={false}
       autoplayTimeout={2}
       loop={true}>
-      {bannerUrls.map((item: string, index: number) => {
+      {props?.bannerUrls.map((item: string, index: number) => {
         return (
           <View key={index} style={styles.imgOuter}>
             <Image source={{uri: item}} style={styles.images} />

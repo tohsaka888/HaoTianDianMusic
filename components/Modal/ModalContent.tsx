@@ -1,13 +1,12 @@
-import React, {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Image} from 'react-native-elements';
+import React, {useContext, useRef, useState} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, Text} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
-import {Lrc} from 'lrc-kit';
-import useLrcParser from '../../hooks/useLrcParser';
+import {ScrollContext} from '../../context/ScrollContext';
+import LyricContent from './LyricContent';
 
 const ImageContent = () => {
   const musicProps = useContext(MusicInfoContext);
-  useLrcParser(musicProps?.musicInfo.id);
   return (
     <View>
       <Image
@@ -19,9 +18,16 @@ const ImageContent = () => {
 };
 
 export default function ModalContent() {
+  const [showPicture, setPicture] = useState<boolean>(true);
   return (
     <View style={styles.imageContainer}>
-      <ImageContent />
+      <TouchableOpacity
+        style={styles.imageContainer}
+        onPress={() => {
+          setPicture(!showPicture);
+        }}>
+        {showPicture ? <ImageContent /> : <LyricContent />}
+      </TouchableOpacity>
     </View>
   );
 }
@@ -36,6 +42,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 3,
+    flex: 5,
   },
 });

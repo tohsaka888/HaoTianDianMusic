@@ -1,13 +1,21 @@
-import React, {useCallback, useContext, useRef} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Slider, Icon} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
 import moment from 'moment';
+import {ScrollContext} from '../../context/ScrollContext';
+import useLrcParser from '../../hooks/useLrcParser';
 
 export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);
+  const scrollProps = useContext(ScrollContext);
+  const lyric = useLrcParser(musicProps?.musicInfo.id)
+  const updateLynic = useCallback((value) => {
+
+  }, []);
   const isPlay = useCallback(() => {
     musicProps?.setPaused(!musicProps.paused);
+    console.log(lyric)
   }, [musicProps]);
   return (
     <View style={styles.footer}>
@@ -25,6 +33,7 @@ export default function ModalFooter() {
             trackStyle={styles.track}
             thumbStyle={styles.thumb}
             onSlidingStart={() => musicProps.setPaused(true)}
+            onValueChange={updateLynic}
             onSlidingComplete={value => {
               musicProps.musicRef.current.seek(value);
               musicProps.setPaused(false);
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   controller: {

@@ -27,24 +27,27 @@ const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
   const musicProps = useContext(MusicInfoContext);
   // const musicPlayProps = useContext(MusicInfoContext);
-  const pushMusicRequest = useCallback(async () => {
-    let data;
-    let id = '';
-    if ((id = musicProps?.musicInfo.id)) {
-      data = await getMusicUrl(id);
-    }
-    musicProps?.setMusicUrl(data);
-    if (data === '') {
-      Alert.alert('没有音源');
-      musicProps?.setPaused(true);
-    } else {
-      musicProps?.setPaused(false);
-    }
-  }, [musicProps]);
+  const pushMusicRequest = useCallback(
+    async music => {
+      let data;
+      let id = '';
+      if ((id = music.id || musicProps?.musicInfo.id)) {
+        data = await getMusicUrl(id);
+      }
+      musicProps?.setMusicUrl(data);
+      if (data === '') {
+        Alert.alert('没有音源');
+        musicProps?.setPaused(true);
+      } else {
+        musicProps?.setPaused(false);
+      }
+    },
+    [musicProps],
+  );
   const playMusic = useCallback(
     (music: any) => {
       musicProps?.setMusicInfo(music);
-      pushMusicRequest();
+      pushMusicRequest(music);
     },
     [musicProps, pushMusicRequest],
   );

@@ -10,11 +10,13 @@ import {ThemeContext} from '../../context/ThemeContext';
 export default function Header(): JSX.Element {
   const contexts = useContext(ComponentsContext);
   const props = useContext(ThemeContext);
+  const pushBannerRequest = useCallback(async () => {
+    const data = await getBannnerImg();
+    contexts?.setBannerUrls(data);
+  }, [contexts]);
   useEffect(() => {
-    getBannnerImg().then(value => {
-      contexts?.setBannerUrls(value);
-    });
-  }, [contexts, contexts?.setBannerUrls]);
+    pushBannerRequest();
+  }, [contexts, contexts?.setBannerUrls, pushBannerRequest]);
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
