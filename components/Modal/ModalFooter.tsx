@@ -8,14 +8,13 @@ import useLrcParser from '../../hooks/useLrcParser';
 
 export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);
-  const scrollProps = useContext(ScrollContext);
-  const lyric = useLrcParser(musicProps?.musicInfo.id)
-  const updateLynic = useCallback((value) => {
+  // const scrollProps = useContext(ScrollContext);
+  // const lyric = useLrcParser(musicProps?.musicInfo.id)
+  // const updateLynic = useCallback((value) => {
 
-  }, []);
+  // }, []);
   const isPlay = useCallback(() => {
     musicProps?.setPaused(!musicProps.paused);
-    console.log(lyric)
   }, [musicProps]);
   return (
     <View style={styles.footer}>
@@ -33,7 +32,7 @@ export default function ModalFooter() {
             trackStyle={styles.track}
             thumbStyle={styles.thumb}
             onSlidingStart={() => musicProps.setPaused(true)}
-            onValueChange={updateLynic}
+            // onValueChange={updateLynic}
             onSlidingComplete={value => {
               musicProps.musicRef.current.seek(value);
               musicProps.setPaused(false);
