@@ -19,14 +19,17 @@ export default function Header(): JSX.Element {
   const searchProps = useContext(SearchContext);
   const navigation = useNavigation();
   const route = useRoute();
+  const goBack = useCallback(() => {
+    navigation.navigate('home');
+  }, [navigation]);
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
       searchProps?.setResult(data.result);
-      console.log(data.result);
     }
-    navigation.navigate('search');
-    console.log(route);
+    if (route.name !== 'search') {
+      navigation.navigate('search');
+    }
   }, [contexts?.searchValue, navigation, route, searchProps]);
   const changeTheme = useCallback(() => {
     if (props?.globalTheme === 'dark') {
@@ -38,14 +41,26 @@ export default function Header(): JSX.Element {
   return (
     <View style={styles.header}>
       <View style={styles.leftButton}>
-        <TouchableOpacity onPress={changeTheme}>
-          <Icon
-            name="menufold"
-            type="antdesign"
-            color="gray"
-            tvParallaxProperties={undefined}
-          />
-        </TouchableOpacity>
+        {route.name !== 'search' && (
+          <TouchableOpacity onPress={changeTheme}>
+            <Icon
+              name="menufold"
+              type="antdesign"
+              color="gray"
+              tvParallaxProperties={undefined}
+            />
+          </TouchableOpacity>
+        )}
+        {route.name === 'search' && (
+          <TouchableOpacity onPress={goBack}>
+            <Icon
+              name="back"
+              type="antdesign"
+              color="gray"
+              tvParallaxProperties={undefined}
+            />
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.centerSearch}>
         <SearchInput />
