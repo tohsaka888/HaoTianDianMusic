@@ -28,7 +28,9 @@ export default function MusicController() {
       }
       if (lyric?.length) {
         if (currentTime >= lyric[currentIndexRef.current].endTime) {
-          currentIndexRef.current++;
+          if (currentIndexRef.current < lyric.length - 1) {
+            currentIndexRef.current++;
+          }
         }
       }
       console.log(currentIndexRef.current);

@@ -47,6 +47,7 @@ export default function LyricContent() {
     <FlatList
       data={lyrics}
       renderItem={renderItem}
+      getItemLayout={(data, index) => ({length: 50, offset: 50 * index, index})}
       ref={refs => {
         if (scrollProps?.scrollRef) {
           scrollProps.scrollRef.current = refs;
