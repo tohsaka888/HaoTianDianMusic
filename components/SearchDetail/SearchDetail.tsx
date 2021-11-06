@@ -14,7 +14,7 @@ export default function SearchDetail() {
           seachProps.result.map((item: any, index: number) => {
             return (
               <View key={index} style={styles.container}>
-                <View>
+                <View style={styles.song}>
                   <Text style={styles.title} numberOfLines={1}>
                     {item.name}
                   </Text>
@@ -30,6 +30,7 @@ export default function SearchDetail() {
                   name="play"
                   color="white"
                   tvParallaxProperties={undefined}
+                  style={styles.button}
                 />
               </View>
             );
@@ -58,5 +59,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomColor: '#3d3d3dc',
     borderBottomWidth: 1,
+  },
+  song: {
+    flex: 5,
+  },
+  button: {
+    flex: 1,
   },
 });
