@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Text, FlatList, StyleSheet, View} from 'react-native';
+import {Text, FlatList, StyleSheet} from 'react-native';
 import useLrcParser from '../../hooks/useLrcParser';
 import {MusicInfoContext} from '../../context/MainContext';
 import {ScrollContext} from '../../context/ScrollContext';
@@ -17,6 +17,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
       item?.startTime < musicProps?.currentTimeRef.current &&
       item?.endTime > musicProps?.currentTimeRef.current ? (
         <Text
+          numberOfLines={1}
           style={styles.currentLyric}
           key={index}
           ref={refs => {
@@ -27,7 +28,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
           {item.content}
         </Text>
       ) : (
-        <Text style={styles.lyric} key={index}>
+        <Text style={styles.lyric} key={index} numberOfLines={1}>
           {item.content}
         </Text>
       )}

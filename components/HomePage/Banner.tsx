@@ -7,25 +7,26 @@ import {getBannnerImg} from '../../request/HomePage';
 
 export default function Banner(): JSX.Element {
   const props = useContext(ComponentsContext);
-  const pushBannerRequest = useCallback(
-    async signal => {
-      const data = await getBannnerImg(signal);
-      props?.setBannerUrls(data);
-    },
-    [props],
-  );
   useEffect(() => {
     // const AbortController =  window.AbortController;
     // eslint-disable-next-line no-undef
     const controller = new AbortController();
     const {signal} = controller;
-    pushBannerRequest(signal);
-    return () => {
-      if (props?.bannerUrls && props?.bannerUrls.length > 0) {
-        controller.abort();
-      }
+    const pushBannerRequest = async () => {
+      const data = await getBannnerImg(signal);
+      props?.setBannerUrls(data);
     };
-  }, [props?.bannerUrls, props?.bannerUrls.length, pushBannerRequest]);
+    pushBannerRequest();
+    // return () => {
+    //   try {
+    //     if (props?.bannerUrls && props?.bannerUrls.length > 0) {
+    //       controller.abort();
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+  }, [props, props?.bannerUrls, props?.bannerUrls.length]);
   return (
     <Swiper
       height={185}

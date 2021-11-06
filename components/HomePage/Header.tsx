@@ -20,7 +20,6 @@ export default function Header(): JSX.Element {
   const navigation = useNavigation();
   const route = useRoute();
   const searchEvent = useCallback(async () => {
-    console.log(111)
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
       searchProps?.setResult(data.result);

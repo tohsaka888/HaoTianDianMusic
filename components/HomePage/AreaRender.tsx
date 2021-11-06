@@ -48,6 +48,9 @@ const RenderContent = ({item}: Props) => {
     (music: any) => {
       musicProps?.setMusicInfo(music);
       pushMusicRequest(music);
+      if (musicProps?.currentIndexRef) {
+        musicProps.currentIndexRef.current = 0;
+      }
     },
     [musicProps, pushMusicRequest],
   );

@@ -23,7 +23,6 @@ import MusicDetailModal from './components/common/MusicDetailModal';
 import SearchDetail from './components/SearchDetail/SearchDetail';
 import {SearchContext} from './context/SearchContext';
 import {ScrollContext} from './context/ScrollContext';
-// import {Image} from 'react-native-elements/dist/image/Image';
 
 const TransparentTheme = {
   ...DefaultTheme,
@@ -60,6 +59,7 @@ const App = () => {
   const currentLrcRef = useRef<Text>();
   const musicRef = useRef();
   const scrollRef = useRef<FlatList>();
+  const currentIndexRef = useRef<number>(0);
 
   return (
     <NavigationContainer theme={TransparentTheme}>
@@ -88,6 +88,7 @@ const App = () => {
                 durationRef: durationRef,
                 musicUrl: musicUrl,
                 setMusicUrl: setMusicUrl,
+                currentIndexRef: currentIndexRef,
               }}>
               <SearchContext.Provider
                 value={{result: result, setResult: setResult}}>

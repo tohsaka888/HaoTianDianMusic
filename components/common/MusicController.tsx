@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useRef} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
@@ -19,34 +19,41 @@ export default function MusicController() {
   // useEffect(() => {
   //   pushMusicRequest();
   // }, [pushMusicRequest]);
-  const currentIndexRef = useRef<number>(0);
-  const onProgress = useCallback(
-    ({currentTime, seekableDuration}: OnProgressData): void => {
-      if (musicProps?.currentTimeRef && musicProps.durationRef) {
-        musicProps.currentTimeRef.current = currentTime;
-        musicProps.durationRef.current = seekableDuration;
-      }
-      if (lyric?.length) {
-        if (currentTime >= lyric[currentIndexRef.current].endTime) {
-          if (currentIndexRef.current < lyric.length - 1) {
-            currentIndexRef.current++;
+  const onProgress = ({
+    currentTime,
+    seekableDuration,
+  }: OnProgressData): void => {
+    if (musicProps?.currentTimeRef && musicProps.durationRef) {
+      musicProps.currentTimeRef.current = currentTime;
+      musicProps.durationRef.current = seekableDuration;
+    }
+    let current = musicProps?.currentIndexRef.current || 0;
+    if (lyric?.length) {
+      if (currentTime >= lyric[current].endTime) {
+        if (current < lyric.length - 1) {
+          if (musicProps?.currentIndexRef) {
+            musicProps.currentIndexRef.current++;
+            current++;
           }
         }
-        const scrollRef = scrollProps?.scrollRef.current;
-        scrollRef?.scrollToIndex({
-          index: currentIndexRef.current,
-          animated: true,
-          viewPosition: 0.5,
-        });
       }
-    },
-    [
-      lyric,
-      musicProps?.currentTimeRef,
-      musicProps?.durationRef,
-      scrollProps?.scrollRef,
-    ],
-  );
+      if (currentTime <= lyric[current].startTime) {
+        if (current > 0) {
+          if (musicProps?.currentIndexRef) {
+            musicProps.currentIndexRef.current--;
+            current--;
+          }
+        }
+      }
+      // console.log(current, musicProps?.currentIndexRef.current)
+      const scrollRef = scrollProps?.scrollRef.current;
+      scrollRef?.scrollToIndex({
+        index: current,
+        animated: true,
+        viewPosition: 0.5,
+      });
+    }
+  };
   return (
     <TouchableOpacity
       style={styles.controllerMain}

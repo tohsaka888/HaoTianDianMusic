@@ -23,6 +23,7 @@ type MusicInfoProps = {
   musicUrl: string | null;
   setMusicUrl: Function;
   currentLrcRef: MutableRefObject<Text | undefined>;
+  currentIndexRef: MutableRefObject<number>;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);
