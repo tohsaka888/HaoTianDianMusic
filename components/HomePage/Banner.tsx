@@ -1,11 +1,31 @@
-import React, {useContext} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import Swiper from 'react-native-swiper';
 import {StyleSheet, View} from 'react-native';
 import {ComponentsContext} from '../../context/MainContext';
 import {Image} from 'react-native-elements';
+import {getBannnerImg} from '../../request/HomePage';
 
 export default function Banner(): JSX.Element {
   const props = useContext(ComponentsContext);
+  const pushBannerRequest = useCallback(
+    async signal => {
+      const data = await getBannnerImg(signal);
+      props?.setBannerUrls(data);
+    },
+    [props],
+  );
+  useEffect(() => {
+    // const AbortController =  window.AbortController;
+    // eslint-disable-next-line no-undef
+    const controller = new AbortController();
+    const {signal} = controller;
+    pushBannerRequest(signal);
+    return () => {
+      if (props?.bannerUrls && props?.bannerUrls.length > 0) {
+        controller.abort();
+      }
+    };
+  }, [props?.bannerUrls, props?.bannerUrls.length, pushBannerRequest]);
   return (
     <Swiper
       height={185}

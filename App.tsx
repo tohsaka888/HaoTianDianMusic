@@ -9,7 +9,7 @@
  */
 
 import React, {useRef, useState} from 'react';
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import Content from './components/HomePage/Content';
 import Header from './components/HomePage/Header';
 import MusicController from './components/common/MusicController';
@@ -22,6 +22,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MusicDetailModal from './components/common/MusicDetailModal';
 import SearchDetail from './components/SearchDetail/SearchDetail';
 import {SearchContext} from './context/SearchContext';
+import {ScrollContext} from './context/ScrollContext';
 // import {Image} from 'react-native-elements/dist/image/Image';
 
 const TransparentTheme = {
@@ -58,61 +59,65 @@ const App = () => {
   const [result, setResult] = useState<any[]>([]);
   const currentLrcRef = useRef<Text>();
   const musicRef = useRef();
+  const scrollRef = useRef<FlatList>();
+
   return (
     <NavigationContainer theme={TransparentTheme}>
       <ThemeContext.Provider value={{globalTheme, setGlobalTheme}}>
-        <ComponentsContext.Provider
-          value={{
-            searchValue: searchValue,
-            setSearchValue: setSearchValue,
-            setBannerUrls: setBannerUrls,
-            bannerUrls: bannerUrls,
-            visible: visible,
-            setVisible: setVisible,
-          }}>
-          <MusicInfoContext.Provider
+        <ScrollContext.Provider value={{scrollRef: scrollRef}}>
+          <ComponentsContext.Provider
             value={{
-              currentLrcRef: currentLrcRef,
-              musicInfo: musicInfo,
-              setMusicInfo: setMusicInfo,
-              musicRef: musicRef,
-              playStatus: playStatus,
-              setPlayStatus: setPlayStatus,
-              paused: paused,
-              setPaused: setPaused,
-              currentTimeRef: currentTimeRef,
-              durationRef: durationRef,
-              musicUrl: musicUrl,
-              setMusicUrl: setMusicUrl,
+              searchValue: searchValue,
+              setSearchValue: setSearchValue,
+              setBannerUrls: setBannerUrls,
+              bannerUrls: bannerUrls,
+              visible: visible,
+              setVisible: setVisible,
             }}>
-            <SearchContext.Provider
-              value={{result: result, setResult: setResult}}>
-              <ImageBackground
-                source={globalTheme === 'light' ? bak1 : bak2}
-                imageStyle={styles.background}
-                style={styles.background}>
-                <MusicDetailModal />
-                <Stack.Navigator>
-                  <Stack.Screen
-                    name="home"
-                    component={HomePage}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-                  <Stack.Screen
-                    name="search"
-                    component={SearchDetail}
-                    options={{
-                      headerShown: false,
-                    }}
-                  />
-                </Stack.Navigator>
-                <MusicController />
-              </ImageBackground>
-            </SearchContext.Provider>
-          </MusicInfoContext.Provider>
-        </ComponentsContext.Provider>
+            <MusicInfoContext.Provider
+              value={{
+                currentLrcRef: currentLrcRef,
+                musicInfo: musicInfo,
+                setMusicInfo: setMusicInfo,
+                musicRef: musicRef,
+                playStatus: playStatus,
+                setPlayStatus: setPlayStatus,
+                paused: paused,
+                setPaused: setPaused,
+                currentTimeRef: currentTimeRef,
+                durationRef: durationRef,
+                musicUrl: musicUrl,
+                setMusicUrl: setMusicUrl,
+              }}>
+              <SearchContext.Provider
+                value={{result: result, setResult: setResult}}>
+                <ImageBackground
+                  source={globalTheme === 'light' ? bak1 : bak2}
+                  imageStyle={styles.background}
+                  style={styles.background}>
+                  <MusicDetailModal />
+                  <Stack.Navigator>
+                    <Stack.Screen
+                      name="home"
+                      component={HomePage}
+                      options={{
+                        headerShown: false,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="search"
+                      component={SearchDetail}
+                      options={{
+                        headerShown: false,
+                      }}
+                    />
+                  </Stack.Navigator>
+                  <MusicController />
+                </ImageBackground>
+              </SearchContext.Provider>
+            </MusicInfoContext.Provider>
+          </ComponentsContext.Provider>
+        </ScrollContext.Provider>
       </ThemeContext.Provider>
     </NavigationContainer>
   );

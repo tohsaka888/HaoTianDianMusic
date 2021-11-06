@@ -1,7 +1,7 @@
 import {baseUrl, pythonUrl} from './baseUrl';
 
-export const getBannnerImg = async (): Promise<string[]> => {
-  const res = await fetch(`${baseUrl}/banner?type=1`);
+export const getBannnerImg = async (signal: any): Promise<string[]> => {
+  const res = await fetch(`${baseUrl}/banner?type=1`, {signal});
   const data = await res.json();
   let bannerUrls: string[] = [];
   if (data.banners.length) {

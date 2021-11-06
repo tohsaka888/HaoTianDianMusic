@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Text, FlatList, StyleSheet} from 'react-native';
+import {Text, FlatList, StyleSheet, View} from 'react-native';
 import useLrcParser from '../../hooks/useLrcParser';
 import {MusicInfoContext} from '../../context/MainContext';
 import {ScrollContext} from '../../context/ScrollContext';
@@ -31,6 +31,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
           {item.content}
         </Text>
       )}
+      {/* {<View style={styles.blank} />} */}
     </>
   );
 };
@@ -47,9 +48,10 @@ export default function LyricContent() {
     <FlatList
       data={lyrics}
       renderItem={renderItem}
-      getItemLayout={(data, index) => ({length: 50, offset: 50 * index, index})}
+      getItemLayout={(data, index) => ({length: 36, offset: 36 * index, index})}
+      showsVerticalScrollIndicator={false}
       ref={refs => {
-        if (scrollProps?.scrollRef) {
+        if (scrollProps) {
           scrollProps.scrollRef.current = refs;
         }
       }}
@@ -62,10 +64,17 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     flex: 1,
+    fontSize: 16,
+    lineHeight: 36,
   },
   currentLyric: {
     color: 'red',
     textAlign: 'center',
     flex: 1,
+    fontSize: 16,
+    lineHeight: 36,
+  },
+  blankTop: {
+    marginTop: '40%',
   },
 });

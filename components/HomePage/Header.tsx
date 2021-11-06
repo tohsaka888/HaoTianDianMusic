@@ -6,28 +6,29 @@ import {getBannnerImg} from '../../request/HomePage';
 import {ComponentsContext} from '../../context/MainContext';
 import {getMusicByName} from '../../request/SearchResult';
 import {ThemeContext} from '../../context/ThemeContext';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {SearchContext} from '../../context/SearchContext';
 
 export default function Header(): JSX.Element {
   const contexts = useContext(ComponentsContext);
   const props = useContext(ThemeContext);
-  const pushBannerRequest = useCallback(async () => {
-    const data = await getBannnerImg();
-    contexts?.setBannerUrls(data);
-  }, [contexts]);
+  // const pushBannerRequest = useCallback(async () => {
+  //   const data = await getBannnerImg();
+  //   contexts?.setBannerUrls(data);
+  // }, [contexts]);
   const searchProps = useContext(SearchContext);
   const navigation = useNavigation();
-  useEffect(() => {
-    pushBannerRequest();
-  }, [pushBannerRequest]);
+  const route = useRoute();
   const searchEvent = useCallback(async () => {
+    console.log(111)
     if (contexts?.searchValue) {
       const data = await getMusicByName(contexts.searchValue);
       searchProps?.setResult(data.result);
+      console.log(data.result);
     }
     navigation.navigate('search');
-  }, [contexts?.searchValue, navigation, searchProps]);
+    console.log(route);
+  }, [contexts?.searchValue, navigation, route, searchProps]);
   const changeTheme = useCallback(() => {
     if (props?.globalTheme === 'dark') {
       props?.setGlobalTheme('light');

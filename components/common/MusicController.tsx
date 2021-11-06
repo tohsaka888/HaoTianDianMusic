@@ -32,13 +32,13 @@ export default function MusicController() {
             currentIndexRef.current++;
           }
         }
+        const scrollRef = scrollProps?.scrollRef.current;
+        scrollRef?.scrollToIndex({
+          index: currentIndexRef.current,
+          animated: true,
+          viewPosition: 0.5,
+        });
       }
-      console.log(currentIndexRef.current);
-      scrollProps?.scrollRef.current?.scrollToIndex({
-        index: currentIndexRef.current,
-        animated: true,
-        viewPosition: 0.5,
-      });
     },
     [
       lyric,
