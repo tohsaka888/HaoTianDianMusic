@@ -1,8 +1,8 @@
 import {createContext, MutableRefObject} from 'react';
-import {ScrollView} from 'react-native';
+import {FlatList} from 'react-native';
 
 type ScrollProps = {
-  scrollRef: MutableRefObject<ScrollView | null | undefined>;
+  scrollRef: MutableRefObject<FlatList | null | undefined>;
 };
 
 const ScrollContext = createContext<ScrollProps | null>(null);

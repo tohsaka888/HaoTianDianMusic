@@ -9,7 +9,7 @@
  */
 
 import React, {useRef, useState} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import Content from './components/HomePage/Content';
 import Header from './components/HomePage/Header';
 import MusicController from './components/common/MusicController';
@@ -56,6 +56,7 @@ const App = () => {
   const durationRef = useRef<number>(null);
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const [result, setResult] = useState<any[]>([]);
+  const currentLrcRef = useRef<Text>();
   const musicRef = useRef();
   return (
     <NavigationContainer theme={TransparentTheme}>
@@ -71,6 +72,7 @@ const App = () => {
           }}>
           <MusicInfoContext.Provider
             value={{
+              currentLrcRef: currentLrcRef,
               musicInfo: musicInfo,
               setMusicInfo: setMusicInfo,
               musicRef: musicRef,

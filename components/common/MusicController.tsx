@@ -21,8 +21,15 @@ export default function MusicController() {
         musicProps.currentTimeRef.current = currentTime;
         musicProps.durationRef.current = seekableDuration;
       }
+      if (musicProps?.currentLrcRef.current !== undefined) {
+        console.log(musicProps.currentLrcRef.current);
+      }
     },
-    [musicProps?.currentTimeRef, musicProps?.durationRef],
+    [
+      musicProps?.currentLrcRef,
+      musicProps?.currentTimeRef,
+      musicProps?.durationRef,
+    ],
   );
   return (
     <TouchableOpacity

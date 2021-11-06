@@ -1,5 +1,5 @@
 import React, {useContext, useRef} from 'react';
-import {Modal, StyleSheet, ImageBackground, ScrollView} from 'react-native';
+import {Modal, StyleSheet, ImageBackground, FlatList} from 'react-native';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 import ModalTitle from '../Modal/ModalTitle';
 import ModalContent from '../Modal/ModalContent';
@@ -9,7 +9,7 @@ import {ScrollContext} from '../../context/ScrollContext';
 export default function MusicDetailModal() {
   const props = useContext(ComponentsContext);
   const musicProps = useContext(MusicInfoContext);
-  const scrollRef = useRef<ScrollView>();
+  const scrollRef = useRef<FlatList>();
   return (
     <Modal
       visible={props?.visible}

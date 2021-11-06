@@ -3,8 +3,8 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Slider, Icon} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
 import moment from 'moment';
-import {ScrollContext} from '../../context/ScrollContext';
-import useLrcParser from '../../hooks/useLrcParser';
+// import {ScrollContext} from '../../context/ScrollContext';
+// import useLrcParser from '../../hooks/useLrcParser';
 
 export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);

@@ -1,4 +1,5 @@
 import {createContext, MutableRefObject} from 'react';
+import {Text} from 'react-native';
 
 type ComponentProps = {
   searchValue: string;
@@ -21,6 +22,7 @@ type MusicInfoProps = {
   durationRef: MutableRefObject<number | null>;
   musicUrl: string | null;
   setMusicUrl: Function;
+  currentLrcRef: MutableRefObject<Text | undefined>;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);

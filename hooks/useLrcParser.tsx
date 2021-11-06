@@ -33,7 +33,6 @@ export default function useLrcParser(id: string): Lyric[] | null {
           });
         });
       }
-      console.log(lyric)
       setLyrics(lyric);
     }
   }, [id, musicProps?.durationRef]);
