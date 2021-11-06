@@ -1,34 +1,48 @@
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback, useContext, useRef} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 import Video, {OnProgressData} from 'react-native-video';
+import useLrcParser from '../../hooks/useLrcParser';
+import {ScrollContext} from '../../context/ScrollContext';
 // import {getMusicUrl} from '../../request/getMusicUrl';
 
 export default function MusicController() {
   const musicProps = useContext(MusicInfoContext);
   const props = useContext(ComponentsContext);
+  const scrollProps = useContext(ScrollContext);
   const isPlay = useCallback(() => {
     musicProps?.setPaused(!musicProps.paused);
   }, [musicProps]);
+  const lyric = useLrcParser(musicProps?.musicInfo.id);
   // useEffect(() => {
   //   pushMusicRequest();
   // }, [pushMusicRequest]);
+  const currentIndexRef = useRef<number>(0);
   const onProgress = useCallback(
     ({currentTime, seekableDuration}: OnProgressData): void => {
       if (musicProps?.currentTimeRef && musicProps.durationRef) {
         musicProps.currentTimeRef.current = currentTime;
         musicProps.durationRef.current = seekableDuration;
       }
-      if (musicProps?.currentLrcRef.current !== undefined) {
-        console.log(musicProps.currentLrcRef.current);
+      if (lyric?.length) {
+        if (currentTime >= lyric[currentIndexRef.current].endTime) {
+          currentIndexRef.current++;
+        }
       }
+      console.log(currentIndexRef.current);
+      scrollProps?.scrollRef.current?.scrollToIndex({
+        index: currentIndexRef.current,
+        animated: true,
+        viewPosition: 0.5,
+      });
     },
     [
-      musicProps?.currentLrcRef,
+      lyric,
       musicProps?.currentTimeRef,
       musicProps?.durationRef,
+      scrollProps?.scrollRef,
     ],
   );
   return (

@@ -1,8 +1,8 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Image, Text} from 'react-native-elements';
+import {Image} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
-import {ScrollContext} from '../../context/ScrollContext';
+// import {ScrollContext} from '../../context/ScrollContext';
 import LyricContent from './LyricContent';
 
 const ImageContent = () => {

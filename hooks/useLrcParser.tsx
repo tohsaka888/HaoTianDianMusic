@@ -5,11 +5,11 @@ import {MusicInfoContext} from '../context/MainContext';
 
 type Lyrics = {
   startTime: number;
-  endTime: number | undefined | null;
+  endTime: number;
   content: string;
 };
 
-export default function useLrcParser(id: string): Lyric[] | null {
+export default function useLrcParser(id: string): Lyrics[] | null {
   const [lyrics, setLyrics] = useState<any[] | null>(null);
   const musicProps = useContext(MusicInfoContext);
   const getLrc = useCallback(async () => {
@@ -20,11 +20,13 @@ export default function useLrcParser(id: string): Lyric[] | null {
       if (parsedLyric.length !== 0) {
         parsedLyric.map((item: Lyric, index: number) => {
           let startTime = item.timestamp;
-          let endTime;
+          let endTime = 0;
           if (index < parsedLyric.length - 1) {
             endTime = parsedLyric[index + 1].timestamp;
           } else {
-            endTime = musicProps?.durationRef.current;
+            if (musicProps?.durationRef.current) {
+              endTime = musicProps.durationRef.current;
+            }
           }
           lyric.push({
             startTime: startTime,
