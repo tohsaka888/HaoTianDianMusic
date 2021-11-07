@@ -9,7 +9,14 @@
  */
 
 import React, {useRef, useState} from 'react';
-import {FlatList, ImageBackground, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  ImageBackground,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Content from './components/HomePage/Content';
 import Header from './components/HomePage/Header';
 import MusicController from './components/common/MusicController';
@@ -23,6 +30,7 @@ import MusicDetailModal from './components/common/MusicDetailModal';
 import SearchDetail from './components/SearchDetail/SearchDetail';
 import {SearchContext} from './context/SearchContext';
 import {ScrollContext} from './context/ScrollContext';
+import Playlist from './components/PlayList/Playlist';
 
 const TransparentTheme = {
   ...DefaultTheme,
@@ -121,6 +129,21 @@ const App = () => {
                       component={SearchDetail}
                       options={{
                         headerShown: false,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="playlist"
+                      component={Playlist}
+                      options={{
+                        title: '歌单',
+                        headerStyle: {
+                          backgroundColor: 'transparent',
+                        },
+                        headerTintColor: 'white',
+                        headerTitleStyle: {
+                          color: 'white',
+                          fontWeight: 'bold',
+                        },
                       }}
                     />
                   </Stack.Navigator>

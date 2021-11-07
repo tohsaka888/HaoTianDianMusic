@@ -12,6 +12,7 @@ import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
 import {MusicInfoContext} from '../../context/MainContext';
 import {getMusicUrl} from '../../request/getMusicUrl';
+import {useNavigation} from '@react-navigation/native';
 
 type Item = {
   id: string;
@@ -26,6 +27,7 @@ type Props = {
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
   const musicProps = useContext(MusicInfoContext);
+  const navigation = useNavigation();
   // const musicPlayProps = useContext(MusicInfoContext);
   const pushMusicRequest = useCallback(
     async music => {
@@ -63,8 +65,16 @@ const RenderContent = ({item}: Props) => {
         {item.id === '0' &&
           randomMusic?.musicData.map((music: any, index: number) => {
             return (
-              <View key={index} style={styles.randomPlaylist}>
-                <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('playlist');
+                }}
+                key={index}
+                style={styles.randomPlaylist}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('playlist');
+                  }}>
                   <Image
                     source={{uri: music.picUrl}}
                     style={styles.randomPlaylistPicture}
@@ -73,7 +83,7 @@ const RenderContent = ({item}: Props) => {
                 <Text numberOfLines={1} style={styles.randomPlaylistName}>
                   {music.name}
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           })}
         {item.id === '1' &&
@@ -82,7 +92,7 @@ const RenderContent = ({item}: Props) => {
               <View key={i}>
                 {musicGroup.map((music: any, index: number) => {
                   return (
-                    <View key={index} style={styles.randomMusic}>
+                    <TouchableOpacity key={index} style={styles.randomMusic}>
                       <Image
                         source={{uri: music.picUrl}}
                         style={styles.randomMusicPicture}
@@ -107,7 +117,7 @@ const RenderContent = ({item}: Props) => {
                           }}
                         />
                       </View>
-                    </View>
+                    </TouchableOpacity>
                   );
                 })}
               </View>
