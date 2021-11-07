@@ -4,7 +4,6 @@ import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 import Video, {OnProgressData} from 'react-native-video';
-import useLrcParser from '../../hooks/useLrcParser';
 import {ScrollContext} from '../../context/ScrollContext';
 // import {getMusicUrl} from '../../request/getMusicUrl';
 
@@ -13,23 +12,17 @@ export default function MusicController() {
   const props = useContext(ComponentsContext);
   const scrollProps = useContext(ScrollContext);
   const isPlay = useCallback(() => {
-    musicProps?.setPaused(!musicProps.paused);
+    musicProps?.setPause(!musicProps.pause);
   }, [musicProps]);
-  const lyric = useLrcParser(musicProps?.musicInfo.id);
+  const lyric = musicProps?.lyricRef.current;
   // useEffect(() => {
   //   pushMusicRequest();
   // }, [pushMusicRequest]);
-  const onProgress = ({
-    currentTime,
-    seekableDuration,
-  }: OnProgressData): void => {
-    if (musicProps?.currentTimeRef && musicProps.durationRef) {
-      musicProps.currentTimeRef.current = currentTime;
-      musicProps.durationRef.current = seekableDuration;
-    }
+  const onProgress = ({currentTime}: OnProgressData): void => {
+    musicProps?.setCurrentTime(currentTime);
     let current = musicProps?.currentIndexRef.current || 0;
     if (lyric?.length) {
-      if (currentTime >= lyric[current].endTime) {
+      while (currentTime >= lyric[current].endTime) {
         if (current < lyric.length - 1) {
           if (musicProps?.currentIndexRef) {
             musicProps.currentIndexRef.current++;
@@ -37,7 +30,7 @@ export default function MusicController() {
           }
         }
       }
-      if (currentTime <= lyric[current].startTime) {
+      while (currentTime <= lyric[current].startTime) {
         if (current > 0) {
           if (musicProps?.currentIndexRef) {
             musicProps.currentIndexRef.current--;
@@ -45,7 +38,6 @@ export default function MusicController() {
           }
         }
       }
-      // console.log(current, musicProps?.currentIndexRef.current)
       const scrollRef = scrollProps?.scrollRef.current;
       scrollRef?.scrollToIndex({
         index: current,
@@ -90,8 +82,13 @@ export default function MusicController() {
             source={{
               uri: musicProps.musicUrl,
             }}
-            paused={musicProps?.paused}
+            paused={musicProps?.pause}
             ref={musicProps?.musicRef}
+            onLoad={({duration}) => {
+              if (musicProps.durationRef) {
+                musicProps.durationRef.current = duration;
+              }
+            }}
             onProgress={onProgress}
           />
         )}
@@ -104,7 +101,7 @@ export default function MusicController() {
           <Icon
             type="antdesign"
             name={
-              musicProps?.musicUrl && !musicProps?.paused
+              musicProps?.musicUrl && !musicProps?.pause
                 ? 'pausecircle'
                 : 'play'
             }

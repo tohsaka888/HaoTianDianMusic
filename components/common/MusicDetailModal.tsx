@@ -14,6 +14,12 @@ export default function MusicDetailModal() {
       animationType="slide"
       transparent={false}
       onRequestClose={() => {
+        if (musicProps?.currentIndexRef) {
+          musicProps.currentIndexRef.current = 0;
+        }
+        if (musicProps?.lyricRef) {
+          musicProps.lyricRef.current = [];
+        }
         props?.setVisible(false);
       }}>
       <ImageBackground
