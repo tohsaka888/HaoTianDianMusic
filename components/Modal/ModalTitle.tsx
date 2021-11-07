@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     padding: 10,
+    height: 60,
+    // backgroundColor: '#4b4b4b2b',
   },
   titleIcon: {
     position: 'absolute',

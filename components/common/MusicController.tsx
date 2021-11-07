@@ -42,7 +42,7 @@ export default function MusicController() {
       scrollRef?.scrollToIndex({
         index: current,
         animated: true,
-        viewPosition: 0.5,
+        viewPosition: 0,
       });
     }
   };

@@ -7,6 +7,7 @@ type Lyrics = {
   startTime: number;
   endTime: number;
   content: string;
+  length: number;
 };
 
 export default function useLrcParser(id: string): Lyrics[] | null {
@@ -32,6 +33,7 @@ export default function useLrcParser(id: string): Lyrics[] | null {
             startTime: startTime,
             endTime: endTime,
             content: item.content,
+            length: parsedLyric.length,
           });
         });
       }
