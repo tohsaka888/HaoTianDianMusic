@@ -37,9 +37,9 @@ const RenderContent = ({item}: Props) => {
       musicProps?.setMusicUrl(data);
       if (data === '') {
         Alert.alert('没有音源');
-        musicProps?.setPaused(true);
+        musicProps?.setPause(true);
       } else {
-        musicProps?.setPaused(false);
+        musicProps?.setPause(false);
       }
     },
     [musicProps],
@@ -48,9 +48,9 @@ const RenderContent = ({item}: Props) => {
     (music: any) => {
       musicProps?.setMusicInfo(music);
       pushMusicRequest(music);
-      if (musicProps?.currentIndexRef) {
-        musicProps.currentIndexRef.current = 0;
-      }
+      // if (musicProps?.currentIndexRef) {
+      //   musicProps.currentIndexRef.current = 0;
+      // }
     },
     [musicProps, pushMusicRequest],
   );
