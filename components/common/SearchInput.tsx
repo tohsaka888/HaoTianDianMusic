@@ -16,6 +16,7 @@ export default function SearchInput(): JSX.Element {
         placeholder="请输入(暂时只支持搜索歌名)"
         onChangeText={inputEvent}
         placeholderTextColor={'#cecece'}
+        style={styles.input}
       />
     </View>
   );
@@ -31,5 +32,8 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     marginLeft: 15,
     marginRight: 15,
+  },
+  input: {
+    color: 'white',
   },
 });
