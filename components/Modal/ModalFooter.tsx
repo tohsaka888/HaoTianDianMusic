@@ -1,6 +1,7 @@
 import React, {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Slider, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
+import {Slider} from '@ant-design/react-native';
 import {MusicInfoContext} from '../../context/MainContext';
 import moment from 'moment';
 // import {ScrollContext} from '../../context/ScrollContext';
@@ -8,47 +9,45 @@ import moment from 'moment';
 
 export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);
-  // const scrollProps = useContext(ScrollContext);
-  // const lyric = useLrcParser(musicProps?.musicInfo.id)
-  // const updateLynic = useCallback((value) => {
-
-  // }, []);
-  const isPlay = useCallback(() => {
-    musicProps?.setPaused(!musicProps.paused);
+  const setPause = useCallback(() => {
+    musicProps?.setPause(true);
   }, [musicProps]);
+  const isPlay = useCallback(() => {
+    musicProps?.setPause(!musicProps.pause);
+  }, [musicProps]);
+  // useEffect(() => {
+  //   console.log(musicProps?.pauseRef, musicProps?.currentTimeRef)
+  // }, [musicProps?.currentTimeRef, musicProps?.pauseRef])
   return (
     <View style={styles.footer}>
       <View style={styles.controller}>
-        {musicProps?.currentTimeRef.current && (
-          <Text style={styles.time}>
-            {moment(musicProps.currentTimeRef.current * 1000).format('mm:ss')}
-          </Text>
-        )}
-        {musicProps?.currentTimeRef.current && musicProps.durationRef.current && (
-          <Slider
-            style={styles.slider}
-            maximumValue={musicProps.durationRef.current}
-            value={musicProps.currentTimeRef.current}
-            trackStyle={styles.track}
-            thumbStyle={styles.thumb}
-            onSlidingStart={() => musicProps.setPaused(true)}
-            // onValueChange={updateLynic}
-            onSlidingComplete={value => {
-              musicProps.musicRef.current.seek(value);
-              musicProps.setPaused(false);
-            }}
-            thumbProps={{
-              children: (
-                <Icon
-                  name="heartbeat"
-                  type="font-awesome"
-                  size={15}
-                  color="#f50"
-                  tvParallaxProperties={undefined}
-                />
-              ),
-            }}
-          />
+        <Text style={styles.time}>
+          {musicProps && moment(musicProps?.currentTime * 1000).format('mm:ss')}
+        </Text>
+
+        {musicProps && musicProps.durationRef.current && (
+          <View style={styles.slider}>
+            <Slider
+              max={musicProps.durationRef.current}
+              value={musicProps.currentTime}
+              onChange={setPause}
+              onAfterChange={value => {
+                musicProps.musicRef.current.seek(value);
+                musicProps.setPause(false);
+              }}
+              // thumbProps={{
+              //   children: (
+              //     <Icon
+              //       name="heartbeat"
+              //       type="font-awesome"
+              //       size={15}
+              //       color="#f50"
+              //       tvParallaxProperties={undefined}
+              //     />
+              //   ),
+              // }}
+            />
+          </View>
         )}
         {musicProps?.durationRef.current && (
           <Text style={styles.time}>
@@ -65,7 +64,7 @@ export default function ModalFooter() {
         />
         <Icon
           type="antdesign"
-          name={!musicProps?.paused ? 'pausecircle' : 'play'}
+          name={!musicProps?.pause ? 'pausecircle' : 'play'}
           size={30}
           style={styles.centerButton}
           tvParallaxProperties={undefined}
