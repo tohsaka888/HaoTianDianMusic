@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '40%',
     justifyContent: 'space-around',
+    marginTop: 8,
   },
   centerButton: {
     marginLeft: 8,
