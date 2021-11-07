@@ -1,11 +1,41 @@
-import React, {useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useCallback, useContext} from 'react';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
+import {MusicInfoContext} from '../../context/MainContext';
 import {SearchContext} from '../../context/SearchContext';
+import {getMusicUrl} from '../../request/getMusicUrl';
 import SearchTitle from './SearchTitle';
 
 export default function SearchDetail() {
   const seachProps = useContext(SearchContext);
+  const musicProps = useContext(MusicInfoContext);
+  const pushMusicRequest = useCallback(
+    async music => {
+      let data;
+      let id = '';
+      if ((id = music.id || musicProps?.musicInfo.id)) {
+        data = await getMusicUrl(id);
+      }
+      musicProps?.setMusicUrl(data);
+      if (data === '') {
+        Alert.alert('没有音源');
+        musicProps?.setPause(true);
+      } else {
+        musicProps?.setPause(false);
+      }
+    },
+    [musicProps],
+  );
+  const playMusic = useCallback(
+    (music: any) => {
+      musicProps?.setMusicInfo(music);
+      pushMusicRequest(music);
+      if (musicProps?.currentIndexRef) {
+        musicProps.currentIndexRef.current = 0;
+      }
+    },
+    [musicProps, pushMusicRequest],
+  );
   return (
     <View>
       <SearchTitle />
@@ -31,6 +61,9 @@ export default function SearchDetail() {
                   color="white"
                   tvParallaxProperties={undefined}
                   style={styles.button}
+                  onPress={() => {
+                    playMusic(item);
+                  }}
                 />
               </View>
             );
