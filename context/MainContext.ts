@@ -16,14 +16,18 @@ type MusicInfoProps = {
   musicRef: any;
   playStatus: boolean;
   setPlayStatus: Function;
-  paused: boolean;
-  setPaused: Function;
-  currentTimeRef: MutableRefObject<number | null>;
+  pause: boolean;
+  setPause: Function;
+  // pauseRef: MutableRefObject<boolean>;
+  // currentTimeRef: MutableRefObject<number>;
+  currentTime: number;
+  setCurrentTime: Function;
   durationRef: MutableRefObject<number | null>;
   musicUrl: string | null;
   setMusicUrl: Function;
   currentLrcRef: MutableRefObject<Text | undefined>;
   currentIndexRef: MutableRefObject<number>;
+  lyricRef: MutableRefObject<any[]>;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);
