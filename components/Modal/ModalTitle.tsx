@@ -13,9 +13,12 @@ export default function ModalTitle() {
         type="antdesign"
         color={'black'}
         onPress={() => {
+          if (musicProps?.lyricRef) {
+            musicProps.lyricRef.current = [];
+            musicProps.currentIndexRef.current = 0;
+          }
           props?.setVisible(false);
         }}
-        // style={styles.titleIcon}
       />
       <View>
         <Text numberOfLines={1} style={styles.title}>
@@ -50,7 +53,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     padding: 10,
-    marginTop: 15,
   },
   titleIcon: {
     position: 'absolute',
