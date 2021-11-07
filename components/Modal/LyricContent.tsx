@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Text, FlatList, StyleSheet} from 'react-native';
 import useLrcParser from '../../hooks/useLrcParser';
 import {MusicInfoContext} from '../../context/MainContext';
@@ -13,9 +13,9 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
   const musicProps = useContext(MusicInfoContext);
   return (
     <>
-      {musicProps?.currentTimeRef.current &&
-      item?.startTime < musicProps?.currentTimeRef.current &&
-      item?.endTime > musicProps?.currentTimeRef.current ? (
+      {musicProps?.currentTime &&
+      item?.startTime < musicProps?.currentTime &&
+      item?.endTime > musicProps?.currentTime ? (
         <Text
           numberOfLines={1}
           style={styles.currentLyric}
@@ -45,6 +45,11 @@ export default function LyricContent() {
   const musicProps = useContext(MusicInfoContext);
   const lyrics = useLrcParser(musicProps?.musicInfo.id);
   const scrollProps = useContext(ScrollContext);
+  useEffect(() => {
+    if (musicProps?.lyricRef && lyrics) {
+      musicProps.lyricRef.current = lyrics;
+    }
+  }, [lyrics, musicProps?.lyricRef]);
   return (
     <FlatList
       data={lyrics}
