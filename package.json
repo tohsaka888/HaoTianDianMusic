@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
+    "@ant-design/react-native": "^4.2.0",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/segmented-control": "^2.2.2",
     "@react-native-community/slider": "^4.1.10",
