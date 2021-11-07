@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Swiper from 'react-native-swiper';
 import {StyleSheet, View} from 'react-native';
 import {ComponentsContext} from '../../context/MainContext';
@@ -7,14 +7,15 @@ import {getBannnerImg} from '../../request/HomePage';
 
 export default function Banner(): JSX.Element {
   const props = useContext(ComponentsContext);
+  // const bannerUrls = props?.bannerUrls;
+  const setBannerUrls = props?.setBannerUrls;
   useEffect(() => {
     // const AbortController =  window.AbortController;
-    // eslint-disable-next-line no-undef
-    const controller = new AbortController();
-    const {signal} = controller;
     const pushBannerRequest = async () => {
-      const data = await getBannnerImg(signal);
-      props?.setBannerUrls(data);
+      const data = await getBannnerImg();
+      if (setBannerUrls && data) {
+        setBannerUrls(data);
+      }
     };
     pushBannerRequest();
     // return () => {
@@ -26,7 +27,7 @@ export default function Banner(): JSX.Element {
     //     console.log(error);
     //   }
     // };
-  }, [props, props?.bannerUrls, props?.bannerUrls.length]);
+  }, [setBannerUrls]);
   return (
     <Swiper
       height={185}
