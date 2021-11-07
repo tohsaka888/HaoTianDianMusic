@@ -19,12 +19,19 @@ const ImageContent = () => {
 
 export default function ModalContent() {
   const [showPicture, setPicture] = useState<boolean>(true);
+  const musicProps = useContext(MusicInfoContext);
   return (
     <View style={styles.imageContainer}>
       <TouchableOpacity
         style={styles.imageContainer}
         onPress={() => {
           setPicture(!showPicture);
+          if (!showPicture) {
+            if (musicProps?.lyricRef) {
+              musicProps.lyricRef.current = [];
+              musicProps.currentIndexRef.current = 0;
+            }
+          }
         }}>
         {showPicture ? <ImageContent /> : <LyricContent />}
       </TouchableOpacity>
@@ -42,6 +49,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 5,
+    flex: 8,
   },
 });
