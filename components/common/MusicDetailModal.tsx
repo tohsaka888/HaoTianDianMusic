@@ -13,6 +13,8 @@ export default function MusicDetailModal() {
       visible={props?.visible}
       animationType="slide"
       transparent={false}
+      presentationStyle={'fullScreen'}
+      statusBarTranslucent={true}
       onRequestClose={() => {
         if (musicProps?.currentIndexRef) {
           musicProps.currentIndexRef.current = 0;

@@ -1,8 +1,8 @@
 import React, {useCallback, useContext, useEffect} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, StatusBar} from 'react-native';
 import SearchInput from '../common/SearchInput';
 import {Icon} from 'react-native-elements';
-import {getBannnerImg} from '../../request/HomePage';
+// import {getBannnerImg} from '../../request/HomePage';
 import {ComponentsContext} from '../../context/MainContext';
 import {getMusicByName} from '../../request/SearchResult';
 import {ThemeContext} from '../../context/ThemeContext';
@@ -38,44 +38,48 @@ export default function Header(): JSX.Element {
       props?.setGlobalTheme('dark');
     }
   }, [props]);
+  const statusBarHeight = StatusBar.currentHeight;
   return (
-    <View style={styles.header}>
-      <View style={styles.leftButton}>
-        {route.name !== 'search' && (
-          <TouchableOpacity onPress={changeTheme}>
+    <>
+      <View style={{marginTop: statusBarHeight}} />
+      <View style={styles.header}>
+        <View style={styles.leftButton}>
+          {route.name !== 'search' && (
+            <TouchableOpacity onPress={changeTheme}>
+              <Icon
+                name="menufold"
+                type="antdesign"
+                color="gray"
+                tvParallaxProperties={undefined}
+              />
+            </TouchableOpacity>
+          )}
+          {route.name === 'search' && (
+            <TouchableOpacity onPress={goBack}>
+              <Icon
+                name="back"
+                type="antdesign"
+                color="gray"
+                tvParallaxProperties={undefined}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.centerSearch}>
+          <SearchInput />
+        </View>
+        <View style={styles.rightButton}>
+          <TouchableOpacity onPress={searchEvent}>
             <Icon
-              name="menufold"
+              name="search1"
               type="antdesign"
               color="gray"
               tvParallaxProperties={undefined}
             />
           </TouchableOpacity>
-        )}
-        {route.name === 'search' && (
-          <TouchableOpacity onPress={goBack}>
-            <Icon
-              name="back"
-              type="antdesign"
-              color="gray"
-              tvParallaxProperties={undefined}
-            />
-          </TouchableOpacity>
-        )}
+        </View>
       </View>
-      <View style={styles.centerSearch}>
-        <SearchInput />
-      </View>
-      <View style={styles.rightButton}>
-        <TouchableOpacity onPress={searchEvent}>
-          <Icon
-            name="search1"
-            type="antdesign"
-            color="gray"
-            tvParallaxProperties={undefined}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </>
   );
 }
 

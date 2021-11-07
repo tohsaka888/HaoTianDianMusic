@@ -9,7 +9,7 @@
  */
 
 import React, {useRef, useState} from 'react';
-import {FlatList, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ImageBackground, StatusBar, StyleSheet, Text, View} from 'react-native';
 import Content from './components/HomePage/Content';
 import Header from './components/HomePage/Header';
 import MusicController from './components/common/MusicController';
@@ -103,6 +103,10 @@ const App = () => {
                   source={globalTheme === 'light' ? bak1 : bak2}
                   imageStyle={styles.background}
                   style={styles.background}>
+                  <StatusBar
+                    translucent={true}
+                    backgroundColor={'transparent'}
+                  />
                   <MusicDetailModal />
                   <Stack.Navigator>
                     <Stack.Screen

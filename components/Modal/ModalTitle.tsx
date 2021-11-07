@@ -1,42 +1,46 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 
 export default function ModalTitle() {
   const musicProps = useContext(MusicInfoContext);
   const props = useContext(ComponentsContext);
+  const statusBarHeight = StatusBar.currentHeight;
   return (
-    <View style={styles.titleContainer}>
-      <Icon
-        name="down"
-        type="antdesign"
-        color={'black'}
-        onPress={() => {
-          if (musicProps?.lyricRef) {
-            musicProps.lyricRef.current = [];
-            musicProps.currentIndexRef.current = 0;
-          }
-          props?.setVisible(false);
-        }}
-      />
-      <View>
-        <Text numberOfLines={1} style={styles.title}>
-          {musicProps?.musicInfo.name}
-        </Text>
-        <Text numberOfLines={1} style={styles.artists}>
-          {musicProps?.musicInfo.ar.map((item: any) => {
-            return item.name;
-          })}
-        </Text>
+    <>
+      <View style={{marginTop: statusBarHeight}} />
+      <View style={styles.titleContainer}>
+        <Icon
+          name="down"
+          type="antdesign"
+          color={'black'}
+          onPress={() => {
+            if (musicProps?.lyricRef) {
+              musicProps.lyricRef.current = [];
+              musicProps.currentIndexRef.current = 0;
+            }
+            props?.setVisible(false);
+          }}
+        />
+        <View>
+          <Text numberOfLines={1} style={styles.title}>
+            {musicProps?.musicInfo.name}
+          </Text>
+          <Text numberOfLines={1} style={styles.artists}>
+            {musicProps?.musicInfo.ar.map((item: any) => {
+              return item.name;
+            })}
+          </Text>
+        </View>
+        <Icon
+          name="link"
+          type="antdesign"
+          color={'black'}
+          // style={styles.titleIcon}
+        />
       </View>
-      <Icon
-        name="link"
-        type="antdesign"
-        color={'black'}
-        // style={styles.titleIcon}
-      />
-    </View>
+    </>
   );
 }
 
