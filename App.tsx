@@ -50,16 +50,19 @@ const App = () => {
   const [globalTheme, setGlobalTheme] = useState<ThemeName>('light');
   const [musicInfo, setMusicInfo] = useState<any>({});
   const [playStatus, setPlayStatus] = useState<boolean>(false);
-  const [paused, setPaused] = useState<boolean>(false);
+  // const pauseRef = useRef<boolean>(false);
+  const [pause, setPause] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const currentTimeRef = useRef<number>(null);
-  const durationRef = useRef<number>(null);
+  // const currentTimeRef = useRef<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const durationRef = useRef<number>(0);
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const [result, setResult] = useState<any[]>([]);
   const currentLrcRef = useRef<Text>();
   const musicRef = useRef();
   const scrollRef = useRef<FlatList>();
   const currentIndexRef = useRef<number>(0);
+  const lyricRef = useRef<any[]>([]);
 
   return (
     <NavigationContainer theme={TransparentTheme}>
@@ -82,13 +85,17 @@ const App = () => {
                 musicRef: musicRef,
                 playStatus: playStatus,
                 setPlayStatus: setPlayStatus,
-                paused: paused,
-                setPaused: setPaused,
-                currentTimeRef: currentTimeRef,
+                // pauseRef: pauseRef,
+                pause: pause,
+                setPause: setPause,
+                currentTime: currentTime,
+                setCurrentTime: setCurrentTime,
+                // currentTimeRef: currentTimeRef,
                 durationRef: durationRef,
                 musicUrl: musicUrl,
                 setMusicUrl: setMusicUrl,
                 currentIndexRef: currentIndexRef,
+                lyricRef: lyricRef,
               }}>
               <SearchContext.Provider
                 value={{result: result, setResult: setResult}}>
