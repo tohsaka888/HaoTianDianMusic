@@ -63,7 +63,7 @@ const RenderContent = ({item}: Props) => {
       </View>
       <ScrollView horizontal={true}>
         {item.id === '0' &&
-          randomMusic?.musicData.map((music: any, index: number) => {
+          randomMusic?.playlists.map((music: any, index: number) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -73,10 +73,12 @@ const RenderContent = ({item}: Props) => {
                 style={styles.randomPlaylist}>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('playlist');
+                    navigation.navigate('playlist', {
+                      detail: music,
+                    });
                   }}>
                   <Image
-                    source={{uri: music.picUrl}}
+                    source={{uri: music.coverImgUrl}}
                     style={styles.randomPlaylistPicture}
                   />
                 </TouchableOpacity>

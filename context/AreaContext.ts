@@ -4,6 +4,8 @@ type AreaProps = {
   musicData: any[];
   setMusicData: Function;
   musicGroups: any[];
+  playlists: any[];
+  setPlaylists: Function;
 };
 
 const AreaContext = createContext<AreaProps | null>(null);

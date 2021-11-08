@@ -4,6 +4,7 @@ import {ThemeContext} from '../../context/ThemeContext';
 import {getRandomMusic} from '../../request/HomePage';
 import AreaRender from './AreaRender';
 import {AreaContext} from '../../context/AreaContext';
+import {getDefaultPlaylist} from '../../request/Playlist';
 
 type DataProps = {
   id: string;
@@ -32,6 +33,7 @@ const DATA = [
 export default function Content() {
   const [randomMusic, setRandomMusic] = useState([]);
   const [musicGroups, setMusicGroups] = useState<any[]>([]);
+  const [playlists, setPlaylists] = useState<any[]>([]);
   const props = useContext(ThemeContext);
   const sliceMusicGroup = (data: any[]) => {
     let musicGroup = [];
@@ -52,6 +54,11 @@ export default function Content() {
       item.globalTheme = props?.globalTheme;
     });
     pushRequest();
+    const getPlaylist = async () => {
+      const data = await getDefaultPlaylist();
+      setPlaylists(data);
+    };
+    getPlaylist();
   }, [props?.globalTheme, pushRequest]);
   return (
     <AreaContext.Provider
@@ -59,6 +66,8 @@ export default function Content() {
         musicData: randomMusic,
         setMusicData: setRandomMusic,
         musicGroups: musicGroups,
+        playlists: playlists,
+        setPlaylists: setPlaylists,
       }}>
       <FlatList
         data={DATA}
