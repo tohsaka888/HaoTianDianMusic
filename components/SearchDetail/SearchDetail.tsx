@@ -1,9 +1,11 @@
-import React, {useCallback, useContext} from 'react';
+import {Toast} from '@ant-design/react-native';
+import React, {useCallback, useContext, useState} from 'react';
 import {View, Text, StyleSheet, Alert, FlatList} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
 import {SearchContext} from '../../context/SearchContext';
 import {getMusicUrl} from '../../request/getMusicUrl';
+import {getNextPageMusic} from '../../request/SearchResult';
 import SearchTitle from './SearchTitle';
 
 const SearchResult = ({item, index}: {item: any; index: number}) => {
@@ -42,7 +44,8 @@ const SearchResult = ({item, index}: {item: any; index: number}) => {
           {item.name}
         </Text>
         <Text style={styles.artists} numberOfLines={1}>
-          {item.ar.length &&
+          {item.ar &&
+            item.ar.length &&
             item.ar?.map((value: any) => {
               return value.name;
             })}
@@ -68,6 +71,16 @@ const RenderItem = ({item, index}: {item: any; index: number}) => {
 
 export default function SearchDetail() {
   const seachProps = useContext(SearchContext);
+  const [currentPage, setCurrentPage] = useState<number>(2);
+  const getNextPage = useCallback(async () => {
+    const data = await getNextPageMusic(currentPage);
+    if (data.result) {
+      setCurrentPage(currentPage + 1);
+      seachProps?.setResult(seachProps.result.concat(data.result));
+    } else {
+      Toast.fail({content: '已经到底啦~'});
+    }
+  }, [currentPage, seachProps]);
 
   return (
     <View>
@@ -77,6 +90,8 @@ export default function SearchDetail() {
           data={seachProps.result}
           renderItem={RenderItem}
           style={styles.scroll}
+          onEndReachedThreshold={0.5}
+          onEndReached={getNextPage}
         />
       )}
       <View style={styles.blank} />

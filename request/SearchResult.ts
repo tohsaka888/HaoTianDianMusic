@@ -10,3 +10,14 @@ export const getMusicByName = async (musicName: string, page: number = 1) => {
   const data = await res.json();
   return data;
 };
+
+export const getNextPageMusic = async (page: number) => {
+  const res = await fetch(`${pythonUrl}` + '/getMusicByName', {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({musicName: '', page: page}),
+    headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
+  });
+  const data = await res.json();
+  return data;
+};
