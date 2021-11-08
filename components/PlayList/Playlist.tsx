@@ -9,7 +9,7 @@ export default function Playlist({route}: any) {
   return (
     <View style={styles.playlist}>
       {params.detail && <PlaylistHeader music={params.detail} />}
-      {params.detail.tracks && (
+      {params.detail && params.detail.tracks && (
         <PlaylistContent tracks={params.detail.tracks} />
       )}
     </View>

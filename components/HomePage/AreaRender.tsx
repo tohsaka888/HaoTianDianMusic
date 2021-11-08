@@ -94,7 +94,7 @@ const RenderContent = ({item}: Props) => {
               <View key={i}>
                 {musicGroup.map((music: any, index: number) => {
                   return (
-                    <TouchableOpacity key={index} style={styles.randomMusic}>
+                    <View key={index} style={styles.randomMusic}>
                       <Image
                         source={{uri: music.picUrl}}
                         style={styles.randomMusicPicture}
@@ -119,7 +119,7 @@ const RenderContent = ({item}: Props) => {
                           }}
                         />
                       </View>
-                    </TouchableOpacity>
+                    </View>
                   );
                 })}
               </View>
