@@ -1,13 +1,12 @@
 import React, {useCallback, useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import {View, Text, StyleSheet, Alert, FlatList} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
 import {SearchContext} from '../../context/SearchContext';
 import {getMusicUrl} from '../../request/getMusicUrl';
 import SearchTitle from './SearchTitle';
 
-export default function SearchDetail() {
-  const seachProps = useContext(SearchContext);
+const SearchResult = ({item, index}: {item: any; index: number}) => {
   const musicProps = useContext(MusicInfoContext);
   const pushMusicRequest = useCallback(
     async music => {
@@ -37,39 +36,50 @@ export default function SearchDetail() {
     [musicProps, pushMusicRequest],
   );
   return (
+    <View key={index} style={styles.container}>
+      <View style={styles.song}>
+        <Text style={styles.title} numberOfLines={1}>
+          {item.name}
+        </Text>
+        <Text style={styles.artists} numberOfLines={1}>
+          {item.ar.length &&
+            item.ar?.map((value: any) => {
+              return value.name;
+            })}
+        </Text>
+      </View>
+      <Icon
+        type="antdesign"
+        name="play"
+        color="white"
+        tvParallaxProperties={undefined}
+        style={styles.button}
+        onPress={() => {
+          playMusic(item);
+        }}
+      />
+    </View>
+  );
+};
+
+const RenderItem = ({item, index}: {item: any; index: number}) => {
+  return <SearchResult item={item} index={index} />;
+};
+
+export default function SearchDetail() {
+  const seachProps = useContext(SearchContext);
+
+  return (
     <View>
       <SearchTitle />
-      <ScrollView>
-        {seachProps?.result &&
-          seachProps.result.map((item: any, index: number) => {
-            return (
-              <View key={index} style={styles.container}>
-                <View style={styles.song}>
-                  <Text style={styles.title} numberOfLines={1}>
-                    {item.name}
-                  </Text>
-                  <Text style={styles.artists} numberOfLines={1}>
-                    {item.ar.length &&
-                      item.ar?.map((value: any) => {
-                        return value.name;
-                      })}
-                  </Text>
-                </View>
-                <Icon
-                  type="antdesign"
-                  name="play"
-                  color="white"
-                  tvParallaxProperties={undefined}
-                  style={styles.button}
-                  onPress={() => {
-                    playMusic(item);
-                  }}
-                />
-              </View>
-            );
-          })}
-        <View style={styles.blank} />
-      </ScrollView>
+      {seachProps?.result && (
+        <FlatList
+          data={seachProps.result}
+          renderItem={RenderItem}
+          style={styles.scroll}
+        />
+      )}
+      <View style={styles.blank} />
     </View>
   );
 }
@@ -101,6 +111,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   blank: {
-    height: 30,
+    height: 60,
+  },
+  scroll: {
+    marginBottom: 30,
   },
 });
