@@ -28,9 +28,11 @@ import {ThemeContext, ThemeName} from './context/ThemeContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MusicDetailModal from './components/common/MusicDetailModal';
 import SearchDetail from './components/SearchDetail/SearchDetail';
+import Login from './components/Login/Login';
 import {SearchContext} from './context/SearchContext';
 import {ScrollContext} from './context/ScrollContext';
 import Playlist from './components/PlayList/Playlist';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 const TransparentTheme = {
   ...DefaultTheme,
@@ -42,6 +44,7 @@ const TransparentTheme = {
 };
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const HomePage = () => {
   return (
@@ -49,6 +52,35 @@ const HomePage = () => {
       <Header />
       <Content />
     </View>
+  );
+};
+
+const HomeTabs = () => {
+  return (
+    <Tab.Navigator initialRouteName="homePage">
+      <Tab.Screen
+        name="login"
+        component={Login}
+        options={{
+          tabBarShowLabel: false,
+          swipeEnabled: true,
+          tabBarStyle: {
+            height: 0,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="homePage"
+        component={HomePage}
+        options={{
+          tabBarShowLabel: false,
+          swipeEnabled: true,
+          tabBarStyle: {
+            height: 0,
+          },
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -119,7 +151,7 @@ const App = () => {
                   <Stack.Navigator>
                     <Stack.Screen
                       name="home"
-                      component={HomePage}
+                      component={HomeTabs}
                       options={{
                         headerShown: false,
                       }}
@@ -147,6 +179,10 @@ const App = () => {
                       }}
                     />
                   </Stack.Navigator>
+                  {/* <Tab.Navigator>
+                    <Tab.Screen name="home" component={HomePage} />
+                    <Tab.Screen name="login" component={Login} />
+                  </Tab.Navigator> */}
                   <MusicController />
                 </ImageBackground>
               </SearchContext.Provider>
