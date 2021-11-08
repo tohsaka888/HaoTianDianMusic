@@ -68,6 +68,7 @@ export default function SearchDetail() {
               </View>
             );
           })}
+        <View style={styles.blank} />
       </ScrollView>
     </View>
   );
@@ -98,5 +99,8 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
+  },
+  blank: {
+    height: 30,
   },
 });
