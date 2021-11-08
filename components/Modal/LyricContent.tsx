@@ -41,7 +41,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
         </Text>
       )}
       {index === item.length - 1 && (
-        <View style={{height: window.height / 2}} />
+        <View style={{height: window.height / 2 - 60}} />
       )}
     </>
   );
