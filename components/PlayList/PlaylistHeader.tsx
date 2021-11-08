@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
   },
   introText: {
     fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
   },
   textArea: {
     marginLeft: 8,
@@ -49,15 +51,15 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 14,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#64edff84',
+    // borderColor: '#64edff84',
     marginRight: 8,
     paddingTop: 1,
     paddingBottom: 1,
-    paddingLeft: 3,
-    paddingRight: 3,
-    backgroundColor: '#04b2e7',
+    paddingLeft: 5,
+    paddingRight: 5,
+    backgroundColor: '#1890ff',
     marginTop: 8,
   },
   tag: {

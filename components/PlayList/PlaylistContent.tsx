@@ -40,6 +40,7 @@ export default function PlaylistContent({tracks}: Props) {
   );
   return (
     <ScrollView style={styles.content}>
+      <View style={styles.blank} />
       {tracks.map((item: any, index: number) => {
         return (
           <View key={index} style={styles.container}>
@@ -93,6 +94,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: 60,
     alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   song: {
     flex: 5,
@@ -103,7 +106,6 @@ const styles = StyleSheet.create({
   content: {
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    paddingTop: 10,
     backgroundColor: '#ffffff29',
     marginTop: 16,
     paddingBottom: 50,
