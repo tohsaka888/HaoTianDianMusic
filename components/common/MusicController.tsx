@@ -5,7 +5,6 @@ import bak1 from '../../assets/images/bak1.jpg';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 import Video, {OnProgressData} from 'react-native-video';
 import {ScrollContext} from '../../context/ScrollContext';
-// import {getMusicUrl} from '../../request/getMusicUrl';
 
 export default function MusicController() {
   const musicProps = useContext(MusicInfoContext);
@@ -15,13 +14,11 @@ export default function MusicController() {
     musicProps?.setPause(!musicProps.pause);
   }, [musicProps]);
   const lyric = musicProps?.lyricRef.current;
-  // useEffect(() => {
-  //   pushMusicRequest();
-  // }, [pushMusicRequest]);
   const onProgress = ({currentTime}: OnProgressData): void => {
     musicProps?.setCurrentTime(currentTime);
     let current = musicProps?.currentIndexRef.current || 0;
-    if (lyric?.length) {
+    if (lyric && lyric?.length > 0) {
+      // 控制快进到某句歌词
       while (currentTime >= lyric[current].endTime) {
         if (current < lyric.length - 1) {
           if (musicProps?.currentIndexRef) {
@@ -30,6 +27,7 @@ export default function MusicController() {
           }
         }
       }
+      // 控制快退到某句歌词
       while (currentTime <= lyric[current].startTime) {
         if (current > 0) {
           if (musicProps?.currentIndexRef) {
@@ -39,11 +37,14 @@ export default function MusicController() {
         }
       }
       const scrollRef = scrollProps?.scrollRef.current;
-      scrollRef?.scrollToIndex({
-        index: current,
-        animated: true,
-        viewPosition: 0,
-      });
+      // 防止滚动事件为undefined导致的卡死问题
+      if (scrollRef) {
+        scrollRef.scrollToIndex({
+          index: current,
+          animated: true,
+          viewPosition: 0,
+        });
+      }
     }
   };
   return (
