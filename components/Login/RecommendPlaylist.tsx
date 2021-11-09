@@ -1,13 +1,22 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
 import {UserContext} from '../../context/UserContext';
 import {getUserPlaylist} from '../../request/UserMusic';
 
-const renderItem = ({item, index}: {item: any; index: number}) => {
+const Playlists = ({item, index}: {item: any; index: number}) => {
+  const navigation = useNavigation();
   return (
-    <View key={index}>
-      <View style={styles.playlist}>
+    <TouchableOpacity
+      key={index}
+      style={styles.playlist}
+      onPress={() => {
+        navigation.navigate('playlist', {
+          detail: item,
+        });
+      }}>
+      <>
         <Image source={{uri: item.coverImgUrl}} style={styles.cover} />
         <View>
           <Text numberOfLines={1} style={styles.playlistTitle}>
@@ -21,9 +30,13 @@ const renderItem = ({item, index}: {item: any; index: number}) => {
             ))}
           </View>
         </View>
-      </View>
-    </View>
+      </>
+    </TouchableOpacity>
   );
+};
+
+const renderItem = ({item, index}: {item: any; index: number}) => {
+  return <Playlists item={item} index={index} key={index} />;
 };
 
 export default function RecommendPlaylist() {
