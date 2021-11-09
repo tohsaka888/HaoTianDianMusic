@@ -6,6 +6,7 @@ import {
   ImageBackground,
   StyleSheet,
   TextInput,
+  StatusBar,
 } from 'react-native';
 import {LoginContext} from '../../context/LoginContext';
 import login2 from '../../assets/images/login2.jpg';
@@ -16,8 +17,10 @@ import {Toast} from '@ant-design/react-native';
 
 const ModalTitle = () => {
   const loginProps = useContext(LoginContext);
+  const statusBarHeight = StatusBar.currentHeight;
   return (
     <View style={styles.titleContainer}>
+      <View style={{marginTop: statusBarHeight}} />
       <Icon
         type="antdesign"
         name="down"
@@ -96,6 +99,8 @@ export default function LoginModal() {
     <Modal
       animationType="slide"
       visible={loginProps?.visible}
+      presentationStyle={'fullScreen'}
+      statusBarTranslucent={true}
       onRequestClose={() => {
         loginProps?.setVisible(false);
       }}>

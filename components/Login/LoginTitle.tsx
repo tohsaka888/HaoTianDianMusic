@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {LoginContext} from '../../context/LoginContext';
@@ -8,8 +8,10 @@ import {UserContext} from '../../context/UserContext';
 export default function LoginTitle() {
   const loginProps = useContext(LoginContext);
   const userProps = useContext(UserContext);
+  const statusBarHeight = StatusBar.currentHeight;
   return (
     <View>
+      <View style={{marginTop: statusBarHeight}} />
       <View style={styles.container}>
         <Image
           source={

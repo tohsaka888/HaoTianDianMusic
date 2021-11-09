@@ -9,7 +9,7 @@ export default function LovedMusic() {
       <Image source={bak1} style={styles.coverImage} />
       <View style={styles.infoArea}>
         <Text style={styles.musicName}>我喜欢的音乐</Text>
-        <Text>共0首</Text>
+        <Text style={styles.numbers}>共0首</Text>
       </View>
     </View>
   );
@@ -36,5 +36,9 @@ const styles = StyleSheet.create({
   },
   infoArea: {
     marginLeft: 16,
+  },
+  numbers: {
+    marginTop: 8,
+    color: 'white',
   },
 });
