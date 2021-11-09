@@ -31,8 +31,10 @@ import SearchDetail from './components/SearchDetail/SearchDetail';
 import Login from './components/Login/Login';
 import {SearchContext} from './context/SearchContext';
 import {ScrollContext} from './context/ScrollContext';
+import {UserContext} from './context/UserContext';
 import Playlist from './components/PlayList/Playlist';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {Provider} from '@ant-design/react-native';
 
 const TransparentTheme = {
   ...DefaultTheme,
@@ -95,6 +97,7 @@ const App = () => {
   const [visible, setVisible] = useState<boolean>(false);
   // const currentTimeRef = useRef<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [profile, setProfile] = useState<any>({});
   const durationRef = useRef<number>(0);
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const [result, setResult] = useState<any[]>([]);
@@ -139,52 +142,53 @@ const App = () => {
               }}>
               <SearchContext.Provider
                 value={{result: result, setResult: setResult}}>
-                <ImageBackground
-                  source={globalTheme === 'light' ? bak1 : bak2}
-                  imageStyle={styles.background}
-                  style={styles.background}>
-                  <StatusBar
-                    translucent={true}
-                    backgroundColor={'transparent'}
-                  />
-                  <MusicDetailModal />
-                  <Stack.Navigator>
-                    <Stack.Screen
-                      name="home"
-                      component={HomeTabs}
-                      options={{
-                        headerShown: false,
-                      }}
-                    />
-                    <Stack.Screen
-                      name="search"
-                      component={SearchDetail}
-                      options={{
-                        headerShown: false,
-                      }}
-                    />
-                    <Stack.Screen
-                      name="playlist"
-                      component={Playlist}
-                      options={{
-                        title: '歌单',
-                        headerStyle: {
-                          backgroundColor: 'transparent',
-                        },
-                        headerTintColor: 'white',
-                        headerTitleStyle: {
-                          color: 'white',
-                          fontWeight: 'bold',
-                        },
-                      }}
-                    />
-                  </Stack.Navigator>
-                  {/* <Tab.Navigator>
-                    <Tab.Screen name="home" component={HomePage} />
-                    <Tab.Screen name="login" component={Login} />
-                  </Tab.Navigator> */}
-                  <MusicController />
-                </ImageBackground>
+                <UserContext.Provider
+                  value={{profile: profile, setProfile: setProfile}}>
+                  <Provider>
+                    <ImageBackground
+                      source={globalTheme === 'light' ? bak1 : bak2}
+                      imageStyle={styles.background}
+                      style={styles.background}>
+                      <StatusBar
+                        translucent={true}
+                        backgroundColor={'transparent'}
+                      />
+                      <MusicDetailModal />
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="home"
+                          component={HomeTabs}
+                          options={{
+                            headerShown: false,
+                          }}
+                        />
+                        <Stack.Screen
+                          name="search"
+                          component={SearchDetail}
+                          options={{
+                            headerShown: false,
+                          }}
+                        />
+                        <Stack.Screen
+                          name="playlist"
+                          component={Playlist}
+                          options={{
+                            title: '歌单',
+                            headerStyle: {
+                              backgroundColor: 'transparent',
+                            },
+                            headerTintColor: 'white',
+                            headerTitleStyle: {
+                              color: 'white',
+                              fontWeight: 'bold',
+                            },
+                          }}
+                        />
+                      </Stack.Navigator>
+                      <MusicController />
+                    </ImageBackground>
+                  </Provider>
+                </UserContext.Provider>
               </SearchContext.Provider>
             </MusicInfoContext.Provider>
           </ComponentsContext.Provider>
