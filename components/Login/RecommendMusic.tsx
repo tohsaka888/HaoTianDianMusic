@@ -1,12 +1,49 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {Toast} from '@ant-design/react-native';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
+import {MusicInfoContext} from '../../context/MainContext';
 import {UserContext} from '../../context/UserContext';
+import {getMusicUrl} from '../../request/getMusicUrl';
 import {getUserMusic} from '../../request/UserMusic';
 
-const renderItem = ({item, index}: {item: any; index: number}) => {
+const RecommendMusics = ({item, index}: {item: any; index: number}) => {
+  const musicProps = useContext(MusicInfoContext);
+  // const navigation = useNavigation();
+  // const musicPlayProps = useContext(MusicInfoContext);
+  const pushMusicRequest = useCallback(
+    async music => {
+      let data;
+      let id = '';
+      if ((id = music.id || musicProps?.musicInfo.id)) {
+        data = await getMusicUrl(id);
+      }
+      musicProps?.setMusicUrl(data);
+      if (data === '') {
+        Toast.fail('没有音源');
+        musicProps?.setPause(true);
+      } else {
+        musicProps?.setPause(false);
+      }
+    },
+    [musicProps],
+  );
+  const playMusic = useCallback(
+    (music: any) => {
+      musicProps?.setMusicInfo(music);
+      pushMusicRequest(music);
+      // if (musicProps?.currentIndexRef) {
+      //   musicProps.currentIndexRef.current = 0;
+      // }
+    },
+    [musicProps, pushMusicRequest],
+  );
   return (
-    <View key={index}>
+    <TouchableOpacity
+      key={index}
+      onPress={() => {
+        playMusic(item);
+      }}>
       <View style={styles.Music}>
         <Image source={{uri: item.picUrl}} style={styles.cover} />
         <View>
@@ -22,8 +59,12 @@ const renderItem = ({item, index}: {item: any; index: number}) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
+};
+
+const renderItem = ({item, index}: {item: any; index: number}) => {
+  return <RecommendMusics item={item} index={index} key={index} />;
 };
 
 export default function RecommendMusic() {
