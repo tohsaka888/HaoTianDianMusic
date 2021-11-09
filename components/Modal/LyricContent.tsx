@@ -22,17 +22,11 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
     <>
       {index === 0 && <View style={{height: window.height / 2 - 60}} />}
       {musicProps?.currentTime &&
-      item?.startTime < musicProps?.currentTime &&
-      item?.endTime > musicProps?.currentTime ? (
-        <Text
-          numberOfLines={1}
-          style={styles.currentLyric}
-          key={index}
-          ref={refs => {
-            if (refs) {
-              musicProps.currentLrcRef.current = refs;
-            }
-          }}>
+      item?.startTime &&
+      item?.endTime &&
+      item.startTime < musicProps.currentTime &&
+      item.endTime > musicProps.currentTime ? (
+        <Text numberOfLines={1} style={styles.currentLyric} key={index}>
           {item.content}
         </Text>
       ) : (

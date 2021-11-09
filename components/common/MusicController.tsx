@@ -25,6 +25,8 @@ export default function MusicController() {
             musicProps.currentIndexRef.current++;
             current++;
           }
+        } else {
+          break;
         }
       }
       // 控制快退到某句歌词
@@ -34,6 +36,8 @@ export default function MusicController() {
             musicProps.currentIndexRef.current--;
             current--;
           }
+        } else {
+          break;
         }
       }
       const scrollRef = scrollProps?.scrollRef.current;
