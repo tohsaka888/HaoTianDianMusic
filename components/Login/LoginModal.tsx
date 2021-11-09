@@ -19,19 +19,21 @@ const ModalTitle = () => {
   const loginProps = useContext(LoginContext);
   const statusBarHeight = StatusBar.currentHeight;
   return (
-    <View style={styles.titleContainer}>
+    <>
       <View style={{marginTop: statusBarHeight}} />
-      <Icon
-        type="antdesign"
-        name="down"
-        tvParallaxProperties={undefined}
-        color="white"
-        onPress={() => {
-          loginProps?.setVisible(false);
-        }}
-      />
-      <Text style={styles.titleText}>登录</Text>
-    </View>
+      <View style={styles.titleContainer}>
+        <Icon
+          type="antdesign"
+          name="down"
+          tvParallaxProperties={undefined}
+          color="white"
+          onPress={() => {
+            loginProps?.setVisible(false);
+          }}
+        />
+        <Text style={styles.titleText}>登录</Text>
+      </View>
+    </>
   );
 };
 
