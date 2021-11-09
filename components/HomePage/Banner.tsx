@@ -33,6 +33,7 @@ export default function Banner(): JSX.Element {
       height={185}
       autoplay={true}
       showsButtons={false}
+      showsPagination={false}
       autoplayTimeout={2}
       loop={true}>
       {props?.bannerUrls.map((item: string, index: number) => {
