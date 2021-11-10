@@ -28,6 +28,8 @@ type MusicInfoProps = {
   currentLrcRef: MutableRefObject<Text | undefined>;
   currentIndexRef: MutableRefObject<number>;
   lyricRef: MutableRefObject<any[]>;
+  playlistId: number | string;
+  setPlaylistId: Function;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);
