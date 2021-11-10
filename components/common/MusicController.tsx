@@ -5,6 +5,9 @@ import bak1 from '../../assets/images/bak1.jpg';
 import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 import Video, {OnProgressData} from 'react-native-video';
 import {ScrollContext} from '../../context/ScrollContext';
+import usePlayNextMusic from '../../hooks/usePlayNextMusic';
+import usePlayPreviousMusic from '../../hooks/usePlayPreviousMusic';
+import {Toast} from '@ant-design/react-native';
 
 export default function MusicController() {
   const musicProps = useContext(MusicInfoContext);
@@ -13,6 +16,8 @@ export default function MusicController() {
   const isPlay = useCallback(() => {
     musicProps?.setPause(!musicProps.pause);
   }, [musicProps]);
+  const playNextMusic = usePlayNextMusic();
+  const playPreviousMusic = usePlayPreviousMusic();
   const lyric = musicProps?.lyricRef.current;
   const onProgress = ({currentTime}: OnProgressData): void => {
     musicProps?.setCurrentTime(currentTime);
@@ -89,6 +94,9 @@ export default function MusicController() {
             }}
             paused={musicProps?.pause}
             ref={musicProps?.musicRef}
+            onEnd={() => {
+              playNextMusic();
+            }}
             onLoad={({duration}) => {
               if (musicProps.durationRef) {
                 musicProps.durationRef.current = duration;
@@ -102,6 +110,13 @@ export default function MusicController() {
             type="antdesign"
             name="leftcircle"
             tvParallaxProperties={undefined}
+            onPress={() => {
+              if (musicProps?.musicInfo.id) {
+                playPreviousMusic();
+              } else {
+                Toast.fail('没有播放中的歌曲');
+              }
+            }}
           />
           <Icon
             type="antdesign"
@@ -111,12 +126,25 @@ export default function MusicController() {
                 : 'play'
             }
             tvParallaxProperties={undefined}
-            onPress={isPlay}
+            onPress={() => {
+              if (musicProps?.musicInfo.id) {
+                isPlay();
+              } else {
+                Toast.fail('没有播放中的歌曲');
+              }
+            }}
           />
           <Icon
             type="antdesign"
             name="rightcircle"
             tvParallaxProperties={undefined}
+            onPress={() => {
+              if (musicProps?.musicInfo.id) {
+                playNextMusic();
+              } else {
+                Toast.fail('没有播放中的歌曲');
+              }
+            }}
           />
         </View>
       </View>
