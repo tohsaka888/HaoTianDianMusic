@@ -25,35 +25,37 @@ export default function MusicController() {
     if (lyric && lyric?.length > 0) {
       // console.log(current);
       // 控制快进到某句歌词
-      while (currentTime >= lyric[current].endTime) {
-        if (current < lyric.length - 1) {
-          if (musicProps?.currentIndexRef) {
-            musicProps.currentIndexRef.current++;
-            current++;
+      if (lyric[current] && lyric[current].endTime) {
+        while (currentTime >= lyric[current].endTime) {
+          if (current < lyric.length - 1) {
+            if (musicProps?.currentIndexRef) {
+              musicProps.currentIndexRef.current++;
+              current++;
+            }
+          } else {
+            break;
           }
-        } else {
-          break;
         }
-      }
-      // 控制快退到某句歌词
-      while (currentTime <= lyric[current].startTime) {
-        if (current > 0) {
-          if (musicProps?.currentIndexRef) {
-            musicProps.currentIndexRef.current--;
-            current--;
+        // 控制快退到某句歌词
+        while (currentTime <= lyric[current].startTime) {
+          if (current > 0) {
+            if (musicProps?.currentIndexRef) {
+              musicProps.currentIndexRef.current--;
+              current--;
+            }
+          } else {
+            break;
           }
-        } else {
-          break;
         }
-      }
-      const scrollRef = scrollProps?.scrollRef.current;
-      // 防止滚动事件为undefined导致的卡死问题
-      if (scrollRef) {
-        scrollRef.scrollToIndex({
-          index: current,
-          animated: true,
-          viewPosition: 0,
-        });
+        const scrollRef = scrollProps?.scrollRef.current;
+        // 防止滚动事件为undefined导致的卡死问题
+        if (scrollRef) {
+          scrollRef.scrollToIndex({
+            index: current,
+            animated: true,
+            viewPosition: 0,
+          });
+        }
       }
     }
   };
