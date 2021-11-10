@@ -100,6 +100,7 @@ export default function MusicController() {
             onEnd={() => {
               playNextMusic();
             }}
+            playInBackground={true}
             onLoad={({duration}) => {
               if (musicProps.durationRef) {
                 musicProps.durationRef.current = duration;
