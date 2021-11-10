@@ -4,40 +4,14 @@ import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
 import {MusicInfoContext} from '../../context/MainContext';
 import {UserContext} from '../../context/UserContext';
+import usePlayMusic from '../../hooks/usePlayMusic';
 import {getMusicUrl} from '../../request/getMusicUrl';
 import {getUserMusic} from '../../request/UserMusic';
 
 const RecommendMusics = ({item, index}: {item: any; index: number}) => {
-  const musicProps = useContext(MusicInfoContext);
+  const playMusic = usePlayMusic();
   // const navigation = useNavigation();
   // const musicPlayProps = useContext(MusicInfoContext);
-  const pushMusicRequest = useCallback(
-    async music => {
-      let data;
-      let id = '';
-      if ((id = music.id || musicProps?.musicInfo.id)) {
-        data = await getMusicUrl(id);
-      }
-      musicProps?.setMusicUrl(data);
-      if (data === '') {
-        Toast.fail('没有音源');
-        musicProps?.setPause(true);
-      } else {
-        musicProps?.setPause(false);
-      }
-    },
-    [musicProps],
-  );
-  const playMusic = useCallback(
-    (music: any) => {
-      musicProps?.setMusicInfo(music);
-      pushMusicRequest(music);
-      // if (musicProps?.currentIndexRef) {
-      //   musicProps.currentIndexRef.current = 0;
-      // }
-    },
-    [musicProps, pushMusicRequest],
-  );
   return (
     <TouchableOpacity
       key={index}
