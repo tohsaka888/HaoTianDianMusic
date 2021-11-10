@@ -36,6 +36,17 @@ export default function useLrcParser(id: string): Lyrics[] | null {
             length: parsedLyric.length,
           });
         });
+      } else {
+        let endTime = 0;
+        if (musicProps?.durationRef.current) {
+          endTime = musicProps.durationRef.current;
+        }
+        lyric.push({
+          startTime: 0,
+          endTime: endTime,
+          content: '纯音乐,请欣赏~',
+          length: 1,
+        });
       }
       setLyrics(lyric);
     }
