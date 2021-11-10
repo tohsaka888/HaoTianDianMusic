@@ -1,17 +1,12 @@
-import {Toast} from '@ant-design/react-native';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
-import {MusicInfoContext} from '../../context/MainContext';
 import {UserContext} from '../../context/UserContext';
 import usePlayMusic from '../../hooks/usePlayMusic';
-import {getMusicUrl} from '../../request/getMusicUrl';
 import {getUserMusic} from '../../request/UserMusic';
 
 const RecommendMusics = ({item, index}: {item: any; index: number}) => {
   const playMusic = usePlayMusic();
-  // const navigation = useNavigation();
-  // const musicPlayProps = useContext(MusicInfoContext);
   return (
     <TouchableOpacity
       key={index}
