@@ -1,3 +1,4 @@
+import {Toast} from '@ant-design/react-native';
 import {useCallback, useContext} from 'react';
 import {MusicInfoContext} from '../context/MainContext';
 import {getNextMusic} from '../request/Music';
@@ -11,7 +12,11 @@ export default function usePlayNextMusic() {
       musicProps?.playlistId,
       musicProps?.musicInfo.id,
     );
-    playMusic(data?.music);
+    if (data.success) {
+      playMusic(data?.music);
+    } else {
+      Toast.fail(data.errmsg);
+    }
   }, [musicProps?.musicInfo.id, musicProps?.playlistId, playMusic]);
   return nextMusic;
 }
