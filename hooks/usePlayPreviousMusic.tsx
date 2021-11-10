@@ -8,6 +8,10 @@ export default function usePlayPreviousMusic() {
   const playMusic = usePlayMusic();
   const musicProps = useContext(MusicInfoContext);
   const nextMusic = useCallback(async () => {
+    if (musicProps?.lyricRef) {
+      musicProps.lyricRef.current = [];
+      musicProps.currentIndexRef.current = 0;
+    }
     const data = await getPreviousMusic(
       musicProps?.playlistId,
       musicProps?.musicInfo.id,

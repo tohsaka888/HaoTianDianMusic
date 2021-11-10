@@ -23,6 +23,7 @@ export default function MusicController() {
     musicProps?.setCurrentTime(currentTime);
     let current = musicProps?.currentIndexRef.current || 0;
     if (lyric && lyric?.length > 0) {
+      // console.log(current);
       // 控制快进到某句歌词
       while (currentTime >= lyric[current].endTime) {
         if (current < lyric.length - 1) {

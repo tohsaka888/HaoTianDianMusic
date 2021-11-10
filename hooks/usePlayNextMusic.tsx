@@ -8,6 +8,10 @@ export default function usePlayNextMusic() {
   const playMusic = usePlayMusic();
   const musicProps = useContext(MusicInfoContext);
   const nextMusic = useCallback(async () => {
+    if (musicProps?.lyricRef) {
+      musicProps.lyricRef.current = [];
+      musicProps.currentIndexRef.current = 0;
+    }
     const data = await getNextMusic(
       musicProps?.playlistId,
       musicProps?.musicInfo.id,
@@ -17,6 +21,11 @@ export default function usePlayNextMusic() {
     } else {
       Toast.fail(data.errmsg);
     }
-  }, [musicProps?.musicInfo.id, musicProps?.playlistId, playMusic]);
+  }, [
+    musicProps?.currentIndexRef,
+    musicProps?.musicInfo.id,
+    musicProps?.playlistId,
+    playMusic,
+  ]);
   return nextMusic;
 }

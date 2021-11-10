@@ -43,7 +43,7 @@ export default function useLrcParser(id: string): Lyrics[] | null {
         }
         lyric.push({
           startTime: 0,
-          endTime: endTime,
+          endTime: endTime || 100000,
           content: '纯音乐,请欣赏~',
           length: 1,
         });
