@@ -26,7 +26,7 @@ export default function MusicDetailModal() {
       }}>
       <ImageBackground
         blurRadius={100}
-        source={{uri: musicProps?.musicInfo.picUrl}}
+        source={{uri: musicProps?.musicInfo.picUrl || ''}}
         imageStyle={styles.image}
         style={styles.background}>
         <ModalTitle />

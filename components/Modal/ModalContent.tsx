@@ -10,7 +10,7 @@ const ImageContent = () => {
   return (
     <View>
       <Image
-        source={{uri: musicProps?.musicInfo.picUrl}}
+        source={{uri: musicProps?.musicInfo.picUrl || ''}}
         style={styles.image}
       />
     </View>

@@ -1,14 +1,18 @@
 import React, {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {Slider} from '@ant-design/react-native';
+import {Slider, Toast} from '@ant-design/react-native';
 import {MusicInfoContext} from '../../context/MainContext';
 import moment from 'moment';
+import usePlayNextMusic from '../../hooks/usePlayNextMusic';
+import usePlayPreviousMusic from '../../hooks/usePlayPreviousMusic';
 // import {ScrollContext} from '../../context/ScrollContext';
 // import useLrcParser from '../../hooks/useLrcParser';
 
 export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);
+  const playNextMusic = usePlayNextMusic();
+  const playPreviousMusic = usePlayPreviousMusic();
   const setPause = useCallback(() => {
     musicProps?.setPause(true);
   }, [musicProps]);
@@ -24,7 +28,6 @@ export default function ModalFooter() {
         <Text style={styles.time}>
           {musicProps && moment(musicProps?.currentTime * 1000).format('mm:ss')}
         </Text>
-
         {musicProps && musicProps.durationRef.current && (
           <View style={styles.slider}>
             <Slider
@@ -35,17 +38,6 @@ export default function ModalFooter() {
                 musicProps.musicRef.current.seek(value);
                 musicProps.setPause(false);
               }}
-              // thumbProps={{
-              //   children: (
-              //     <Icon
-              //       name="heartbeat"
-              //       type="font-awesome"
-              //       size={15}
-              //       color="#f50"
-              //       tvParallaxProperties={undefined}
-              //     />
-              //   ),
-              // }}
             />
           </View>
         )}
@@ -61,6 +53,13 @@ export default function ModalFooter() {
           name="leftcircle"
           size={30}
           tvParallaxProperties={undefined}
+          onPress={() => {
+            if (musicProps?.musicInfo.id) {
+              playPreviousMusic();
+            } else {
+              Toast.fail('没有播放中的歌曲');
+            }
+          }}
         />
         <Icon
           type="antdesign"
@@ -75,6 +74,13 @@ export default function ModalFooter() {
           name="rightcircle"
           size={30}
           tvParallaxProperties={undefined}
+          onPress={() => {
+            if (musicProps?.musicInfo.id) {
+              playNextMusic();
+            } else {
+              Toast.fail('没有播放中的歌曲');
+            }
+          }}
         />
       </View>
     </View>

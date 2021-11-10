@@ -14,6 +14,7 @@ import {AreaContext} from '../../context/AreaContext';
 // import {getMusicUrl} from '../../request/getMusicUrl';
 import {useNavigation} from '@react-navigation/native';
 import usePlayMusic from '../../hooks/usePlayMusic';
+import {MusicInfoContext} from '../../context/MainContext';
 
 type Item = {
   id: string;
@@ -28,7 +29,7 @@ type Props = {
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
   const navigation = useNavigation();
-  // const musicPlayProps = useContext(MusicInfoContext);
+  const musicProps = useContext(MusicInfoContext);
   const playMusic = usePlayMusic();
   return (
     <>
@@ -47,6 +48,7 @@ const RenderContent = ({item}: Props) => {
                 style={styles.randomPlaylist}>
                 <TouchableOpacity
                   onPress={() => {
+                    musicProps?.setPlaylistId(music.id);
                     navigation.navigate('playlist', {
                       detail: music,
                     });
