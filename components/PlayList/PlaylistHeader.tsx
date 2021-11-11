@@ -1,4 +1,4 @@
-import {Tag} from '@ant-design/react-native';
+// import {Tag} from '@ant-design/react-native';
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Image} from 'react-native-elements';
