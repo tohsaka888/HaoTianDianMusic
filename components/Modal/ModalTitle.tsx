@@ -48,23 +48,26 @@ const styles = StyleSheet.create({
   title: {
     color: 'black',
     fontSize: 18,
-    width: 250,
+    flex: 1,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   titleContainer: {
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexDirection: 'row',
     padding: 10,
     height: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
     // backgroundColor: '#4b4b4b2b',
   },
   titleIcon: {
-    position: 'absolute',
+    // position: 'absolute',
   },
   artists: {
     color: 'black',
     textAlign: 'center',
+    flex: 1,
   },
 });
