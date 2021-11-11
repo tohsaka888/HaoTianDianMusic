@@ -35,6 +35,7 @@ import {UserContext} from './context/UserContext';
 import Playlist from './components/PlayList/Playlist';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Provider} from '@ant-design/react-native';
+import Categroy from './components/Category/Category';
 
 const TransparentTheme = {
   ...DefaultTheme,
@@ -74,6 +75,17 @@ const HomeTabs = () => {
       <Tab.Screen
         name="homePage"
         component={HomePage}
+        options={{
+          tabBarShowLabel: false,
+          swipeEnabled: true,
+          tabBarStyle: {
+            height: 0,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="category"
+        component={Categroy}
         options={{
           tabBarShowLabel: false,
           swipeEnabled: true,
