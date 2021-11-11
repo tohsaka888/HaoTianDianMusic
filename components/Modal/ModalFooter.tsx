@@ -1,11 +1,13 @@
 import React, {useCallback, useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Slider, Toast} from '@ant-design/react-native';
 import {MusicInfoContext} from '../../context/MainContext';
 import moment from 'moment';
 import usePlayNextMusic from '../../hooks/usePlayNextMusic';
 import usePlayPreviousMusic from '../../hooks/usePlayPreviousMusic';
+import {collectMusic} from '../../request/collectMusic';
+import {UserContext} from '../../context/UserContext';
 // import {ScrollContext} from '../../context/ScrollContext';
 // import useLrcParser from '../../hooks/useLrcParser';
 
@@ -13,12 +15,36 @@ export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);
   const playNextMusic = usePlayNextMusic();
   const playPreviousMusic = usePlayPreviousMusic();
+  const userProps = useContext(UserContext);
+  // const musicProps = useContext(MusicInfoContext);
   const setPause = useCallback(() => {
     musicProps?.setPause(true);
   }, [musicProps]);
   const isPlay = useCallback(() => {
     musicProps?.setPause(!musicProps.pause);
   }, [musicProps]);
+  const collectMyMusic = useCallback(async () => {
+    let userId = null;
+    let musicId = null;
+    let tags = [];
+    if (userProps?.profile) {
+      userId = userProps.profile.id;
+    }
+    if (musicProps?.musicInfo) {
+      musicId = musicProps.musicInfo.id;
+      tags = musicProps.musicInfo.tags;
+    }
+    if (!musicId) {
+      Alert.alert('没有播放中的歌曲');
+      return;
+    }
+    if (!userId) {
+      Alert.alert('请先登录');
+      return;
+    }
+    const data = await collectMusic(userId, musicId, tags);
+    console.log(data);
+  }, [musicProps?.musicInfo, userProps?.profile]);
   // useEffect(() => {
   //   console.log(musicProps?.pauseRef, musicProps?.currentTimeRef)
   // }, [musicProps?.currentTimeRef, musicProps?.pauseRef])
@@ -81,6 +107,14 @@ export default function ModalFooter() {
               Toast.fail('没有播放中的歌曲');
             }
           }}
+        />
+        <Icon
+          type="antdesign"
+          name={'hearto'}
+          size={30}
+          style={styles.centerButton}
+          tvParallaxProperties={undefined}
+          onPress={collectMyMusic}
         />
       </View>
     </View>
