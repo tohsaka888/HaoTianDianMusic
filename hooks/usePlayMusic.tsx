@@ -1,13 +1,12 @@
 import {useCallback, useContext} from 'react';
-// import {AreaContext} from '../context/AreaContext';
 import {Toast} from '@ant-design/react-native';
 import {MusicInfoContext} from '../context/MainContext';
 import {getMusicUrl} from '../request/getMusicUrl';
-export default function usePlayMusic() {
-  // const randomMusic = useContext(AreaContext);
+
+type PlayMusicFunction = (music: any) => void;
+
+export default function usePlayMusic(): PlayMusicFunction {
   const musicProps = useContext(MusicInfoContext);
-  // const navigation = useNavigation();
-  // const musicPlayProps = useContext(MusicInfoContext);
   const pushMusicRequest = useCallback(
     async music => {
       let data;
@@ -29,9 +28,6 @@ export default function usePlayMusic() {
     (music: any) => {
       musicProps?.setMusicInfo(music);
       pushMusicRequest(music);
-      // if (musicProps?.currentIndexRef) {
-      //   musicProps.currentIndexRef.current = 0;
-      // }
     },
     [musicProps, pushMusicRequest],
   );
