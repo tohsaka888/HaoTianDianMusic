@@ -6,6 +6,7 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
         // protected List<ReactPackage> getPackages() {
         //     return Arrays.asList(
         //             new MainReactPackage(),
+            new AsyncStoragePackage(),
             new AsyncStoragePackage(),
             new AsyncStoragePackage(),
         //     new ReactVideoPackage(),
