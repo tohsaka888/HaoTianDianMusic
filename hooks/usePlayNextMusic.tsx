@@ -4,7 +4,9 @@ import {MusicInfoContext} from '../context/MainContext';
 import {getNextMusic} from '../request/Music';
 import usePlayMusic from './usePlayMusic';
 
-export default function usePlayNextMusic() {
+type PlayNextMusicFunction = () => void;
+
+export default function usePlayNextMusic(): PlayNextMusicFunction {
   const playMusic = usePlayMusic();
   const musicProps = useContext(MusicInfoContext);
   const nextMusic = useCallback(async () => {
@@ -23,6 +25,7 @@ export default function usePlayNextMusic() {
     }
   }, [
     musicProps?.currentIndexRef,
+    musicProps?.lyricRef,
     musicProps?.musicInfo.id,
     musicProps?.playlistId,
     playMusic,
