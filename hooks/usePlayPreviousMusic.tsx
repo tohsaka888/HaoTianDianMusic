@@ -4,7 +4,9 @@ import {MusicInfoContext} from '../context/MainContext';
 import {getPreviousMusic} from '../request/Music';
 import usePlayMusic from './usePlayMusic';
 
-export default function usePlayPreviousMusic() {
+type PlayPreviousMusicFunction = () => void;
+
+export default function usePlayPreviousMusic(): PlayPreviousMusicFunction {
   const playMusic = usePlayMusic();
   const musicProps = useContext(MusicInfoContext);
   const nextMusic = useCallback(async () => {
@@ -21,6 +23,12 @@ export default function usePlayPreviousMusic() {
     } else {
       Toast.fail(data.errmsg);
     }
-  }, [musicProps?.musicInfo.id, musicProps?.playlistId, playMusic]);
+  }, [
+    musicProps?.currentIndexRef,
+    musicProps?.lyricRef,
+    musicProps?.musicInfo.id,
+    musicProps?.playlistId,
+    playMusic,
+  ]);
   return nextMusic;
 }
