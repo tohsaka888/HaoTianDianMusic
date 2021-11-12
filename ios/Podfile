@@ -16,6 +16,8 @@ target 'AwesomeTSProject' do
 
   pod 'react-native-video', :path => '../node_modules/react-native-video'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'AwesomeTSProjectTests' do
     inherit! :complete
     # Pods for testing
