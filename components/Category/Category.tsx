@@ -1,65 +1,71 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  StatusBar,
-  useWindowDimensions,
-} from 'react-native';
+import {Text, StyleSheet, StatusBar, useWindowDimensions} from 'react-native';
 import {getCategroy} from '../../request/getCategroy';
 import useSliceArray from '../../hooks/useSliceArray';
 import useCreateRandomColor from '../../hooks/useCreateRandomColor';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+
+const Tab = createMaterialTopTabNavigator();
+
+const Detail = ({item}: {item: any}) => {
+  return <Text>{item.name}</Text>;
+};
+
+// const arr = [1, 2, 3];
 
 export default function Category() {
-  const [categroy, setCategroy] = useState<any[][]>();
-  const sliceArray = useSliceArray();
-  const width = useWindowDimensions().width;
-  const createRandomColor = useCreateRandomColor();
+  const [categroy, setCategroy] = useState<any[]>();
+  // 弃用旧分类方案
+  // const sliceArray = useSliceArray();
+  // const width = useWindowDimensions().width;
+  // const createRandomColor = useCreateRandomColor();
   useEffect(() => {
     const getCategroyList = async () => {
       const data = await getCategroy();
       setCategroy(data);
-      const slicedArray = sliceArray(data, 3);
-      setCategroy(slicedArray);
+      // const slicedArray = sliceArray(data, 3);
+      // setCategroy(slicedArray);
     };
     getCategroyList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [0]);
   const height = StatusBar.currentHeight;
   return (
-    <View>
-      <View style={{height: height}} />
-      <Text style={styles.title}>标签分类</Text>
-      <ScrollView>
-        {categroy?.map((item: any[], index: number) => {
-          return (
-            <View key={index}>
-              <View style={styles.container}>
-                {item.length &&
-                  item.map((value: any, i: number) => {
-                    return (
-                      <View
-                        key={i}
-                        style={[
-                          styles.category,
-                          {
-                            backgroundColor: createRandomColor(),
-                            width: width / 3 - 20,
-                            height: width / 3 - 20,
-                          },
-                        ]}>
-                        <Text style={styles.name}>{value.name}</Text>
-                      </View>
-                    );
-                  })}
-              </View>
-            </View>
-          );
-        })}
-        <View style={styles.blank} />
-      </ScrollView>
-    </View>
+    <>
+      {categroy && (
+        <Tab.Navigator>
+          {categroy &&
+            categroy.map((item, index) => {
+              return (
+                <Tab.Screen
+                  options={{
+                    tabBarScrollEnabled: true,
+                    tabBarStyle: {
+                      backgroundColor: 'transparent',
+                    },
+                    tabBarItemStyle: {
+                      width: 100,
+                      height: 50,
+                    },
+                    tabBarLabelStyle: {
+                      color: 'white',
+                      fontWeight: 'bold',
+                    },
+                    tabBarIndicatorStyle: {
+                      backgroundColor: 'red',
+                    },
+                  }}
+                  name={item.name}
+                  key={index}
+                  children={() => {
+                    return <Detail key={index} item={item} />;
+                  }}
+                />
+              );
+            })}
+        </Tab.Navigator>
+      )}
+    </>
   );
 }
 
