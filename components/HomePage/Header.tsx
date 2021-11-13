@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 import {ComponentsContext} from '../../context/MainContext';
 import {getMusicByName} from '../../request/SearchResult';
 import {ThemeContext} from '../../context/ThemeContext';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {NavigationProp, useNavigation, useRoute} from '@react-navigation/native';
 import {SearchContext} from '../../context/SearchContext';
 
 export default function Header(): JSX.Element {
@@ -17,7 +17,7 @@ export default function Header(): JSX.Element {
   //   contexts?.setBannerUrls(data);
   // }, [contexts]);
   const searchProps = useContext(SearchContext);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<{search: any}>>();
   const route = useRoute();
   const goBack = useCallback(() => {
     navigation.navigate({key: 'home'});

@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
@@ -6,7 +6,7 @@ import {UserContext} from '../../context/UserContext';
 import {getUserPlaylist} from '../../request/UserMusic';
 
 const Playlists = ({item, index}: {item: any; index: number}) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<{playlist: any}>>();
   return (
     <TouchableOpacity
       key={index}
