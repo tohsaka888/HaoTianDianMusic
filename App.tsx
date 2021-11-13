@@ -35,7 +35,7 @@ import {UserContext} from './context/UserContext';
 import Playlist from './components/PlayList/Playlist';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Provider} from '@ant-design/react-native';
-import Categroy from './components/Category/Category';
+import Categroy from './components/Category/Categroy';
 
 const TransparentTheme = {
   ...DefaultTheme,
