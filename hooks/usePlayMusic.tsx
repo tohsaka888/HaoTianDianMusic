@@ -17,14 +17,15 @@ export default function usePlayMusic(): PlayMusicFunction {
       let data;
       let id = '';
       let loginStatus = await storage.load({key: 'loginStatus'});
+      let isCollect: string | boolean = '';
       if ((id = music.id || musicProps?.musicInfo.id)) {
         if (loginStatus.userId) {
-          let isCollect = await isCollectMusic(id, loginStatus.userId);
+          isCollect = await isCollectMusic(id, loginStatus.userId);
           console.log(isCollect);
         }
         data = await getMusicUrl(id);
         // data.isCollect = isCollect;
-        // console.log(isCollect);
+        console.log(isCollect);
       }
       musicProps?.setMusicUrl(data);
       if (data === '') {

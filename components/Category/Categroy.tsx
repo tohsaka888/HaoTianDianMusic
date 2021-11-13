@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Text, StyleSheet, StatusBar, useWindowDimensions} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import {getCategroy} from '../../request/getCategroy';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import CategoryDetail from './CategroyDetail'
+import CategoryDetail from './CategroyDetail';
 
 const Tab = createMaterialTopTabNavigator();
-
-const Detail = ({item}: {item: any}) => {
-  return <Text>{item.name}</Text>;
-};
-
-// const arr = [1, 2, 3];
 
 export default function Category() {
   const [categroy, setCategroy] = useState<any[]>();
@@ -29,6 +23,7 @@ export default function Category() {
   const height = StatusBar.currentHeight;
   return (
     <>
+      <View style={{height: height}} />
       {categroy && (
         <Tab.Navigator>
           {categroy &&
@@ -66,42 +61,42 @@ export default function Category() {
   );
 }
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 18,
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    // justifyContent: 'space-around',
-  },
-  category: {
-    // flex: 1,
-    margin: 10,
-    // padding: 8,
-    justifyContent: 'center',
-    textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 8,
-    alignItems: 'center',
-    borderRadius: 15,
-    shadowColor: '#cecece',
-    shadowOffset: {width: 5, height: 5},
-    shadowRadius: 5,
-    shadowOpacity: 1,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    textShadowColor: '#cecece',
-    textShadowOffset: {width: 3, height: 3},
-    textShadowRadius: 1,
-  },
-  blank: {
-    height: 70,
-  },
-});
+// const styles = StyleSheet.create({
+//   title: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//     textAlign: 'center',
+//     marginBottom: 18,
+//   },
+//   container: {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     // justifyContent: 'space-around',
+//   },
+//   category: {
+//     // flex: 1,
+//     margin: 10,
+//     // padding: 8,
+//     justifyContent: 'center',
+//     textAlign: 'center',
+//     marginTop: 8,
+//     marginBottom: 8,
+//     alignItems: 'center',
+//     borderRadius: 15,
+//     shadowColor: '#cecece',
+//     shadowOffset: {width: 5, height: 5},
+//     shadowRadius: 5,
+//     shadowOpacity: 1,
+//   },
+//   name: {
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//     color: 'white',
+//     textShadowColor: '#cecece',
+//     textShadowOffset: {width: 3, height: 3},
+//     textShadowRadius: 1,
+//   },
+//   blank: {
+//     height: 70,
+//   },
+// });

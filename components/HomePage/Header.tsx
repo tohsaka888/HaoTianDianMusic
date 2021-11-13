@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {StyleSheet, View, TouchableOpacity, StatusBar} from 'react-native';
 import SearchInput from '../common/SearchInput';
 import {Icon} from 'react-native-elements';
@@ -20,7 +20,7 @@ export default function Header(): JSX.Element {
   const navigation = useNavigation();
   const route = useRoute();
   const goBack = useCallback(() => {
-    navigation.navigate('home');
+    navigation.navigate({key: 'home'});
   }, [navigation]);
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
@@ -28,7 +28,7 @@ export default function Header(): JSX.Element {
       searchProps?.setResult(data.result);
     }
     if (route.name !== 'search') {
-      navigation.navigate('search');
+      navigation.navigate({key: 'search'});
     }
   }, [contexts?.searchValue, navigation, route, searchProps]);
   const changeTheme = useCallback(() => {

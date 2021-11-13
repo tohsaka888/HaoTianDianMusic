@@ -1,8 +1,9 @@
-import React, { useCallback, useContext } from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Icon} from 'react-native-elements';
-import { MusicInfoContext } from '../../context/MainContext';
-import { getMusicUrl } from '../../request/getMusicUrl';
+// import {MusicInfoContext} from '../../context/MainContext';
+import usePlayMusic from '../../hooks/usePlayMusic';
+// import {getMusicUrl} from '../../request/getMusicUrl';
 
 type Props = {
   tracks: any[];
@@ -10,34 +11,35 @@ type Props = {
 
 export default function PlaylistContent({tracks}: Props) {
   // const seachProps = useContext(SearchContext);
-  const musicProps = useContext(MusicInfoContext);
-  const pushMusicRequest = useCallback(
-    async music => {
-      let data;
-      let id = '';
-      if ((id = music.id || musicProps?.musicInfo.id)) {
-        data = await getMusicUrl(id);
-      }
-      musicProps?.setMusicUrl(data);
-      if (data === '') {
-        Alert.alert('没有音源');
-        musicProps?.setPause(true);
-      } else {
-        musicProps?.setPause(false);
-      }
-    },
-    [musicProps],
-  );
-  const playMusic = useCallback(
-    (music: any) => {
-      musicProps?.setMusicInfo(music);
-      pushMusicRequest(music);
-      if (musicProps?.currentIndexRef) {
-        musicProps.currentIndexRef.current = 0;
-      }
-    },
-    [musicProps, pushMusicRequest],
-  );
+  // const musicProps = useContext(MusicInfoContext);
+  const playMusic = usePlayMusic();
+  // const pushMusicRequest = useCallback(
+  //   async music => {
+  //     let data;
+  //     let id = '';
+  //     if ((id = music.id || musicProps?.musicInfo.id)) {
+  //       data = await getMusicUrl(id);
+  //     }
+  //     musicProps?.setMusicUrl(data);
+  //     if (data === '') {
+  //       Alert.alert('没有音源');
+  //       musicProps?.setPause(true);
+  //     } else {
+  //       musicProps?.setPause(false);
+  //     }
+  //   },
+  //   [musicProps],
+  // );
+  // const playMusic = useCallback(
+  //   (music: any) => {
+  //     musicProps?.setMusicInfo(music);
+  //     pushMusicRequest(music);
+  //     if (musicProps?.currentIndexRef) {
+  //       musicProps.currentIndexRef.current = 0;
+  //     }
+  //   },
+  //   [musicProps, pushMusicRequest],
+  // );
   return (
     <ScrollView style={styles.content}>
       <View style={styles.blank} />
