@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Text, StyleSheet, StatusBar, useWindowDimensions} from 'react-native';
 import {getCategroy} from '../../request/getCategroy';
-import useSliceArray from '../../hooks/useSliceArray';
-import useCreateRandomColor from '../../hooks/useCreateRandomColor';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import CategoryDetail from './CategroyDetail'
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -23,8 +22,6 @@ export default function Category() {
     const getCategroyList = async () => {
       const data = await getCategroy();
       setCategroy(data);
-      // const slicedArray = sliceArray(data, 3);
-      // setCategroy(slicedArray);
     };
     getCategroyList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +55,7 @@ export default function Category() {
                   name={item.name}
                   key={index}
                   children={() => {
-                    return <Detail key={index} item={item} />;
+                    return <CategoryDetail key={index} item={item} />;
                   }}
                 />
               );
