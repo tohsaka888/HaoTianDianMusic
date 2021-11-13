@@ -30,7 +30,7 @@
     "react-native": "0.66.1",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-pager-view": "^5.4.8",
+    "react-native-pager-view": "^5.4.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
     "react-native-swiper": "^1.6.0-rc.3",
