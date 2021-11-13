@@ -12,7 +12,7 @@ import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
 // import {MusicInfoContext} from '../../context/MainContext';
 // import {getMusicUrl} from '../../request/getMusicUrl';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import usePlayMusic from '../../hooks/usePlayMusic';
 import {MusicInfoContext} from '../../context/MainContext';
 
@@ -28,7 +28,7 @@ type Props = {
 
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<{playlist: any}>>();
   const musicProps = useContext(MusicInfoContext);
   const playMusic = usePlayMusic();
   return (
