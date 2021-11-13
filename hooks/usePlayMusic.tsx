@@ -3,27 +3,30 @@ import {Toast} from '@ant-design/react-native';
 import {MusicInfoContext} from '../context/MainContext';
 import {getMusicUrl} from '../request/getMusicUrl';
 import {isCollectMusic} from '../request/isCollect';
-import {UserContext} from '../context/UserContext';
+// import {UserContext} from '../context/UserContext';
+import useStorge from './useStorge';
 
 type PlayMusicFunction = (music: any) => void;
 
 export default function usePlayMusic(): PlayMusicFunction {
   const musicProps = useContext(MusicInfoContext);
-  const userProps = useContext(UserContext);
+  // const userProps = useContext(UserContext);
+  const storage = useStorge();
   const pushMusicRequest = useCallback(
     async music => {
       let data;
       let id = '';
+      let loginStatus = await storage.load({key: 'loginStatus'});
       if ((id = music.id || musicProps?.musicInfo.id)) {
-        if (userProps?.profile.id) {
-          let isCollect = await isCollectMusic(id, userProps?.profile.id);
+        if (loginStatus.userId) {
+          let isCollect = await isCollectMusic(id, loginStatus.userId);
+          console.log(isCollect);
         }
         data = await getMusicUrl(id);
         // data.isCollect = isCollect;
         // console.log(isCollect);
       }
       musicProps?.setMusicUrl(data);
-      console.log(data);
       if (data === '') {
         Toast.fail('没有音源');
         musicProps?.setPause(true);
@@ -31,7 +34,7 @@ export default function usePlayMusic(): PlayMusicFunction {
         musicProps?.setPause(false);
       }
     },
-    [musicProps, userProps?.profile.id],
+    [musicProps, storage],
   );
   const playMusic = useCallback(
     (music: any) => {

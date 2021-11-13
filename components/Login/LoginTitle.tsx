@@ -3,12 +3,12 @@ import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {LoginContext} from '../../context/LoginContext';
-import {UserContext} from '../../context/UserContext';
+// import {UserContext} from '../../context/UserContext';
 import useStorge from '../../hooks/useStorge';
 
 export default function LoginTitle() {
   const loginProps = useContext(LoginContext);
-  const userProps = useContext(UserContext);
+  // const userProps = useContext(UserContext);
   const [loginStatus, setLoginStatus] = useState<any>({});
   const storage = useStorge();
   const statusBarHeight = StatusBar.currentHeight;
