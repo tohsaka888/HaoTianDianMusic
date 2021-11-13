@@ -42,7 +42,7 @@ const RenderContent = ({item}: Props) => {
             return (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('playlist');
+                  navigation.navigate({key: 'playlist'});
                 }}
                 key={index}
                 style={styles.randomPlaylist}>
@@ -111,10 +111,10 @@ export default function AreaRender({item}: Props): JSX.Element {
     <View>
       {item.id === '0' && <Banner />}
       <View
-        style={StyleSheet.compose(
+        style={[
           styles.allArea,
           item.globalTheme === 'light' ? lightTheme.theme : darkTheme.theme,
-        )}>
+        ]}>
         <RenderContent item={item} />
       </View>
     </View>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   randomMusicName: {
-    width: 200,
+    width: 230,
     color: 'black',
     fontWeight: 'bold',
   },
