@@ -6,7 +6,7 @@ export default function CategoryDetail({item}: {item: any}) {
   useEffect(() => {
     const getList = async () => {
       const data = await getCategroyList({tag: item.tag, page: 0});
-      console.log(data);
+      // console.log(data);
     };
     getList();
   }, [item.tag]);
