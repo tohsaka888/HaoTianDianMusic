@@ -12,7 +12,6 @@
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
     "@ant-design/react-native": "^4.2.0",
-    "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/segmented-control": "^2.2.2",

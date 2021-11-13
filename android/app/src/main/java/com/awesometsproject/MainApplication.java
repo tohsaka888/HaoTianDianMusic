@@ -30,9 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
         // protected List<ReactPackage> getPackages() {
         //     return Arrays.asList(
         //             new MainReactPackage(),
-            new AsyncStoragePackage(),
-            new AsyncStoragePackage(),
-            new AsyncStoragePackage(),
+            // new AsyncStoragePackage(),
+            // new AsyncStoragePackage(),
+            // new AsyncStoragePackage(),
         //     new ReactVideoPackage(),
         //             new ReactVideoPackage()
         //     );
