@@ -1,29 +1,37 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {LoginContext} from '../../context/LoginContext';
 import {UserContext} from '../../context/UserContext';
+import useStorge from '../../hooks/useStorge';
 
 export default function LoginTitle() {
   const loginProps = useContext(LoginContext);
   const userProps = useContext(UserContext);
+  const [loginStatus, setLoginStatus] = useState<any>({});
+  const storage = useStorge();
   const statusBarHeight = StatusBar.currentHeight;
+  useEffect(() => {
+    const getLoginStatus = async () => {
+      let data = await storage.load({
+        key: 'loginStatus',
+      });
+      setLoginStatus(data);
+    };
+    getLoginStatus();
+  }, [storage]);
   return (
     <View>
       <View style={{marginTop: statusBarHeight}} />
       <View style={styles.container}>
         <Image
-          source={
-            userProps?.profile.avatarUrl
-              ? {uri: userProps.profile.avatarUrl}
-              : bak1
-          }
+          source={loginStatus.avatarUrl ? {uri: loginStatus.avatarUrl} : bak1}
           style={styles.avatar}
         />
-        {userProps?.profile.nickname ? (
-          <Text style={StyleSheet.compose(styles.username, styles.icon)}>
-            {userProps.profile.nickname}
+        {loginStatus.nickname ? (
+          <Text style={[styles.username, styles.icon]}>
+            {loginStatus.nickname}
           </Text>
         ) : (
           <>
