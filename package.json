@@ -12,7 +12,7 @@
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.2",
     "@ant-design/react-native": "^4.2.0",
-    "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/segmented-control": "^2.2.2",
     "@react-native-community/slider": "^4.1.10",
@@ -33,6 +33,7 @@
     "react-native-pager-view": "^5.4.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
+    "react-native-storage": "^1.0.1",
     "react-native-swiper": "^1.6.0-rc.3",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^8.1.0",
