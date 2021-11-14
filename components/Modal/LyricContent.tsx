@@ -20,7 +20,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
   const window = useWindowDimensions();
   return (
     <>
-      {index === 0 && <View style={{height: window.height / 2 - 60}} />}
+      {index === 0 && <View style={{height: window.height / 2 - 80}} />}
       {musicProps?.currentTime &&
       item?.startTime &&
       item?.endTime &&
@@ -35,7 +35,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
         </Text>
       )}
       {index === item.length - 1 && (
-        <View style={{height: window.height / 2 - 60}} />
+        <View style={{height: window.height / 2 - 80}} />
       )}
     </>
   );

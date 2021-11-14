@@ -18,7 +18,6 @@ export default function LoginTitle() {
       });
       setLoginStatus(data);
     };
-    console.log(22)
     getLoginStatus();
   }, []);
   return (

@@ -1,4 +1,4 @@
-import React, {useCallback, useContext} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Slider, Toast} from '@ant-design/react-native';
@@ -8,6 +8,7 @@ import usePlayNextMusic from '../../hooks/usePlayNextMusic';
 import usePlayPreviousMusic from '../../hooks/usePlayPreviousMusic';
 import {collectMusic} from '../../request/collectMusic';
 import {UserContext} from '../../context/UserContext';
+import storage from '../../storage.config';
 // import {ScrollContext} from '../../context/ScrollContext';
 // import useLrcParser from '../../hooks/useLrcParser';
 
@@ -15,7 +16,6 @@ export default function ModalFooter() {
   const musicProps = useContext(MusicInfoContext);
   const playNextMusic = usePlayNextMusic();
   const playPreviousMusic = usePlayPreviousMusic();
-  const userProps = useContext(UserContext);
   // const musicProps = useContext(MusicInfoContext);
   const setPause = useCallback(() => {
     musicProps?.setPause(true);
@@ -24,11 +24,12 @@ export default function ModalFooter() {
     musicProps?.setPause(!musicProps.pause);
   }, [musicProps]);
   const collectMyMusic = useCallback(async () => {
+    let loginStatus = await storage.load({key: 'loginStatus'});
     let userId = null;
     let musicId = null;
     let tags = [];
-    if (userProps?.profile) {
-      userId = userProps.profile.id;
+    if (loginStatus) {
+      userId = loginStatus.userId;
     }
     if (musicProps?.musicInfo) {
       musicId = musicProps.musicInfo.id;
@@ -42,12 +43,19 @@ export default function ModalFooter() {
       Alert.alert('请先登录');
       return;
     }
-    const data = await collectMusic(userId, musicId, tags);
-    console.log(data);
-  }, [musicProps?.musicInfo, userProps?.profile]);
+    const data = await collectMusic(musicId, userId, tags);
+    let updateMusicInfo = musicProps?.musicInfo;
+    if (data.success) {
+      updateMusicInfo.isCollect = data.isCollect;
+    } else {
+      Alert.alert(data.message);
+    }
+    // console.log(updateMusicInfo)
+    // musicProps?.setMusicInfo(updateMusicInfo);
+  }, [musicProps]);
   // useEffect(() => {
-  //   console.log(musicProps?.pauseRef, musicProps?.currentTimeRef)
-  // }, [musicProps?.currentTimeRef, musicProps?.pauseRef])
+  //   console.log(musicProps?.musicInfo.isCollect);
+  // }, [musicProps?.musicInfo.isCollect]);
   return (
     <View style={styles.footer}>
       <View style={styles.controller}>
@@ -110,7 +118,7 @@ export default function ModalFooter() {
         />
         <Icon
           type="antdesign"
-          name={'hearto'}
+          name={musicProps?.musicInfo.isCollect ? 'heart' : 'hearto'}
           size={30}
           style={styles.centerButton}
           tvParallaxProperties={undefined}
