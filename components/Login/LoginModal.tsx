@@ -14,7 +14,7 @@ import {Button, Icon} from 'react-native-elements';
 import {setLogin} from '../../request/login';
 import {UserContext} from '../../context/UserContext';
 import {Toast} from '@ant-design/react-native';
-import useStorage from '../../hooks/useStorge';
+import storage from '../../storage.config';
 
 const ModalTitle = () => {
   const loginProps = useContext(LoginContext);
@@ -44,7 +44,6 @@ const ModalContent = () => {
   const userProps = useContext(UserContext);
   const loginProps = useContext(LoginContext);
   // 不传值默认设置一天过期,最大存储1000条数据
-  const storage = useStorage();
   const login = useCallback(async () => {
     const loginStatus = await setLogin(phone, password);
     if (loginStatus.nickname) {
@@ -52,13 +51,14 @@ const ModalContent = () => {
       storage.save({
         key: 'loginStatus',
         data: loginStatus,
+        expires: null,
       });
       loginProps?.setVisible(false);
     } else {
       Toast.fail('登陆失败');
     }
     userProps?.setProfile(loginStatus);
-  }, [loginProps, password, phone, storage, userProps]);
+  }, [loginProps, password, phone, userProps]);
 
   return (
     <View style={styles.contentContainer}>

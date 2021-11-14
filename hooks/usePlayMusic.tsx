@@ -4,14 +4,13 @@ import {MusicInfoContext} from '../context/MainContext';
 import {getMusicUrl} from '../request/getMusicUrl';
 import {isCollectMusic} from '../request/isCollect';
 // import {UserContext} from '../context/UserContext';
-import useStorge from './useStorge';
+import storage from '../storage.config';
 
 type PlayMusicFunction = (music: any) => void;
 
 export default function usePlayMusic(): PlayMusicFunction {
   const musicProps = useContext(MusicInfoContext);
   // const userProps = useContext(UserContext);
-  const storage = useStorge();
   const pushMusicRequest = useCallback(
     async music => {
       let data;
@@ -25,7 +24,6 @@ export default function usePlayMusic(): PlayMusicFunction {
         }
         data = await getMusicUrl(id);
         // data.isCollect = isCollect;
-        console.log(isCollect);
       }
       musicProps?.setMusicUrl(data);
       if (data === '') {
@@ -35,7 +33,7 @@ export default function usePlayMusic(): PlayMusicFunction {
         musicProps?.setPause(false);
       }
     },
-    [musicProps, storage],
+    [musicProps],
   );
   const playMusic = useCallback(
     (music: any) => {

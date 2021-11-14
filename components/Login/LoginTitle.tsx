@@ -4,13 +4,12 @@ import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {LoginContext} from '../../context/LoginContext';
 // import {UserContext} from '../../context/UserContext';
-import useStorge from '../../hooks/useStorge';
+import storage from '../../storage.config';
 
 export default function LoginTitle() {
   const loginProps = useContext(LoginContext);
   // const userProps = useContext(UserContext);
   const [loginStatus, setLoginStatus] = useState<any>({});
-  const storage = useStorge();
   const statusBarHeight = StatusBar.currentHeight;
   useEffect(() => {
     const getLoginStatus = async () => {
@@ -19,8 +18,9 @@ export default function LoginTitle() {
       });
       setLoginStatus(data);
     };
+    console.log(22)
     getLoginStatus();
-  }, [storage]);
+  }, []);
   return (
     <View>
       <View style={{marginTop: statusBarHeight}} />

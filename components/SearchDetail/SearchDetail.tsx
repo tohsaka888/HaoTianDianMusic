@@ -2,41 +2,43 @@ import {Toast} from '@ant-design/react-native';
 import React, {useCallback, useContext, useState} from 'react';
 import {View, Text, StyleSheet, Alert, FlatList} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {MusicInfoContext} from '../../context/MainContext';
+// import {MusicInfoContext} from '../../context/MainContext';
 import {SearchContext} from '../../context/SearchContext';
-import {getMusicUrl} from '../../request/getMusicUrl';
+import usePlayMusic from '../../hooks/usePlayMusic';
+// import {getMusicUrl} from '../../request/getMusicUrl';
 import {getNextPageMusic} from '../../request/SearchResult';
 import SearchTitle from './SearchTitle';
 
 const SearchResult = ({item, index}: {item: any; index: number}) => {
-  const musicProps = useContext(MusicInfoContext);
-  const pushMusicRequest = useCallback(
-    async music => {
-      let data;
-      let id = '';
-      if ((id = music.id || musicProps?.musicInfo.id)) {
-        data = await getMusicUrl(id);
-      }
-      musicProps?.setMusicUrl(data);
-      if (data === '') {
-        Alert.alert('没有音源');
-        musicProps?.setPause(true);
-      } else {
-        musicProps?.setPause(false);
-      }
-    },
-    [musicProps],
-  );
-  const playMusic = useCallback(
-    (music: any) => {
-      musicProps?.setMusicInfo(music);
-      pushMusicRequest(music);
-      if (musicProps?.currentIndexRef) {
-        musicProps.currentIndexRef.current = 0;
-      }
-    },
-    [musicProps, pushMusicRequest],
-  );
+  // const musicProps = useContext(MusicInfoContext);
+  const playMusic = usePlayMusic();
+  // const pushMusicRequest = useCallback(
+  //   async music => {
+  //     let data;
+  //     let id = '';
+  //     if ((id = music.id || musicProps?.musicInfo.id)) {
+  //       data = await getMusicUrl(id);
+  //     }
+  //     musicProps?.setMusicUrl(data);
+  //     if (data === '') {
+  //       Alert.alert('没有音源');
+  //       musicProps?.setPause(true);
+  //     } else {
+  //       musicProps?.setPause(false);
+  //     }
+  //   },
+  //   [musicProps],
+  // );
+  // const playMusic = useCallback(
+  //   (music: any) => {
+  //     musicProps?.setMusicInfo(music);
+  //     pushMusicRequest(music);
+  //     if (musicProps?.currentIndexRef) {
+  //       musicProps.currentIndexRef.current = 0;
+  //     }
+  //   },
+  //   [musicProps, pushMusicRequest],
+  // );
   return (
     <View key={index} style={styles.container}>
       <View style={styles.song}>
