@@ -15,14 +15,19 @@ export default function usePlayMusic(): PlayMusicFunction {
     async music => {
       let data;
       let id = '';
-      let loginStatus = await storage.load({key: 'loginStatus'});
+      let loginStatus: any = {};
+      try {
+        loginStatus = await storage.load({key: 'loginStatus'});
+      } catch (error) {
+        loginStatus.userId = '';
+      }
       let isCollect: string | boolean = '';
       if ((id = music.id || musicProps?.musicInfo.id)) {
         if (loginStatus.userId && musicProps?.musicInfo) {
           isCollect = await isCollectMusic(id, loginStatus.userId);
           music.isCollect = isCollect;
-          musicProps?.setMusicInfo(music);
         }
+        musicProps?.setMusicInfo(music);
         data = await getMusicUrl(id);
       }
       musicProps?.setMusicUrl(data);

@@ -1,6 +1,6 @@
 import {Toast} from '@ant-design/react-native';
 import React, {useCallback, useContext, useState} from 'react';
-import {View, Text, StyleSheet, Alert, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Icon} from 'react-native-elements';
 // import {MusicInfoContext} from '../../context/MainContext';
 import {SearchContext} from '../../context/SearchContext';

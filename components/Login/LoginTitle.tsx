@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, StatusBar} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
@@ -13,12 +13,24 @@ export default function LoginTitle() {
   const statusBarHeight = StatusBar.currentHeight;
   useEffect(() => {
     const getLoginStatus = async () => {
-      let data = await storage.load({
-        key: 'loginStatus',
-      });
+      let data = null;
+      try {
+        data = await storage.load({
+          key: 'loginStatus',
+        });
+      } catch (error) {
+        data = {
+          userId: '',
+          avatarUrl: '',
+          tracks: [],
+        };
+      }
       setLoginStatus(data);
     };
     getLoginStatus();
+  }, []);
+  const logout = useCallback(async () => {
+    await storage.remove({key: 'loginStatus'});
   }, []);
   return (
     <View>
@@ -29,9 +41,18 @@ export default function LoginTitle() {
           style={styles.avatar}
         />
         {loginStatus.nickname ? (
-          <Text style={[styles.username, styles.icon]}>
-            {loginStatus.nickname}
-          </Text>
+          <View style={styles.line}>
+            <Text style={[styles.username, styles.icon]}>
+              {loginStatus.nickname}
+            </Text>
+            <Text
+              style={styles.logout}
+              onPress={() => {
+                logout();
+              }}>
+              退出登录
+            </Text>
+          </View>
         ) : (
           <>
             <Icon
@@ -74,5 +95,20 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 16,
+  },
+  logout: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 8,
+    paddingRight: 8,
+    backgroundColor: 'red',
+    borderRadius: 3,
+    fontWeight: 'bold',
+  },
+  line: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

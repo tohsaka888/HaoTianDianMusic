@@ -24,13 +24,16 @@ export default function ModalFooter() {
     musicProps?.setPause(!musicProps.pause);
   }, [musicProps]);
   const collectMyMusic = useCallback(async () => {
-    let loginStatus = await storage.load({key: 'loginStatus'});
+    let loginStatus: any = {};
+    try {
+      loginStatus = await storage.load({key: 'loginStatus'});
+    } catch (error) {
+      loginStatus.userId = '';
+    }
     let userId = null;
     let musicId = null;
     let tags = [];
-    if (loginStatus) {
-      userId = loginStatus.userId;
-    }
+    userId = loginStatus.userId;
     if (musicProps?.musicInfo) {
       musicId = musicProps.musicInfo.id;
       tags = musicProps.musicInfo.tags;
