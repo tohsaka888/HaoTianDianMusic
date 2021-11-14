@@ -6,7 +6,11 @@ import {Icon} from 'react-native-elements';
 import {ComponentsContext} from '../../context/MainContext';
 import {getMusicByName} from '../../request/SearchResult';
 import {ThemeContext} from '../../context/ThemeContext';
-import {NavigationProp, useNavigation, useRoute} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {SearchContext} from '../../context/SearchContext';
 
 export default function Header(): JSX.Element {
@@ -17,10 +21,10 @@ export default function Header(): JSX.Element {
   //   contexts?.setBannerUrls(data);
   // }, [contexts]);
   const searchProps = useContext(SearchContext);
-  const navigation = useNavigation<NavigationProp<{search: any}>>();
+  const navigation = useNavigation<NavigationProp<{search: any; home: any}>>();
   const route = useRoute();
   const goBack = useCallback(() => {
-    navigation.navigate({key: 'home'});
+    navigation.navigate('home');
   }, [navigation]);
   const searchEvent = useCallback(async () => {
     if (contexts?.searchValue) {
@@ -28,7 +32,7 @@ export default function Header(): JSX.Element {
       searchProps?.setResult(data.result);
     }
     if (route.name !== 'search') {
-      navigation.navigate({key: 'search'});
+      navigation.navigate('search');
     }
   }, [contexts?.searchValue, navigation, route, searchProps]);
   const changeTheme = useCallback(() => {
