@@ -1,20 +1,21 @@
 import {pythonUrl} from './baseUrl';
 
 type CategroyFunction = ({
-  tag,
+  tags,
   page,
 }: {
-  tag: string;
+  tags: string;
   page: number;
 }) => Promise<any>;
 
-const getCategroyList: CategroyFunction = async ({tag, page = 0}) => {
-  const res = await fetch(`${pythonUrl}/getCMExist`, {
+const getCategroyList: CategroyFunction = async ({tags = '娱乐'}) => {
+  const res = await fetch(`${pythonUrl}/getPLCat`, {
     method: 'POST',
-    body: JSON.stringify({tag: tag, page: page}),
+    body: JSON.stringify({tags: tags, page: -1}),
+    headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
   });
   const data = await res.json();
-  // console.log(data);
+  console.log(data.result.length);
 };
 
 export {getCategroyList};
