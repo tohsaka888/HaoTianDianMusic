@@ -1,21 +1,23 @@
 import {Toast} from '@ant-design/react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
+import {MusicInfoContext} from '../../context/MainContext';
 import {getLovedMusic} from '../../request/getLovedMusic';
 
 export default function LovedMusic() {
   const [lovedMusic, setLovedMusic] = useState<any>({});
   const navigation = useNavigation<NavigationProp<{playlist: any}>>();
+  const musicProps = useContext(MusicInfoContext);
   useEffect(() => {
     const getMusic = async () => {
       const playlist = await getLovedMusic();
       setLovedMusic(playlist);
     };
     getMusic();
-  }, []);
+  }, [musicProps?.musicInfo.isCollect]);
   return (
     <TouchableOpacity
       style={styles.container}
