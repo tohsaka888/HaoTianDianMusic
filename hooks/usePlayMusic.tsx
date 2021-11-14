@@ -18,12 +18,12 @@ export default function usePlayMusic(): PlayMusicFunction {
       let loginStatus = await storage.load({key: 'loginStatus'});
       let isCollect: string | boolean = '';
       if ((id = music.id || musicProps?.musicInfo.id)) {
-        if (loginStatus.userId) {
+        if (loginStatus.userId && musicProps?.musicInfo) {
           isCollect = await isCollectMusic(id, loginStatus.userId);
-          console.log(isCollect);
+          music.isCollect = isCollect;
+          musicProps?.setMusicInfo(music);
         }
         data = await getMusicUrl(id);
-        // data.isCollect = isCollect;
       }
       musicProps?.setMusicUrl(data);
       if (data === '') {
@@ -37,10 +37,9 @@ export default function usePlayMusic(): PlayMusicFunction {
   );
   const playMusic = useCallback(
     (music: any) => {
-      musicProps?.setMusicInfo(music);
       pushMusicRequest(music);
     },
-    [musicProps, pushMusicRequest],
+    [pushMusicRequest],
   );
   return playMusic;
 }
