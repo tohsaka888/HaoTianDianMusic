@@ -63,6 +63,7 @@ const HomeTabs = () => {
     <Tab.Navigator initialRouteName="homePage">
       <Tab.Screen
         name="login"
+        key={'login'}
         component={Login}
         options={{
           tabBarShowLabel: false,
@@ -74,6 +75,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         name="homePage"
+        key={'homePage'}
         component={HomePage}
         options={{
           tabBarShowLabel: false,
