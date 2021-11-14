@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Slider, Toast} from '@ant-design/react-native';
@@ -7,7 +7,7 @@ import moment from 'moment';
 import usePlayNextMusic from '../../hooks/usePlayNextMusic';
 import usePlayPreviousMusic from '../../hooks/usePlayPreviousMusic';
 import {collectMusic} from '../../request/collectMusic';
-import {UserContext} from '../../context/UserContext';
+// import {UserContext} from '../../context/UserContext';
 import storage from '../../storage.config';
 // import {ScrollContext} from '../../context/ScrollContext';
 // import useLrcParser from '../../hooks/useLrcParser';
