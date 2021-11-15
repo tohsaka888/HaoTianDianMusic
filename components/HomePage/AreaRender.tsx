@@ -1,20 +1,12 @@
-import React, {useContext} from 'react';
-import {
-  // Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useContext, useRef, useState} from 'react';
+import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Icon, Image, Text} from 'react-native-elements';
 import Banner from './Banner';
 import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
-// import {MusicInfoContext} from '../../context/MainContext';
-// import {getMusicUrl} from '../../request/getMusicUrl';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import usePlayMusic from '../../hooks/usePlayMusic';
-import {MusicInfoContext} from '../../context/MainContext';
+import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
 
 type Item = {
   id: string;
@@ -26,82 +18,118 @@ type Props = {
   item: Item;
 };
 
-const RenderContent = ({item}: Props) => {
-  const randomMusic = useContext(AreaContext);
+const Playlist = ({item, index}: {item: any; index: number}) => {
   const navigation = useNavigation<NavigationProp<{playlist: any}>>();
   const musicProps = useContext(MusicInfoContext);
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate({key: 'playlist'});
+      }}
+      key={index}
+      style={styles.randomPlaylist}>
+      <TouchableOpacity
+        onPress={() => {
+          musicProps?.setPlaylistId(item.id);
+          navigation.navigate('playlist', {
+            detail: item,
+          });
+        }}>
+        <Image
+          source={{uri: item.coverImgUrl}}
+          style={styles.randomPlaylistPicture}
+        />
+      </TouchableOpacity>
+      <Text numberOfLines={1} style={styles.randomPlaylistName}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+const PlaylistRenderItem = ({item, index}: {item: any; index: number}) => {
+  return <Playlist item={item} index={index} />;
+};
+
+const Music = ({musicGroup, i}: {musicGroup: any; i: number}) => {
   const playMusic = usePlayMusic();
+  return (
+    <View key={i}>
+      {musicGroup.map((music: any, index: number) => {
+        return (
+          <View key={index} style={styles.randomMusic}>
+            <Image
+              source={{uri: music.picUrl}}
+              style={styles.randomMusicPicture}
+            />
+            <View>
+              <Text numberOfLines={1} style={styles.randomMusicName}>
+                {music.name}
+              </Text>
+              <Text numberOfLines={1} style={styles.randomArtists}>
+                {music.ar.map((text: any) => {
+                  return text.name;
+                })}
+              </Text>
+            </View>
+            <View>
+              <Icon
+                type="antdesign"
+                name="play"
+                tvParallaxProperties={undefined}
+                onPress={() => {
+                  playMusic(music);
+                }}
+              />
+            </View>
+          </View>
+        );
+      })}
+    </View>
+  );
+};
+
+const MusicRenderItem = ({item, index}: {item: any; index: number}) => {
+  return <Music musicGroup={item} i={index} />;
+};
+
+const RenderContent = ({item}: Props) => {
+  const randomMusic = useContext(AreaContext);
+  const [scrollEnable, setScrollEnable] = useState<boolean>(true);
+  const scrollRef = useRef<FlatList>();
   return (
     <>
       <View>
         <Text style={styles.title}>{item.title}</Text>
       </View>
-      <ScrollView horizontal={true}>
-        {item.id === '0' &&
-          randomMusic?.playlists.map((music: any, index: number) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate({key: 'playlist'});
-                }}
-                key={index}
-                style={styles.randomPlaylist}>
-                <TouchableOpacity
-                  onPress={() => {
-                    musicProps?.setPlaylistId(music.id);
-                    navigation.navigate('playlist', {
-                      detail: music,
-                    });
-                  }}>
-                  <Image
-                    source={{uri: music.coverImgUrl}}
-                    style={styles.randomPlaylistPicture}
-                  />
-                </TouchableOpacity>
-                <Text numberOfLines={1} style={styles.randomPlaylistName}>
-                  {music.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        {item.id === '1' &&
-          randomMusic?.musicGroups.map((musicGroup: any, i: number) => {
-            return (
-              <View key={i}>
-                {musicGroup.map((music: any, index: number) => {
-                  return (
-                    <View key={index} style={styles.randomMusic}>
-                      <Image
-                        source={{uri: music.picUrl}}
-                        style={styles.randomMusicPicture}
-                      />
-                      <View>
-                        <Text numberOfLines={1} style={styles.randomMusicName}>
-                          {music.name}
-                        </Text>
-                        <Text numberOfLines={1} style={styles.randomArtists}>
-                          {music.ar.map((text: any) => {
-                            return text.name;
-                          })}
-                        </Text>
-                      </View>
-                      <View>
-                        <Icon
-                          type="antdesign"
-                          name="play"
-                          tvParallaxProperties={undefined}
-                          onPress={() => {
-                            playMusic(music);
-                          }}
-                        />
-                      </View>
-                    </View>
-                  );
-                })}
-              </View>
-            );
-          })}
-      </ScrollView>
+      {item.id === '0' && (
+        <FlatList
+          ref={refs => {
+            if (refs) {
+              scrollRef.current = refs;
+            }
+          }}
+          data={randomMusic?.playlists}
+          renderItem={PlaylistRenderItem}
+          initialNumToRender={4}
+          horizontal={true}
+          // scrollEnabled={scrollEnable}
+          // onEndReachedThreshold={0.1}
+          // onEndReached={() => {
+          //   setScrollEnable(false);
+          //   setTimeout(() => {
+          //     setScrollEnable(true);
+          //   }, 500);
+          // }}
+        />
+      )}
+      {item.id === '1' && (
+        <FlatList
+          data={randomMusic?.musicGroups}
+          renderItem={MusicRenderItem}
+          horizontal={true}
+          initialNumToRender={2}
+        />
+      )}
     </>
   );
 };

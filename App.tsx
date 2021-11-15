@@ -106,10 +106,9 @@ const App = () => {
   const [globalTheme, setGlobalTheme] = useState<ThemeName>('light');
   const [musicInfo, setMusicInfo] = useState<any>({});
   const [playStatus, setPlayStatus] = useState<boolean>(false);
-  // const pauseRef = useRef<boolean>(false);
   const [pause, setPause] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  // const currentTimeRef = useRef<number>(0);
+  const [isTabScroll, setIsTabScroll] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [profile, setProfile] = useState<any>({});
   const durationRef = useRef<number>(0);
@@ -134,6 +133,8 @@ const App = () => {
               bannerUrls: bannerUrls,
               visible: visible,
               setVisible: setVisible,
+              isTabScroll: isTabScroll,
+              setIsTabScroll: setIsTabScroll,
             }}>
             <MusicInfoContext.Provider
               value={{

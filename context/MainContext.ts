@@ -8,6 +8,8 @@ type ComponentProps = {
   setBannerUrls: Function;
   visible: boolean;
   setVisible: Function;
+  isTabScroll: boolean;
+  setIsTabScroll: Function;
 };
 
 type MusicInfoProps = {
