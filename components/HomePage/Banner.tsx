@@ -18,15 +18,6 @@ export default function Banner(): JSX.Element {
       }
     };
     pushBannerRequest();
-    // return () => {
-    //   try {
-    //     if (props?.bannerUrls && props?.bannerUrls.length > 0) {
-    //       controller.abort();
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
   }, [setBannerUrls]);
   return (
     <Swiper
