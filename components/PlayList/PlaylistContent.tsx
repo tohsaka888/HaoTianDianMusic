@@ -1,77 +1,56 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Icon} from 'react-native-elements';
-// import {MusicInfoContext} from '../../context/MainContext';
 import usePlayMusic from '../../hooks/usePlayMusic';
-// import {getMusicUrl} from '../../request/getMusicUrl';
 
 type Props = {
   tracks: any[];
 };
 
-export default function PlaylistContent({tracks}: Props) {
-  // const seachProps = useContext(SearchContext);
-  // const musicProps = useContext(MusicInfoContext);
+const MusicDetail = ({item, index}: {item: any; index: number}) => {
   const playMusic = usePlayMusic();
-  // const pushMusicRequest = useCallback(
-  //   async music => {
-  //     let data;
-  //     let id = '';
-  //     if ((id = music.id || musicProps?.musicInfo.id)) {
-  //       data = await getMusicUrl(id);
-  //     }
-  //     musicProps?.setMusicUrl(data);
-  //     if (data === '') {
-  //       Alert.alert('没有音源');
-  //       musicProps?.setPause(true);
-  //     } else {
-  //       musicProps?.setPause(false);
-  //     }
-  //   },
-  //   [musicProps],
-  // );
-  // const playMusic = useCallback(
-  //   (music: any) => {
-  //     musicProps?.setMusicInfo(music);
-  //     pushMusicRequest(music);
-  //     if (musicProps?.currentIndexRef) {
-  //       musicProps.currentIndexRef.current = 0;
-  //     }
-  //   },
-  //   [musicProps, pushMusicRequest],
-  // );
   return (
-    <ScrollView style={styles.content}>
-      <View style={styles.blank} />
-      {tracks.map((item: any, index: number) => {
-        return (
-          <View key={index} style={styles.container}>
-            <View style={styles.song}>
-              <Text style={styles.title} numberOfLines={1}>
-                {item.name}
-              </Text>
-              <Text style={styles.artists} numberOfLines={1}>
-                {item.ar.length &&
-                  item.ar?.map((value: any) => {
-                    return value.name;
-                  })}
-              </Text>
-            </View>
-            <Icon
-              type="antdesign"
-              name="play"
-              color="white"
-              tvParallaxProperties={undefined}
-              style={styles.button}
-              onPress={() => {
-                playMusic(item);
-              }}
-            />
-          </View>
-        );
-      })}
-      <View style={styles.blank} />
-    </ScrollView>
+    <View key={index} style={styles.container}>
+      <View style={styles.song}>
+        <Text style={styles.title} numberOfLines={1}>
+          {item.name}
+        </Text>
+        <Text style={styles.artists} numberOfLines={1}>
+          {item.ar.length &&
+            item.ar?.map((value: any) => {
+              return value.name;
+            })}
+        </Text>
+      </View>
+      <Icon
+        type="antdesign"
+        name="play"
+        color="white"
+        tvParallaxProperties={undefined}
+        style={styles.button}
+        onPress={() => {
+          playMusic(item);
+        }}
+      />
+    </View>
+  );
+};
+
+const renderItem = ({item, index}: {item: any; index: number}) => {
+  return <MusicDetail key={index} item={item} index={index} />;
+};
+
+export default function PlaylistContent({tracks}: Props) {
+  return (
+    <FlatList
+      data={tracks}
+      renderItem={renderItem}
+      style={styles.content}
+      initialNumToRender={10}
+      keyExtractor={(item, index) => index.toString()}
+      ListHeaderComponent={<View style={styles.blank} />}
+      ListFooterComponent={<View style={styles.blank} />}
+    />
   );
 }
 
