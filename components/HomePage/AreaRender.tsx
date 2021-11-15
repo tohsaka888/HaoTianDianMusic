@@ -6,7 +6,7 @@ import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import usePlayMusic from '../../hooks/usePlayMusic';
-import {ComponentsContext, MusicInfoContext} from '../../context/MainContext';
+import {MusicInfoContext} from '../../context/MainContext';
 
 type Item = {
   id: string;
