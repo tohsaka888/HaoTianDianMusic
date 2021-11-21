@@ -102,25 +102,27 @@ const RenderContent = ({item}: Props) => {
         <Text style={styles.title}>{item.title}</Text>
       </View>
       {item.id === '0' && (
-        <FlatList
-          ref={refs => {
-            if (refs) {
-              scrollRef.current = refs;
-            }
-          }}
-          data={randomMusic?.playlists}
-          renderItem={PlaylistRenderItem}
-          initialNumToRender={4}
-          horizontal={true}
-          // scrollEnabled={scrollEnable}
-          // onEndReachedThreshold={0.1}
-          // onEndReached={() => {
-          //   setScrollEnable(false);
-          //   setTimeout(() => {
-          //     setScrollEnable(true);
-          //   }, 500);
-          // }}
-        />
+        <View style={styles.flatlist}>
+          <FlatList
+            ref={refs => {
+              if (refs) {
+                scrollRef.current = refs;
+              }
+            }}
+            data={randomMusic?.playlists}
+            renderItem={PlaylistRenderItem}
+            initialNumToRender={4}
+            horizontal={true}
+            // scrollEnabled={scrollEnable}
+            // onEndReachedThreshold={0.1}
+            // onEndReached={() => {
+            //   setScrollEnable(false);
+            //   setTimeout(() => {
+            //     setScrollEnable(true);
+            //   }, 500);
+            // }}
+          />
+        </View>
       )}
       {item.id === '1' && (
         <FlatList
@@ -161,7 +163,8 @@ const styles = StyleSheet.create({
   },
   allArea: {
     margin: 5,
-    padding: 5,
+    paddingLeft: 5,
+    paddingRight: 5,
     borderRadius: 5,
   },
   allAreaToBottom: {
@@ -215,5 +218,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
     width: 200,
+  },
+  flatlist: {
+    height: 140,
   },
 });
