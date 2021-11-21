@@ -17,25 +17,36 @@ type Props = {
 
 const LyricShow = ({item, index}: Props): JSX.Element => {
   const musicProps = useContext(MusicInfoContext);
-  const window = useWindowDimensions();
   return (
     <>
-      {index === 0 && <View style={{height: window.height / 2 - 80}} />}
       {musicProps?.currentTime &&
       item?.startTime &&
       item?.endTime &&
       item.startTime < musicProps.currentTime &&
       item.endTime > musicProps.currentTime ? (
-        <Text numberOfLines={1} style={styles.currentLyric} key={index}>
-          {item.content}
-        </Text>
+        <View key={index} style={styles.current}>
+          <Text numberOfLines={1} style={styles.currentLyric}>
+            {item.content}
+          </Text>
+
+          {item.contentZH !== '' && (
+            <Text numberOfLines={1} style={styles.currentLyric}>
+              {item.contentZH}
+            </Text>
+          )}
+        </View>
       ) : (
-        <Text style={styles.lyric} key={index} numberOfLines={1}>
-          {item.content}
-        </Text>
-      )}
-      {index === item.length - 1 && (
-        <View style={{height: window.height / 2 - 80}} />
+        <View key={index} style={styles.current}>
+          <Text style={styles.lyric} numberOfLines={1}>
+            {item.content}
+          </Text>
+
+          {item.contentZH !== '' && (
+            <Text numberOfLines={1} style={styles.lyric}>
+              {item.contentZH}
+            </Text>
+          )}
+        </View>
       )}
     </>
   );
@@ -49,6 +60,7 @@ export default function LyricContent() {
   const musicProps = useContext(MusicInfoContext);
   const lyrics = useLrcParser(musicProps?.musicInfo.id);
   const scrollProps = useContext(ScrollContext);
+  const window = useWindowDimensions();
   useEffect(() => {
     if (musicProps?.lyricRef && lyrics) {
       musicProps.lyricRef.current = lyrics;
@@ -57,8 +69,10 @@ export default function LyricContent() {
   return (
     <FlatList
       data={lyrics}
+      ListHeaderComponent={<View style={{height: window.height / 2 - 100}} />}
+      ListFooterComponent={<View style={{height: window.height / 2 - 100}} />}
       renderItem={renderItem}
-      getItemLayout={(data, index) => ({length: 36, offset: 36 * index, index})}
+      getItemLayout={(data, index) => ({length: 72, offset: 72 * index, index})}
       showsVerticalScrollIndicator={false}
       ref={refs => {
         if (scrollProps) {
@@ -83,5 +97,9 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     lineHeight: 36,
+  },
+  current: {
+    height: 72,
+    justifyContent: 'center',
   },
 });
