@@ -8,6 +8,7 @@ type Lyrics = {
   endTime: number;
   content: string;
   length: number;
+  contentZH: string;
 };
 
 export default function useLrcParser(id: string): Lyrics[] | null {
@@ -17,7 +18,14 @@ export default function useLrcParser(id: string): Lyrics[] | null {
     if (id) {
       const data = await getMusicLrc(id);
       const lyric: Lyrics[] = [];
-      const parsedLyric = Lrc.parse(data).lyrics;
+      let parsedLyric: any[] = [];
+      let parsedLyricZH: any[] = [];
+      if (data.lrc && data.lrc.lyric) {
+        parsedLyric = Lrc.parse(data.lrc.lyric).lyrics;
+      }
+      if (data.tlyric && data.tlyric.lyric) {
+        parsedLyricZH = Lrc.parse(data.tlyric.lyric).lyrics;
+      }
       if (parsedLyric.length !== 0) {
         parsedLyric.map((item: Lyric, index: number) => {
           let startTime = item.timestamp;
@@ -29,12 +37,30 @@ export default function useLrcParser(id: string): Lyrics[] | null {
               endTime = musicProps.durationRef.current;
             }
           }
-          lyric.push({
-            startTime: startTime,
-            endTime: endTime,
-            content: item.content,
-            length: parsedLyric.length,
-          });
+          if (parsedLyricZH.length) {
+            for (let i = 0; i < parsedLyricZH.length; i++) {
+              if (
+                parsedLyricZH[i] &&
+                parsedLyricZH[i].timestamp === item.timestamp
+              ) {
+                lyric.push({
+                  startTime: startTime,
+                  endTime: endTime,
+                  content: item.content,
+                  length: parsedLyric.length,
+                  contentZH: parsedLyricZH[i].content,
+                });
+              }
+            }
+          } else {
+            lyric.push({
+              startTime: startTime,
+              endTime: endTime,
+              content: item.content,
+              length: parsedLyric.length,
+              contentZH: '',
+            });
+          }
         });
       } else {
         let endTime = 0;
@@ -46,6 +72,7 @@ export default function useLrcParser(id: string): Lyrics[] | null {
           endTime: endTime || 100000,
           content: '纯音乐,请欣赏~',
           length: 1,
+          contentZH: '',
         });
       }
       setLyrics(lyric);
