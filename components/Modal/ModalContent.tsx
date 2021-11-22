@@ -1,3 +1,4 @@
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
@@ -17,11 +18,37 @@ const ImageContent = () => {
   );
 };
 
+const Tab = createMaterialTopTabNavigator();
+
 export default function ModalContent() {
   const [showPicture, setPicture] = useState<boolean>(true);
   const musicProps = useContext(MusicInfoContext);
   return (
     <View style={styles.imageContainer}>
+      {/* <Tab.Navigator>
+        <Tab.Screen
+          name="image"
+          component={ImageContent}
+          options={{
+            tabBarShowLabel: false,
+            swipeEnabled: true,
+            tabBarStyle: {
+              height: 0,
+            },
+          }}
+        />
+        <Tab.Screen
+          name="lyric"
+          component={LyricContent}
+          options={{
+            tabBarShowLabel: false,
+            swipeEnabled: true,
+            tabBarStyle: {
+              height: 0,
+            },
+          }}
+        />
+      </Tab.Navigator> */}
       <TouchableOpacity
         style={styles.imageContainer}
         onPress={() => {
@@ -49,6 +76,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 8,
+    flex: 7,
+    width: '100%',
   },
 });

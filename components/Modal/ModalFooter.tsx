@@ -61,6 +61,23 @@ export default function ModalFooter() {
   // }, [musicProps?.musicInfo.isCollect]);
   return (
     <View style={styles.footer}>
+      <View style={styles.topButtons}>
+        <Icon
+          type="antdesign"
+          name={musicProps?.musicInfo.isCollect ? 'heart' : 'hearto'}
+          size={25}
+          style={styles.centerButton}
+          tvParallaxProperties={undefined}
+          onPress={collectMyMusic}
+        />
+        <Icon
+          type="antdesign"
+          name={'tag'}
+          size={25}
+          style={styles.centerButton}
+          tvParallaxProperties={undefined}
+        />
+      </View>
       <View style={styles.controller}>
         <Text style={styles.time}>
           {musicProps && moment(musicProps?.currentTime * 1000).format('mm:ss')}
@@ -87,7 +104,7 @@ export default function ModalFooter() {
       <View style={styles.buttons}>
         <Icon
           type="antdesign"
-          name="leftcircle"
+          name="leftcircleo"
           size={30}
           tvParallaxProperties={undefined}
           onPress={() => {
@@ -100,15 +117,15 @@ export default function ModalFooter() {
         />
         <Icon
           type="antdesign"
-          name={!musicProps?.pause ? 'pausecircle' : 'play'}
-          size={30}
+          name={!musicProps?.pause ? 'pausecircleo' : 'playcircleo'}
+          size={40}
           style={styles.centerButton}
           tvParallaxProperties={undefined}
           onPress={isPlay}
         />
         <Icon
           type="antdesign"
-          name="rightcircle"
+          name="rightcircleo"
           size={30}
           tvParallaxProperties={undefined}
           onPress={() => {
@@ -119,14 +136,6 @@ export default function ModalFooter() {
             }
           }}
         />
-        <Icon
-          type="antdesign"
-          name={musicProps?.musicInfo.isCollect ? 'heart' : 'hearto'}
-          size={30}
-          style={styles.centerButton}
-          tvParallaxProperties={undefined}
-          onPress={collectMyMusic}
-        />
       </View>
     </View>
   );
@@ -134,9 +143,9 @@ export default function ModalFooter() {
 
 const styles = StyleSheet.create({
   footer: {
-    flex: 1,
+    flex: 2,
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   controller: {
@@ -144,6 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+    marginBottom: 16,
   },
   time: {
     flex: 1,
@@ -167,9 +177,18 @@ const styles = StyleSheet.create({
     width: '40%',
     justifyContent: 'space-around',
     marginTop: 8,
+    alignItems: 'center',
   },
   centerButton: {
     marginLeft: 8,
     marginRight: 8,
+  },
+  topButtons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 16,
   },
 });
