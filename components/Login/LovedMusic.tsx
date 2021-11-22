@@ -5,19 +5,21 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {MusicInfoContext} from '../../context/MainContext';
+import {UserContext} from '../../context/UserContext';
 import {getLovedMusic} from '../../request/getLovedMusic';
 
 export default function LovedMusic() {
   const [lovedMusic, setLovedMusic] = useState<any>({});
   const navigation = useNavigation<NavigationProp<{playlist: any}>>();
   const musicProps = useContext(MusicInfoContext);
+  const userProps = useContext(UserContext);
   useEffect(() => {
     const getMusic = async () => {
       const playlist = await getLovedMusic();
       setLovedMusic(playlist);
     };
     getMusic();
-  }, [musicProps?.musicInfo.isCollect]);
+  }, [musicProps?.musicInfo.isCollect, userProps?.profile]);
   return (
     <TouchableOpacity
       style={styles.container}
