@@ -1,3 +1,4 @@
+// 支持引入图片
 declare module '*.svg';
 declare module '*.png';
 declare module '*.jpg';
