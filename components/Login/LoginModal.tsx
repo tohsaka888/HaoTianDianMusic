@@ -54,8 +54,10 @@ const ModalContent = () => {
         expires: null,
       });
       loginProps?.setVisible(false);
+      userProps?.setProfile(true);
     } else {
       Toast.fail('登陆失败');
+      userProps?.setProfile(false);
     }
     userProps?.setProfile(loginStatus);
   }, [loginProps, password, phone, userProps]);

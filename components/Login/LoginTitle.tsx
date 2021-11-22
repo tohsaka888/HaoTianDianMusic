@@ -1,14 +1,22 @@
+import {Toast} from '@ant-design/react-native';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, StatusBar} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 import {Icon, Image} from 'react-native-elements';
 import bak1 from '../../assets/images/bak1.jpg';
 import {LoginContext} from '../../context/LoginContext';
+import {UserContext} from '../../context/UserContext';
 // import {UserContext} from '../../context/UserContext';
 import storage from '../../storage.config';
 
 export default function LoginTitle() {
   const loginProps = useContext(LoginContext);
-  // const userProps = useContext(UserContext);
+  const userProps = useContext(UserContext);
   const [loginStatus, setLoginStatus] = useState<any>({});
   const statusBarHeight = StatusBar.currentHeight;
   useEffect(() => {
@@ -28,10 +36,12 @@ export default function LoginTitle() {
       setLoginStatus(data);
     };
     getLoginStatus();
-  }, []);
+  }, [userProps?.profile]);
   const logout = useCallback(async () => {
     await storage.remove({key: 'loginStatus'});
-  }, []);
+    Toast.fail('退出登录成功');
+    userProps?.setProfile(false);
+  }, [userProps]);
   return (
     <View>
       <View style={{marginTop: statusBarHeight}} />
@@ -41,7 +51,7 @@ export default function LoginTitle() {
           style={styles.avatar}
         />
         {loginStatus.nickname ? (
-          <View style={styles.line}>
+          <TouchableOpacity style={styles.line}>
             <Text style={[styles.username, styles.icon]}>
               {loginStatus.nickname}
             </Text>
@@ -52,7 +62,7 @@ export default function LoginTitle() {
               }}>
               退出登录
             </Text>
-          </View>
+          </TouchableOpacity>
         ) : (
           <>
             <Icon
