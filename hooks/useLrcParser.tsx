@@ -79,7 +79,10 @@ export default function useLrcParser(id: string): Lyrics[] | null {
     }
   }, [id, musicProps?.durationRef]);
   useEffect(() => {
-    getLrc();
-  }, [getLrc]);
+    if (musicProps?.musicInfo.id && id) {
+      getLrc();
+    }
+    console.log(11)
+  }, [getLrc, id, musicProps?.musicInfo.id]);
   return lyrics;
 }
