@@ -69,8 +69,9 @@ export default function LyricContent() {
   return (
     <FlatList
       data={lyrics}
-      ListHeaderComponent={<View style={{height: window.height / 2 - 100}} />}
-      ListFooterComponent={<View style={{height: window.height / 2 - 100}} />}
+      style={styles.flatlist}
+      ListHeaderComponent={<View style={{height: window.height / 2 - 120}} />}
+      ListFooterComponent={<View style={{height: window.height / 2 - 120}} />}
       renderItem={renderItem}
       getItemLayout={(data, index) => ({length: 72, offset: 72 * index, index})}
       showsVerticalScrollIndicator={false}
@@ -101,5 +102,8 @@ const styles = StyleSheet.create({
   current: {
     height: 72,
     justifyContent: 'center',
+  },
+  flatlist: {
+    width: '100%',
   },
 });
