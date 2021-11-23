@@ -13,7 +13,7 @@ const ImageContent = ({showPicture}: {showPicture: boolean}) => {
       <Image
         source={{uri: musicProps?.musicInfo.picUrl || ''}}
         // eslint-disable-next-line react-native/no-inline-styles
-        style={[styles.image, {opacity: showPicture ? 1 : 0}]}
+        style={[styles.image, {display: showPicture ? 'flex' : 'none'}]}
       />
     </View>
   );
@@ -52,14 +52,14 @@ export default function ModalContent() {
         style={styles.imageContainer}
         onPress={() => {
           setPicture(!showPicture);
-          if (!showPicture) {
-            if (musicProps?.lyricRef) {
-              musicProps.lyricRef.current = [];
-              musicProps.currentIndexRef.current = 0;
-            }
-          }
+          // if (!showPicture) {
+          //   if (musicProps?.lyricRef) {
+          //     musicProps.lyricRef.current = [];
+          //     musicProps.currentIndexRef.current = 0;
+          //   }
+          // }
         }}>
-        <ImageContent showPicture={showPicture} />
+        {showPicture && <ImageContent showPicture={showPicture} />}
         <LyricContent showPicture={showPicture} />
         {/* {showPicture ? <ImageContent /> : <LyricContent />} */}
       </TouchableOpacity>
