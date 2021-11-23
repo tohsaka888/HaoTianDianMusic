@@ -82,7 +82,6 @@ export default function useLrcParser(id: string): Lyrics[] | null {
     if (musicProps?.musicInfo.id && id) {
       getLrc();
     }
-    console.log(11)
   }, [getLrc, id, musicProps?.musicInfo.id]);
   return lyrics;
 }

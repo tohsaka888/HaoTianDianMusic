@@ -6,19 +6,18 @@ import {MusicInfoContext} from '../../context/MainContext';
 // import {ScrollContext} from '../../context/ScrollContext';
 import LyricContent from './LyricContent';
 
-const ImageContent = () => {
+const ImageContent = ({showPicture}: {showPicture: boolean}) => {
   const musicProps = useContext(MusicInfoContext);
   return (
-    <View>
+    <View style={styles.imageMain}>
       <Image
         source={{uri: musicProps?.musicInfo.picUrl || ''}}
-        style={styles.image}
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={[styles.image, {opacity: showPicture ? 1 : 0}]}
       />
     </View>
   );
 };
-
-const Tab = createMaterialTopTabNavigator();
 
 export default function ModalContent() {
   const [showPicture, setPicture] = useState<boolean>(true);
@@ -60,7 +59,9 @@ export default function ModalContent() {
             }
           }
         }}>
-        {showPicture ? <ImageContent /> : <LyricContent />}
+        <ImageContent showPicture={showPicture} />
+        <LyricContent showPicture={showPicture} />
+        {/* {showPicture ? <ImageContent /> : <LyricContent />} */}
       </TouchableOpacity>
     </View>
   );
@@ -78,5 +79,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 7,
     width: '100%',
+  },
+  imageMain: {
+    flex: 1,
+    position: 'absolute',
   },
 });

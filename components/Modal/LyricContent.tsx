@@ -24,7 +24,10 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
       item?.endTime &&
       item.startTime < musicProps.currentTime &&
       item.endTime > musicProps.currentTime ? (
-        <View key={index} style={styles.current}>
+        <View
+          key={index}
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={[styles.current, {height: item.contentZH === '' ? 36 : 72}]}>
           <Text numberOfLines={1} style={styles.currentLyric}>
             {item.content}
           </Text>
@@ -56,7 +59,7 @@ const renderItem = ({item, index}: Props) => {
   return <LyricShow item={item} index={index} />;
 };
 
-export default function LyricContent() {
+export default function LyricContent({showPicture}: {showPicture: boolean}) {
   const musicProps = useContext(MusicInfoContext);
   const lyrics = useLrcParser(musicProps?.musicInfo.id);
   const scrollProps = useContext(ScrollContext);
@@ -69,7 +72,8 @@ export default function LyricContent() {
   return (
     <FlatList
       data={lyrics}
-      style={styles.flatlist}
+      // eslint-disable-next-line react-native/no-inline-styles
+      style={[styles.flatlist, {opacity: showPicture ? 0 : 1}]}
       ListHeaderComponent={<View style={{height: window.height / 2 - 120}} />}
       ListFooterComponent={<View style={{height: window.height / 2 - 120}} />}
       renderItem={renderItem}
@@ -100,10 +104,10 @@ const styles = StyleSheet.create({
     lineHeight: 36,
   },
   current: {
-    height: 72,
     justifyContent: 'center',
   },
   flatlist: {
     width: '100%',
+    height: '100%',
   },
 });
