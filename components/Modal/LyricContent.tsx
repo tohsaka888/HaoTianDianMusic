@@ -27,13 +27,13 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
         <View
           key={index}
           // eslint-disable-next-line react-native/no-inline-styles
-          style={[styles.current, {height: item.contentZH === '' ? 36 : 72}]}>
+          style={styles.current}>
           <Text numberOfLines={1} style={styles.currentLyric}>
             {item.content}
           </Text>
 
           {item.contentZH !== '' && (
-            <Text numberOfLines={1} style={styles.currentLyric}>
+            <Text numberOfLines={1} style={styles.currentLyricZH}>
               {item.contentZH}
             </Text>
           )}
@@ -45,7 +45,7 @@ const LyricShow = ({item, index}: Props): JSX.Element => {
           </Text>
 
           {item.contentZH !== '' && (
-            <Text numberOfLines={1} style={styles.lyric}>
+            <Text numberOfLines={1} style={styles.lyricZH}>
               {item.contentZH}
             </Text>
           )}
@@ -77,7 +77,20 @@ export default function LyricContent({showPicture}: {showPicture: boolean}) {
       ListHeaderComponent={<View style={{height: window.height / 2 - 120}} />}
       ListFooterComponent={<View style={{height: window.height / 2 - 120}} />}
       renderItem={renderItem}
-      getItemLayout={(data, index) => ({length: 72, offset: 72 * index, index})}
+      getItemLayout={(data, index) =>
+        // data && data[index].contentZH
+        //   ? {length: 72, offset: 72 * index, index}
+        //   : {length: 36, offset: 36 * index, index}
+        ({length: 50, offset: 50 * index, index})
+      }
+      onScrollBeginDrag={() => {
+        musicProps?.setDrag(true);
+      }}
+      onScrollEndDrag={() => {
+        setTimeout(() => {
+          musicProps?.setDrag(false);
+        }, 1500);
+      }}
       showsVerticalScrollIndicator={false}
       ref={refs => {
         if (scrollProps) {
@@ -94,17 +107,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
     fontSize: 16,
-    lineHeight: 36,
+  },
+  lyricZH: {
+    color: 'black',
+    textAlign: 'center',
+    flex: 1,
+    fontSize: 12,
   },
   currentLyric: {
     color: 'red',
     textAlign: 'center',
     flex: 1,
     fontSize: 16,
-    lineHeight: 36,
+  },
+  currentLyricZH: {
+    color: 'red',
+    textAlign: 'center',
+    flex: 1,
+    fontSize: 12,
   },
   current: {
+    display: 'flex',
     justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    verticalAlign: 'middle',
   },
   flatlist: {
     width: '100%',
