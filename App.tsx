@@ -115,6 +115,7 @@ const App = () => {
   const [musicUrl, setMusicUrl] = useState<string | null>(null);
   const [result, setResult] = useState<any[]>([]);
   const [playlistId, setPlaylistId] = useState<number | string>('');
+  const [drag, setDrag] = useState<boolean>(false);
   const currentLrcRef = useRef<Text>();
   const musicRef = useRef();
   const scrollRef = useRef<FlatList>();
@@ -157,6 +158,8 @@ const App = () => {
                 lyricRef: lyricRef,
                 playlistId: playlistId,
                 setPlaylistId: setPlaylistId,
+                drag: drag,
+                setDrag: setDrag,
               }}>
               <SearchContext.Provider
                 value={{result: result, setResult: setResult}}>
