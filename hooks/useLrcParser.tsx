@@ -41,25 +41,31 @@ export default function useLrcParser(id: string): Lyrics[] | null {
             for (let i = 0; i < parsedLyricZH.length; i++) {
               if (
                 parsedLyricZH[i] &&
-                parsedLyricZH[i].timestamp === item.timestamp
+                parsedLyricZH[i].timestamp === item.timestamp &&
+                item.content
+                // parsedLyricZH[i].content
               ) {
-                lyric.push({
-                  startTime: startTime,
-                  endTime: endTime,
-                  content: item.content,
-                  length: parsedLyric.length,
-                  contentZH: parsedLyricZH[i].content,
-                });
+                if (item.content) {
+                  lyric.push({
+                    startTime: startTime,
+                    endTime: endTime,
+                    content: item.content,
+                    length: parsedLyric.length,
+                    contentZH: parsedLyricZH[i].content,
+                  });
+                }
               }
             }
           } else {
-            lyric.push({
-              startTime: startTime,
-              endTime: endTime,
-              content: item.content,
-              length: parsedLyric.length,
-              contentZH: '',
-            });
+            if (item.content) {
+              lyric.push({
+                startTime: startTime,
+                endTime: endTime,
+                content: item.content,
+                length: parsedLyric.length,
+                contentZH: '',
+              });
+            }
           }
         });
       } else {
