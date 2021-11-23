@@ -32,6 +32,8 @@ type MusicInfoProps = {
   lyricRef: MutableRefObject<any[]>;
   playlistId: number | string;
   setPlaylistId: Function;
+  drag: boolean;
+  setDrag: Function;
 };
 
 const MusicInfoContext = createContext<MusicInfoProps | null>(null);
