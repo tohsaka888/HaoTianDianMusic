@@ -94,7 +94,7 @@ const MusicRenderItem = ({item, index}: {item: any; index: number}) => {
 
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
-  const [scrollEnable, setScrollEnable] = useState<boolean>(true);
+  // const [scrollEnable, setScrollEnable] = useState<boolean>(true);
   const scrollRef = useRef<FlatList>();
   return (
     <>
