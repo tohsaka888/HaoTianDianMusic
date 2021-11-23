@@ -22,6 +22,7 @@ export default function MusicController() {
   const onProgress = ({currentTime}: OnProgressData): void => {
     musicProps?.setCurrentTime(currentTime);
     let current = musicProps?.currentIndexRef.current || 0;
+    // console.log(lyric);
     if (lyric && lyric?.length > 0) {
       // 控制快进到某句歌词
       if (lyric[current] && lyric[current].endTime) {
@@ -48,7 +49,7 @@ export default function MusicController() {
         }
         const scrollRef = scrollProps?.scrollRef.current;
         // 防止滚动事件为undefined导致的卡死问题
-        if (scrollRef) {
+        if (scrollRef && !musicProps.drag) {
           scrollRef.scrollToIndex({
             index: current,
             animated: true,
