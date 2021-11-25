@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
-import {getCategroy} from '../../request/getCategroy';
+import {getCategroy} from '../../request/getCategory';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import CategoryDetail from './CategroyDetail';
 
@@ -27,7 +27,7 @@ export default function Category() {
       {categroy && (
         <Tab.Navigator>
           {categroy &&
-            categroy.map((item, index) => {
+            categroy.slice(0, 7).map((item, index) => {
               return (
                 <Tab.Screen
                   options={{
