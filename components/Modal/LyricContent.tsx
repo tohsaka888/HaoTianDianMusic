@@ -81,7 +81,7 @@ export default function LyricContent({showPicture}: {showPicture: boolean}) {
         // data && data[index].contentZH
         //   ? {length: 72, offset: 72 * index, index}
         //   : {length: 36, offset: 36 * index, index}
-        ({length: 50, offset: 50 * index, index})
+        ({length: 55, offset: 55 * index, index})
       }
       onScrollBeginDrag={() => {
         musicProps?.setDrag(true);
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
   },
   currentLyric: {
     color: 'red',
@@ -124,13 +124,13 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
   },
   current: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50,
+    height: 55,
     verticalAlign: 'middle',
   },
   flatlist: {
