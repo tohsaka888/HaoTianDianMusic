@@ -61,23 +61,7 @@ export default function ModalFooter() {
   // }, [musicProps?.musicInfo.isCollect]);
   return (
     <View style={styles.footer}>
-      <View style={styles.topButtons}>
-        <Icon
-          type="antdesign"
-          name={musicProps?.musicInfo.isCollect ? 'heart' : 'hearto'}
-          size={25}
-          style={styles.centerButton}
-          tvParallaxProperties={undefined}
-          onPress={collectMyMusic}
-        />
-        <Icon
-          type="antdesign"
-          name={'tag'}
-          size={25}
-          style={styles.centerButton}
-          tvParallaxProperties={undefined}
-        />
-      </View>
+      {/* <View style={styles.topButtons}></View> */}
       <View style={styles.controller}>
         <Text style={styles.time}>
           {musicProps && moment(musicProps?.currentTime * 1000).format('mm:ss')}
@@ -104,8 +88,16 @@ export default function ModalFooter() {
       <View style={styles.buttons}>
         <Icon
           type="antdesign"
+          name={musicProps?.musicInfo.isCollect ? 'heart' : 'hearto'}
+          size={23}
+          color={musicProps?.musicInfo.isCollect ? 'red' : 'black'}
+          tvParallaxProperties={undefined}
+          onPress={collectMyMusic}
+        />
+        <Icon
+          type="antdesign"
           name="leftcircleo"
-          size={30}
+          size={25}
           tvParallaxProperties={undefined}
           onPress={() => {
             if (musicProps?.musicInfo.id) {
@@ -118,15 +110,14 @@ export default function ModalFooter() {
         <Icon
           type="antdesign"
           name={!musicProps?.pause ? 'pausecircleo' : 'playcircleo'}
-          size={40}
-          style={styles.centerButton}
+          size={35}
           tvParallaxProperties={undefined}
           onPress={isPlay}
         />
         <Icon
           type="antdesign"
           name="rightcircleo"
-          size={30}
+          size={25}
           tvParallaxProperties={undefined}
           onPress={() => {
             if (musicProps?.musicInfo.id) {
@@ -135,6 +126,12 @@ export default function ModalFooter() {
               Toast.fail('没有播放中的歌曲');
             }
           }}
+        />
+        <Icon
+          type="antdesign"
+          name={'tag'}
+          size={23}
+          tvParallaxProperties={undefined}
         />
       </View>
     </View>
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 16,
+    // marginBottom: 8,
   },
   time: {
     flex: 1,
@@ -174,14 +171,10 @@ const styles = StyleSheet.create({
   buttons: {
     display: 'flex',
     flexDirection: 'row',
-    width: '40%',
+    width: '70%',
     justifyContent: 'space-around',
     marginTop: 8,
     alignItems: 'center',
-  },
-  centerButton: {
-    marginLeft: 8,
-    marginRight: 8,
   },
   topButtons: {
     display: 'flex',
@@ -189,6 +182,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
-    marginBottom: 16,
+    marginBottom: 8,
   },
 });

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 7,
+    flex: 8,
     width: '100%',
   },
   imageMain: {
