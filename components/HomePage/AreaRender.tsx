@@ -1,7 +1,6 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useRef} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Icon, Image, Text} from 'react-native-elements';
-import Banner from './Banner';
 import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -94,7 +93,6 @@ const MusicRenderItem = ({item, index}: {item: any; index: number}) => {
 
 const RenderContent = ({item}: Props) => {
   const randomMusic = useContext(AreaContext);
-  // const [scrollEnable, setScrollEnable] = useState<boolean>(true);
   const scrollRef = useRef<FlatList>();
   return (
     <>
@@ -139,7 +137,6 @@ const RenderContent = ({item}: Props) => {
 export default function AreaRender({item}: Props): JSX.Element {
   return (
     <View>
-      {item.id === '0' && <Banner />}
       <View
         style={[
           styles.allArea,

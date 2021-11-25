@@ -5,6 +5,7 @@ import {getRandomMusic} from '../../request/HomePage';
 import AreaRender from './AreaRender';
 import {AreaContext} from '../../context/AreaContext';
 import {getDefaultPlaylist} from '../../request/Playlist';
+import Banner from './Banner';
 
 type DataProps = {
   id: string;
@@ -74,6 +75,7 @@ export default function Content() {
         renderItem={AreaRender}
         keyExtractor={item => item.id}
         style={styles.toBottom}
+        ListHeaderComponent={<Banner />}
       />
     </AreaContext.Provider>
   );
