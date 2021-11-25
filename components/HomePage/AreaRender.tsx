@@ -155,7 +155,7 @@ const RenderContent = ({item}: Props) => {
         <View style={styles.analysis}>
           <WebView
             style={styles.webview}
-            nestedScrollEnabled={true}
+            nestedScrollEnabled={false}
             originWhitelist={['http://*', 'https://*']}
             source={{uri: 'http://81.68.113.218:10086/'}}
           />
