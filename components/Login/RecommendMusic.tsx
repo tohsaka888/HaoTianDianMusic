@@ -1,5 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Image} from 'react-native-elements';
 import {UserContext} from '../../context/UserContext';
 import usePlayMusic from '../../hooks/usePlayMusic';
@@ -8,27 +15,33 @@ import {getUserMusic} from '../../request/UserMusic';
 const RecommendMusics = ({item, index}: {item: any; index: number}) => {
   const playMusic = usePlayMusic();
   return (
-    <TouchableOpacity
-      key={index}
-      onPress={() => {
-        playMusic(item);
-      }}>
-      <View style={styles.Music}>
-        <Image source={{uri: item.picUrl}} style={styles.cover} />
-        <View>
-          <Text numberOfLines={1} style={styles.MusicTitle}>
-            {item.name}
-          </Text>
-          <View style={styles.tag}>
-            {item.tags.map((value: string, i: number) => (
-              <Text style={styles.text} key={i}>
-                {value}
+    <>
+      {item.name ? (
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+            playMusic(item);
+          }}>
+          <View style={styles.Music}>
+            <Image source={{uri: item.picUrl}} style={styles.cover} />
+            <View>
+              <Text numberOfLines={1} style={styles.MusicTitle}>
+                {item.name}
               </Text>
-            ))}
+              <View style={styles.tag}>
+                {item.tags.map((value: string, i: number) => (
+                  <Text style={styles.text} key={i}>
+                    {value}
+                  </Text>
+                ))}
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </TouchableOpacity>
+        </TouchableOpacity>
+      ) : (
+        <ActivityIndicator size="large" style={styles.loading} />
+      )}
+    </>
   );
 };
 
@@ -49,7 +62,11 @@ export default function RecommendMusic() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>推荐歌曲</Text>
-      <FlatList data={Music} renderItem={renderItem} />
+      {Music.length !== 0 ? (
+        <FlatList data={Music} renderItem={renderItem} />
+      ) : (
+        <ActivityIndicator size="large" style={styles.loading} />
+      )}
     </View>
   );
 }
@@ -102,5 +119,8 @@ const styles = StyleSheet.create({
   tag: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  loading: {
+    flex: 1,
   },
 });

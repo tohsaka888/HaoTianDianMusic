@@ -1,5 +1,11 @@
 import React, {useContext, useRef} from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Icon, Image, Text} from 'react-native-elements';
 import {lightTheme, darkTheme} from '../../context/ThemeContext';
 import {AreaContext} from '../../context/AreaContext';
@@ -53,36 +59,40 @@ const Music = ({musicGroup, i}: {musicGroup: any; i: number}) => {
   const playMusic = usePlayMusic();
   return (
     <View key={i}>
-      {musicGroup.map((music: any, index: number) => {
-        return (
-          <View key={index} style={styles.randomMusic}>
-            <Image
-              source={{uri: music.picUrl}}
-              style={styles.randomMusicPicture}
-            />
-            <View>
-              <Text numberOfLines={1} style={styles.randomMusicName}>
-                {music.name}
-              </Text>
-              <Text numberOfLines={1} style={styles.randomArtists}>
-                {music.ar.map((text: any) => {
-                  return text.name;
-                })}
-              </Text>
-            </View>
-            <View>
-              <Icon
-                type="antdesign"
-                name="play"
-                tvParallaxProperties={undefined}
-                onPress={() => {
-                  playMusic(music);
-                }}
+      {musicGroup.length !== 0 ? (
+        musicGroup.map((music: any, index: number) => {
+          return (
+            <View key={index} style={styles.randomMusic}>
+              <Image
+                source={{uri: music.picUrl}}
+                style={styles.randomMusicPicture}
               />
+              <View>
+                <Text numberOfLines={1} style={styles.randomMusicName}>
+                  {music.name}
+                </Text>
+                <Text numberOfLines={1} style={styles.randomArtists}>
+                  {music.ar.map((text: any) => {
+                    return text.name;
+                  })}
+                </Text>
+              </View>
+              <View>
+                <Icon
+                  type="antdesign"
+                  name="play"
+                  tvParallaxProperties={undefined}
+                  onPress={() => {
+                    playMusic(music);
+                  }}
+                />
+              </View>
             </View>
-          </View>
-        );
-      })}
+          );
+        })
+      ) : (
+        <ActivityIndicator size="large" />
+      )}
     </View>
   );
 };
@@ -101,25 +111,29 @@ const RenderContent = ({item}: Props) => {
       </View>
       {item.id === '0' && (
         <View style={styles.flatlist}>
-          <FlatList
-            ref={refs => {
-              if (refs) {
-                scrollRef.current = refs;
-              }
-            }}
-            data={randomMusic?.playlists}
-            renderItem={PlaylistRenderItem}
-            initialNumToRender={4}
-            horizontal={true}
-            // scrollEnabled={scrollEnable}
-            // onEndReachedThreshold={0.1}
-            // onEndReached={() => {
-            //   setScrollEnable(false);
-            //   setTimeout(() => {
-            //     setScrollEnable(true);
-            //   }, 500);
-            // }}
-          />
+          {randomMusic?.playlists.length !== 0 ? (
+            <FlatList
+              ref={refs => {
+                if (refs) {
+                  scrollRef.current = refs;
+                }
+              }}
+              data={randomMusic?.playlists}
+              renderItem={PlaylistRenderItem}
+              initialNumToRender={4}
+              horizontal={true}
+              // scrollEnabled={scrollEnable}
+              // onEndReachedThreshold={0.1}
+              // onEndReached={() => {
+              //   setScrollEnable(false);
+              //   setTimeout(() => {
+              //     setScrollEnable(true);
+              //   }, 500);
+              // }}
+            />
+          ) : (
+            <ActivityIndicator size="large" style={styles.loading} />
+          )}
         </View>
       )}
       {item.id === '1' && (
@@ -218,5 +232,8 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     height: 140,
+  },
+  loading: {
+    marginTop: 20,
   },
 });

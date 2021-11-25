@@ -1,6 +1,13 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Image} from 'react-native-elements';
 import {UserContext} from '../../context/UserContext';
 import {getUserPlaylist} from '../../request/UserMusic';
@@ -52,7 +59,11 @@ export default function RecommendPlaylist() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>推荐歌单</Text>
-      <FlatList data={playlist} renderItem={renderItem} />
+      {playlist.length !== 0 ? (
+        <FlatList data={playlist} renderItem={renderItem} />
+      ) : (
+        <ActivityIndicator size="large" style={styles.loading} />
+      )}
     </View>
   );
 }
@@ -105,5 +116,8 @@ const styles = StyleSheet.create({
   tag: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  loading: {
+    flex: 1,
   },
 });
