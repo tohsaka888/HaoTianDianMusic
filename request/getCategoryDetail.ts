@@ -7,7 +7,7 @@ const getCategoryDetail = async (tags: string, page = 1) => {
     body: JSON.stringify({tags: tags, page: page}),
   });
   const data = await res.json();
-  return data.data || [];
+  return data.success ? data.result : [];
 };
 
 export {getCategoryDetail};

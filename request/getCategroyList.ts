@@ -15,7 +15,7 @@ const getCategroyList: CategroyFunction = async ({tags = '娱乐'}) => {
     headers: {Accept: 'application/json', 'Content-Type': 'application/json'},
   });
   const data = await res.json();
-  console.log(data.result.length);
+  return data.data || [];
 };
 
 export {getCategroyList};
