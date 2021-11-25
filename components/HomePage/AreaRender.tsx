@@ -137,12 +137,18 @@ const RenderContent = ({item}: Props) => {
         </View>
       )}
       {item.id === '1' && (
-        <FlatList
-          data={randomMusic?.musicGroups}
-          renderItem={MusicRenderItem}
-          horizontal={true}
-          initialNumToRender={2}
-        />
+        <View style={styles.flatlist}>
+          {randomMusic?.musicGroups.length !== 0 ? (
+            <FlatList
+              data={randomMusic?.musicGroups}
+              renderItem={MusicRenderItem}
+              horizontal={true}
+              initialNumToRender={2}
+            />
+          ) : (
+            <ActivityIndicator size="large" style={styles.loading} />
+          )}
+        </View>
       )}
     </>
   );
@@ -234,6 +240,6 @@ const styles = StyleSheet.create({
     height: 140,
   },
   loading: {
-    marginTop: 20,
+    flex: 1,
   },
 });
