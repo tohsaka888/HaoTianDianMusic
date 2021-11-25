@@ -16,17 +16,17 @@ type DataProps = {
 const DATA = [
   {
     id: '0',
-    title: '歌单推荐',
+    title: '随机歌单',
     globalTheme: '',
   },
   {
     id: '1',
-    title: '人气歌曲',
+    title: '随机歌曲',
     globalTheme: '',
   },
   {
     id: '2',
-    title: '热门分类',
+    title: '数据分析',
     globalTheme: '',
   },
 ];
