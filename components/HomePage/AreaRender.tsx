@@ -12,6 +12,7 @@ import {AreaContext} from '../../context/AreaContext';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import usePlayMusic from '../../hooks/usePlayMusic';
 import {MusicInfoContext} from '../../context/MainContext';
+import WebView from 'react-native-webview';
 
 type Item = {
   id: string;
@@ -137,7 +138,7 @@ const RenderContent = ({item}: Props) => {
         </View>
       )}
       {item.id === '1' && (
-        <View style={styles.flatlist}>
+        <View style={styles.musicGroup}>
           {randomMusic?.musicGroups.length !== 0 ? (
             <FlatList
               data={randomMusic?.musicGroups}
@@ -148,6 +149,16 @@ const RenderContent = ({item}: Props) => {
           ) : (
             <ActivityIndicator size="large" style={styles.loading} />
           )}
+        </View>
+      )}
+      {item.id === '2' && (
+        <View style={styles.analysis}>
+          <WebView
+            style={styles.webview}
+            nestedScrollEnabled={true}
+            originWhitelist={['http://*', 'https://*']}
+            source={{uri: 'http://81.68.113.218:10086/'}}
+          />
         </View>
       )}
     </>
@@ -230,6 +241,7 @@ const styles = StyleSheet.create({
     boxShadow: '3px 3px 3px gray',
     borderWidth: 1,
     borderColor: '#ebebeb68',
+    flex: 1,
   },
   randomArtists: {
     fontSize: 10,
@@ -239,7 +251,16 @@ const styles = StyleSheet.create({
   flatlist: {
     height: 140,
   },
+  musicGroup: {
+    height: 250,
+  },
   loading: {
     flex: 1,
+  },
+  analysis: {
+    height: 500,
+  },
+  webview: {
+    backgroundColor: 'transparent',
   },
 });
