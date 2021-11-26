@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {FlatList} from 'react-native';
 import {Image} from 'react-native-elements';
+import WebView from 'react-native-webview';
 import {MusicInfoContext} from '../../context/MainContext';
 import {getCategoryDetail} from '../../request/getCategoryDetail';
 
@@ -53,11 +54,11 @@ export default function CategoryDetail({item}: {item: any}) {
   const isFocused = useIsFocused();
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [page, setPage] = useState<number>(2);
-  const getCategoryList = useCallback(async () => {
-    const data = await getCategoryDetail(item.name, page);
-    setPlaylists([...playlists, ...data]);
-    setPage(page + 1);
-  }, [item.name, page, playlists]);
+  // const getCategoryList = useCallback(async () => {
+  //   const data = await getCategoryDetail(item.name, page);
+  //   setPlaylists([...playlists, ...data]);
+  //   setPage(page + 1);
+  // }, [item.name, page, playlists]);
   useEffect(() => {
     if (isFocused === true) {
       const getList = async () => {
@@ -68,8 +69,8 @@ export default function CategoryDetail({item}: {item: any}) {
     }
   }, [isFocused, item.name, playlists]);
   return (
-    <View>
-      {playlists?.length !== 0 ? (
+    <View style={styles.webview}>
+      {/* {playlists?.length !== 0 ? (
         <FlatList
           columnWrapperStyle={styles.row}
           numColumns={3}
@@ -82,7 +83,13 @@ export default function CategoryDetail({item}: {item: any}) {
         />
       ) : (
         <ActivityIndicator size="large" style={styles.loading} />
-      )}
+      )} */}
+      <WebView
+        style={styles.webview}
+        nestedScrollEnabled={false}
+        originWhitelist={['http://*', 'https://*']}
+        source={{uri: 'http://81.68.113.218:10086/'}}
+      />
     </View>
   );
 }
@@ -167,5 +174,9 @@ const styles = StyleSheet.create({
   },
   loading: {
     marginTop: 50,
+  },
+  webview: {
+    flex: 1,
+    backgroundColor: '#ffffff52FF',
   },
 });

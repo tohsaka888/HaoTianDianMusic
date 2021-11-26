@@ -28,12 +28,7 @@ const Playlist = ({item, index}: {item: any; index: number}) => {
   const navigation = useNavigation<NavigationProp<{playlist: any}>>();
   const musicProps = useContext(MusicInfoContext);
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate({key: 'playlist'});
-      }}
-      key={index}
-      style={styles.randomPlaylist}>
+    <TouchableOpacity key={index} style={styles.randomPlaylist}>
       <TouchableOpacity
         onPress={() => {
           musicProps?.setPlaylistId(item.id);
@@ -151,7 +146,7 @@ const RenderContent = ({item}: Props) => {
           )}
         </View>
       )}
-      {item.id === '2' && (
+      {/* {item.id === '2' && (
         <View style={styles.analysis}>
           <WebView
             style={styles.webview}
@@ -160,7 +155,7 @@ const RenderContent = ({item}: Props) => {
             source={{uri: 'http://81.68.113.218:10086/'}}
           />
         </View>
-      )}
+      )} */}
     </>
   );
 };
