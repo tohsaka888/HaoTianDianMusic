@@ -12,7 +12,7 @@ import {AreaContext} from '../../context/AreaContext';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import usePlayMusic from '../../hooks/usePlayMusic';
 import {MusicInfoContext} from '../../context/MainContext';
-import WebView from 'react-native-webview';
+import EchartsTab from '../../components/echarts/EchartsTab';
 
 type Item = {
   id: string;
@@ -146,16 +146,11 @@ const RenderContent = ({item}: Props) => {
           )}
         </View>
       )}
-      {/* {item.id === '2' && (
+      {item.id === '2' && (
         <View style={styles.analysis}>
-          <WebView
-            style={styles.webview}
-            nestedScrollEnabled={false}
-            originWhitelist={['http://*', 'https://*']}
-            source={{uri: 'http://81.68.113.218:10086/'}}
-          />
+          <EchartsTab />
         </View>
-      )} */}
+      )}
     </>
   );
 };
@@ -253,7 +248,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   analysis: {
-    height: 500,
+    height: 550,
   },
   webview: {
     backgroundColor: 'transparent',
