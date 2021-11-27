@@ -16,6 +16,7 @@ import {Image} from 'react-native-elements';
 // import WebView from 'react-native-webview';
 import {MusicInfoContext} from '../../context/MainContext';
 import {getCategoryDetail} from '../../request/getCategoryDetail';
+import storage from '../../storage.config';
 
 const PlaylistDetail = ({item, index}: {item: any; index: number}) => {
   const navigation = useNavigation<NavigationProp<{playlist: any}>>();
@@ -53,21 +54,32 @@ const renderItem = ({item, index}: {item: any; index: number}) => {
 export default function CategoryDetail({item}: {item: any}) {
   const isFocused = useIsFocused();
   const [playlists, setPlaylists] = useState<any[]>([]);
-  const [page, setPage] = useState<number>(2);
-  const getCategoryList = useCallback(async () => {
-    const data = await getCategoryDetail(item.name, page);
-    setPlaylists([...playlists, ...data]);
-    setPage(page + 1);
-  }, [item.name, page, playlists]);
+  // const [page, setPage] = useState<number>(2);
+  // const getCategoryList = useCallback(async () => {
+  //   const data = await getCategoryDetail(item.name, page);
+  //   setPlaylists([...playlists, ...data]);
+  //   setPage(page + 1);
+  // }, [item.name, page, playlists]);
   useEffect(() => {
     if (isFocused === true) {
       const getList = async () => {
-        const data = await getCategoryDetail(item.name);
-        setPlaylists(data);
+        try {
+          let playlist = await storage.load({
+            key: item.name,
+          });
+          setPlaylists(playlist);
+        } catch (error) {
+          const data = await getCategoryDetail(item.name);
+          setPlaylists(data);
+          await storage.save({
+            key: item.name,
+            data: data,
+          });
+        }
       };
       getList();
     }
-  }, [isFocused, item.name, playlists]);
+  }, [isFocused, item.name]);
   return (
     <View style={styles.webview}>
       {playlists?.length !== 0 ? (
@@ -77,9 +89,9 @@ export default function CategoryDetail({item}: {item: any}) {
           data={playlists}
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
-          onEndReached={() => {
-            getCategoryList();
-          }}
+          // onEndReached={() => {
+          //   getCategoryList();
+          // }}
         />
       ) : (
         <ActivityIndicator size="large" style={styles.loading} />
