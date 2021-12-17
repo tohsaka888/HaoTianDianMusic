@@ -17,7 +17,8 @@ Pandas
 > 后端项目基于开源库 https://github.com/Binaryify/NeteaseCloudMusicApi 的接口数据开发
 
 ## 项目运行
-1. clone本项目
+### clone项目
+clone本项目
 ```terminal
 git clone https://github.com/tohsaka888/HaoTianDianMusic.git
 ```
@@ -26,7 +27,7 @@ git clone https://github.com/tohsaka888/HaoTianDianMusic.git
 git clone https://github.com.cnpmjs.org/tohsaka888/HaoTianDianMusic.git
 ```
 
-## 安装依赖
+### 安装依赖
 ```terminal
 yarn install
 ```
